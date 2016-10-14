@@ -1,6 +1,7 @@
 DESIGN.md
 ==========
 ---
+![alt text](https://git.cs.duke.edu/CompSci308_2016Fall/slogo_team10/blob/master/images/slogo.PNG)
 
 Introduction
 ---
@@ -9,6 +10,7 @@ We are making a program where a user can input commands into a command line, and
 
 Design Overview
 ---
+![alt text](https://git.cs.duke.edu/CompSci308_2016Fall/slogo_team10/blob/master/images/workflow.PNG)
 
 Front-End Internal API: This API will have Toolbar, History, InputBar, and Canvas classes. These classes will make up the GUI that has the turtle and the terminal. The History will hold all of the commands that the user previously typed. The InputBar will be where the user can input commands. The Canvas will be where the turtle will respond to the user commands.
 
@@ -20,6 +22,7 @@ Back-End External API: There will be a CommandModel that has the parser, which i
 
 User Interface
 ---
+![alt text](https://git.cs.duke.edu/CompSci308_2016Fall/slogo_team10/blob/master/images/userinterface.PNG)
 
 The user interface will essentially be split into four sections, as seen: the toolbar (allowing for various button and interaction controls), the command history (to keep track of previous input), graphic canvas/display (where the graphic elements will be shown) and the input bar (where commands will be entered).
 
