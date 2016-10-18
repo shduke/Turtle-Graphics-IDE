@@ -17,7 +17,7 @@ public class InputField extends HorizontalGUIObject {
     public InputField(String language) {
         super(language);
         myEnterHandler = new EnterEvent();
-        myInputField = makeInputField(74, myEnterHandler);
+        myInputField = makeInputField((int) (SlogoView.DEFAULT_SIZE.getWidth() * 0.075), myEnterHandler);
     }
     
     private class EnterEvent implements EventHandler<ActionEvent> {
