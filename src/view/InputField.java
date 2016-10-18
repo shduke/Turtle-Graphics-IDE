@@ -1,35 +1,39 @@
 package view;
 
-import java.util.ResourceBundle;
-import javax.imageio.ImageIO;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
-public class InputField extends TextField {
+/**
+ * @author Noel Moon
+ *
+ */
+public class InputField extends HorizontalGUIObject {
     
-    private ResourceBundle myResources;
     private TextField myInputField;
+    private EventHandler<ActionEvent> myEnterHandler;
     
-    
-    public InputField(String language){
-        myResources = ResourceBundle.getBundle(SlogoView.DEFAULT_RESOURCE_PACKAGE + language);
-        HBox result = new HBox();
-        EventHandler<ActionEvent> showHandler = new ShowPage();
-        result.getChildren().add(makeButton("EnterCommand", showHandler));
-        myInputField = makeInputField(40, showHandler);
-        result.getChildren().add(myInputField);
+    public InputField(String language) {
+        super(language);
+        myEnterHandler = new EnterEvent();
+        myInputField = makeInputField(74, myEnterHandler);
     }
     
-    private class ShowPage implements EventHandler<ActionEvent> {
+    private class EnterEvent implements EventHandler<ActionEvent> {
         @Override
         public void handle (ActionEvent event) {
-            //
+            String input = myInputField.getText();
+            SlogoView.myHistory.addHistory(input);
+            myInputField.clear();
         }
+    }
+
+    protected HBox getInputField() {
+        HBox result = new HBox();
+        result.getChildren().add(myInputField);
+        result.getChildren().add(makeButton("EnterCommand", myEnterHandler));
+        return result;
     }
     
     private TextField makeInputField (int width, EventHandler<ActionEvent> handler) {
@@ -39,21 +43,5 @@ public class InputField extends TextField {
         return result;
     }
     
-    private Button makeButton (String property, EventHandler<ActionEvent> handler) {
-        // represent all supported image suffixes
-        final String IMAGEFILE_SUFFIXES =
-                String.format(".*\\.(%s)", String.join("|", ImageIO.getReaderFileSuffixes()));
-
-        Button result = new Button();
-        String label = myResources.getString(property);
-        if (label.matches(IMAGEFILE_SUFFIXES)) {
-            result.setGraphic(new ImageView(
-                                  new Image(getClass().getResourceAsStream(SlogoView.DEFAULT_RESOURCE_PACKAGE + label))));
-        }
-        else {
-            result.setText(label);
-        }
-        result.setOnAction(handler);
-        return result;
-    }
+    
 }
