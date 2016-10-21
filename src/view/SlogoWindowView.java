@@ -1,6 +1,10 @@
 package view;
 
 import java.util.ResourceBundle;
+
+import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -24,6 +28,7 @@ public class SlogoWindowView implements WindowView {
     
     //TODO: make turtledisplay private
     public static TurtleDisplay myTurtleDisplay;
+
     
     public SlogoWindowView(String language){
         myLanguage = language;
@@ -38,28 +43,8 @@ public class SlogoWindowView implements WindowView {
         myScene.getStylesheets().add(getClass().getResource(AppResources.APP_CSS.getResource()).toExternalForm());
     }
     
-    private Node makeToolbar () {
-    	Toolbar toolbar = new Toolbar(myLanguage);
-		return toolbar.getToolbar();
-    }
-    
-    private Node makeHistory() {
-        myHistory = new History(null);
-        return myHistory.getHistory();
-    }
-    
-    private Node makeTurtleDisplay() {
-        myTurtleDisplay = new TurtleDisplay(null);
-        return myTurtleDisplay.getStackPane();
-    }
-
-    private Node makeInputField() {
-        myInputField = new InputField(myLanguage);
-        return myInputField.getInputField();
-    }
-    
-    private ResourceBundle initResourceBundle(String language){
-        return ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
+    public History getHistory(){
+    	return myHistory;
     }
     
     public Scene getScene () {
@@ -76,6 +61,34 @@ public class SlogoWindowView implements WindowView {
     
     public static Double getAppHeight(){
     	return myAppHeight;
+    }
+    
+    public void setHistoryBinding(ListChangeListener bind){
+    	myHistory.setBinding(bind); 
+    }
+    
+    private Node makeToolbar () {
+    	Toolbar toolbar = new Toolbar(myLanguage);
+		return toolbar.getToolbar();
+    }
+    
+    private Node makeHistory() {
+        myHistory = new History();
+        return myHistory.getHistory();
+    }
+    
+    private Node makeTurtleDisplay() {
+        myTurtleDisplay = new TurtleDisplay(null);
+        return myTurtleDisplay.getStackPane();
+    }
+
+    private Node makeInputField() {
+        myInputField = new InputField(myLanguage);
+        return myInputField.getInputField();
+    }
+    
+    private ResourceBundle initResourceBundle(String language){
+        return ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
     }
     
 }

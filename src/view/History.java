@@ -1,5 +1,8 @@
 package view;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
@@ -10,13 +13,33 @@ import javafx.scene.control.TextArea;
  */
 public class History extends TextArea {
     
-    TextArea myTextArea;
-    EventHandler<ActionEvent> myEvent;
+    private TextArea myTextArea;
+    private ListChangeListener myEventHandler;
+    private ObservableList<String>myObservableList;
     
-    public History (EventHandler<ActionEvent> event) {
+    
+    public History () {
         myTextArea = new TextArea();
-        myEvent = event;
         myTextArea.setEditable(false);
+        myObservableList = FXCollections.observableArrayList();
+       
+    }
+    
+    public void setBinding(ListChangeListener bind){
+    	myEventHandler = bind; 
+    	myObservableList.addListener(myEventHandler); 
+    }
+    
+    public String getRecentCommand(){
+    	return myObservableList.get(myObservableList.size()-1);
+    }
+    
+    public ObservableList<String> getAllCommands(){
+    	return myObservableList; 
+    }
+    
+    public TextArea getTextArea(){
+    	return myTextArea; 
     }
     
     public TextArea getHistory() {
@@ -25,5 +48,6 @@ public class History extends TextArea {
     
     public void addHistory(String input) {
         myTextArea.appendText(input + "\n");
+        myObservableList.add(input);
     }
 }
