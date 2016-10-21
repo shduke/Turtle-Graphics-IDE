@@ -5,7 +5,13 @@ public enum AppResources {
     APP_WIDTH(1200),
     APP_HEIGHT(650),
     APP_PADDING(25),
-    APP_CSS("style.css");
+    APP_CSS("style.css"),
+    
+    CANVAS_WIDTH(700),
+    CANVAS_HEIGHT(575),
+    
+    TURTLE_WIDTH(50),
+    TURTLE_HEIGHT(50);
 
 
     private double resourceDouble;

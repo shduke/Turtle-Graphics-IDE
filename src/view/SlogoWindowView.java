@@ -1,6 +1,10 @@
 package view;
 
 import java.util.ResourceBundle;
+
+import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -12,8 +16,7 @@ import view.InputField;
  * @author John Martin
  *
  */
-public class SlogoView {
-    public static final String DEFAULT_RESOURCE_PACKAGE = "resources.languages/";
+public class SlogoWindowView implements WindowView {
     private static final double myAppWidth = AppResources.APP_WIDTH.getDoubleResource();
 	private static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();;
     
@@ -22,9 +25,12 @@ public class SlogoView {
     private ResourceBundle myCommands;
     private InputField myInputField;
     protected static History myHistory;
-    private TurtleDisplay myTurtleDisplay;
     
-    public SlogoView(String language){
+    //TODO: make turtledisplay private
+    public static TurtleDisplay myTurtleDisplay;
+
+    
+    public SlogoWindowView(String language){
         myLanguage = language;
         myCommands = initResourceBundle(language);
         BorderPane root = new BorderPane();
@@ -37,13 +43,37 @@ public class SlogoView {
         myScene.getStylesheets().add(getClass().getResource(AppResources.APP_CSS.getResource()).toExternalForm());
     }
     
+    public History getHistory(){
+    	return myHistory;
+    }
+    
+    public Scene getScene () {
+        return myScene;
+    }
+    
+    public TurtleDisplay getTurtleDisplay(){
+    	return myTurtleDisplay;
+    }
+    
+    public static Double getAppWidth(){
+    	return myAppWidth;
+    }
+    
+    public static Double getAppHeight(){
+    	return myAppHeight;
+    }
+    
+    public void setHistoryBinding(ListChangeListener bind){
+    	myHistory.setBinding(bind); 
+    }
+    
     private Node makeToolbar () {
-        Label label = new Label("Toolbar");
-        return label;
+    	Toolbar toolbar = new Toolbar(myLanguage);
+		return toolbar.getToolbar();
     }
     
     private Node makeHistory() {
-        myHistory = new History(null);
+        myHistory = new History();
         return myHistory.getHistory();
     }
     
@@ -59,18 +89,6 @@ public class SlogoView {
     
     private ResourceBundle initResourceBundle(String language){
         return ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
-    }
-    
-    public Scene getScene () {
-        return myScene;
-    }
-    
-    public static Double getAppWidth(){
-    	return myAppWidth;
-    }
-    
-    public static Double getAppHeight(){
-    	return myAppHeight;
     }
     
 }

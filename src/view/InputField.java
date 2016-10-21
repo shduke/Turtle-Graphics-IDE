@@ -11,27 +11,29 @@ import javafx.scene.layout.HBox;
  */
 public class InputField extends HorizontalGUIObject {
     
-    private TextField myInputField;
+    static TextField myTextField;
     private EventHandler<ActionEvent> myEnterHandler;
     
     public InputField(String language) {
         super(language);
         myEnterHandler = new EnterEvent();
-        myInputField = makeInputField((int) (SlogoView.getAppWidth() * 0.075), myEnterHandler);
+        myTextField = makeInputField((int) (SlogoWindowView.getAppWidth() * 0.075), myEnterHandler);
     }
     
     private class EnterEvent implements EventHandler<ActionEvent> {
         @Override
         public void handle (ActionEvent event) {
-            String input = myInputField.getText();
-            SlogoView.myHistory.addHistory(input);
-            myInputField.clear();
+            String input = myTextField.getText();
+            SlogoWindowView.myHistory.addHistory(input);
+            // TODO: Delete following line, just a test line
+            SlogoWindowView.myTurtleDisplay.advanceTurtle(50, 50);
+            myTextField.clear();
         }
     }
 
     protected HBox getInputField() {
         HBox result = new HBox();
-        result.getChildren().add(myInputField);
+        result.getChildren().add(myTextField);
         result.getChildren().add(makeButton("EnterCommand", myEnterHandler));
         return result;
     }
