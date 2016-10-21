@@ -18,10 +18,10 @@ public class SlogoView {
 	private static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();;
     
     protected String myLanguage;
+    protected static History myHistory;
     private Scene myScene;
     private ResourceBundle myCommands;
     private InputField myInputField;
-    protected static History myHistory;
     private TurtleDisplay myTurtleDisplay;
     
     public SlogoView(String language){
