@@ -10,8 +10,9 @@ public class Forward extends CursorCommand {
     }
 
     @Override
-    public void execute() {
-        
+    public double execute() {
+        //getCursor().setCoordinate(getCursor().getCoordinate().translate(10, 10));
+        return 0;
     }
     
 }
