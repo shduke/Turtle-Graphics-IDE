@@ -10,20 +10,20 @@ import javafx.scene.control.TextArea;
  */
 public class History extends TextArea {
     
-    TextArea myHistory;
+    TextArea myTextArea;
     EventHandler<ActionEvent> myEvent;
     
     public History (EventHandler<ActionEvent> event) {
-        myHistory = new TextArea();
+        myTextArea = new TextArea();
         myEvent = event;
-        myHistory.setEditable(false);
+        myTextArea.setEditable(false);
     }
     
     public TextArea getHistory() {
-        return myHistory;
+        return myTextArea;
     }
     
     public void addHistory(String input) {
-        myHistory.appendText(input + "\n");
+        myTextArea.appendText(input + "\n");
     }
 }

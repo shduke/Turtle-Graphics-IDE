@@ -16,7 +16,7 @@ public abstract class HorizontalGUIObject extends HBox {
     private ResourceBundle myResources;
     
     public HorizontalGUIObject(String language) {
-        myResources = ResourceBundle.getBundle(SlogoView.DEFAULT_RESOURCE_PACKAGE + language);
+        myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
         
     }
     

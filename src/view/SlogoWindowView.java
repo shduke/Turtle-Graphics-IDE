@@ -12,8 +12,7 @@ import view.InputField;
  * @author John Martin
  *
  */
-public class SlogoView {
-    public static final String DEFAULT_RESOURCE_PACKAGE = "resources.languages/";
+public class SlogoWindowView implements WindowView {
     private static final double myAppWidth = AppResources.APP_WIDTH.getDoubleResource();
 	private static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();;
     
@@ -26,7 +25,7 @@ public class SlogoView {
     //TODO: make turtledisplay private
     public static TurtleDisplay myTurtleDisplay;
     
-    public SlogoView(String language){
+    public SlogoWindowView(String language){
         myLanguage = language;
         myCommands = initResourceBundle(language);
         BorderPane root = new BorderPane();
@@ -40,8 +39,8 @@ public class SlogoView {
     }
     
     private Node makeToolbar () {
-        Label label = new Label("Toolbar");
-        return label;
+    	Toolbar toolbar = new Toolbar(myLanguage);
+		return toolbar.getToolbar();
     }
     
     private Node makeHistory() {
