@@ -5,25 +5,26 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
 
 /**
- * @author Noel Moon
+ * @author Noel Moon (nm142)
  * @author John Martin
+ *
  */
 public class History extends TextArea {
     
-    TextArea myHistory;
-    EventHandler<ActionEvent> myEvent;
+	TextArea myTextArea;
+	EventHandler<ActionEvent> myEvent;
     
-    public History (EventHandler<ActionEvent> event) {
-        myHistory = new TextArea();
-        myEvent = event;
-        myHistory.setEditable(false);
-    }
+	public History (EventHandler<ActionEvent> event) {
+		myTextArea = new TextArea();
+		myEvent = event;
+		myTextArea.setEditable(false);
+	}
     
-    public TextArea getHistory() {
-        return myHistory;
-    }
+	public TextArea getHistory() {
+		return myTextArea;
+	}
     
-    public void addHistory(String input) {
-        myHistory.appendText(input + "\n");
-    }
+	public void addHistory(String input) {
+		myTextArea.appendText(input + "\n");
+	}
 }
