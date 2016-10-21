@@ -40,8 +40,8 @@ public class SlogoView {
     }
     
     private Node makeToolbar () {
-    	Toolbar toolbar = new Toolbar(myLanguage);
-		return toolbar.getToolbar();
+        Label label = new Label("Toolbar");
+        return label;
     }
     
     private Node makeHistory() {
