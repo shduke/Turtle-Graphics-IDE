@@ -16,4 +16,7 @@ public class DeclarationCommand extends AbstractCommand {
         return 0;
     }
 
+    protected AbstractCommand getCommand(String commandKey) {
+        return myCommandMap.get(commandKey);
+    }
 }

@@ -4,10 +4,12 @@ import java.util.Queue;
 
 public class Variable extends AbstractCommand{
     Queue<AbstractCommand> myCommand;
+    Queue<AbstractCommand> myParameters;
     String myVariableName;
     
-    Variable(String variableName, Queue<Variable> parameters, Queue<AbstractCommand> command) {
+    Variable(VariableName variableName, Queue<VariableName> parameters, Queue<AbstractCommand> command) {
         myCommand = command;
+        myVariableName = variableName.toString();
     }
     
     @Override
