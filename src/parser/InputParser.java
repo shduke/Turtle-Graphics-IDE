@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 public class InputParser {
 	 private List<Entry<String, Pattern>> mySymbols;
 	 
-	 
      public InputParser () {
          mySymbols = new ArrayList<>();
          addPatterns("expressions");//hardcoded probably need to change

@@ -1,9 +1,9 @@
 package main;
 
-import controller.AnimationController;
+import controller.SlogoController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.SlogoView;
+import view.SlogoWindowView;
 
 public class Main extends Application {
 
@@ -14,11 +14,11 @@ public class Main extends Application {
 	}
 
 	public void start(Stage stage) {
-		SlogoView display = new SlogoView("English");
+		SlogoWindowView display = new SlogoWindowView("English");
 		stage.setTitle(TITLE);
 		stage.setScene(display.getScene());
 		stage.show();
-		AnimationController slogo = new AnimationController(display);
+		SlogoController slogo = new SlogoController(display);
 	}
 
 }
