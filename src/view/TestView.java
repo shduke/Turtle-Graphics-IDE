@@ -12,7 +12,7 @@ public class TestView extends Application {
     public static final String TITLE = "SLogo";
     
     public void start (Stage stage) {
-        SlogoWindowView display = new SlogoWindowView("English");
+        SlogoWindowView display = new SlogoWindowView("Russian");
         stage.setTitle(TITLE);
         stage.setScene(display.getScene());
         stage.show();
