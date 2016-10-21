@@ -8,12 +8,14 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import view.AppResources;
+
 public class InputParser {
 	 private List<Entry<String, Pattern>> mySymbols;
 	 
      public InputParser () {
          mySymbols = new ArrayList<>();
-         addPatterns("expressions");//hardcoded probably need to change
+         addPatterns(AppResources.PATTERNS_STRING.getResource());//hardcoded probably need to change
      }
  
      // adds the given resource file to this language's recognized types
@@ -31,7 +33,7 @@ public class InputParser {
  
      // returns the language's type associated with the given text if one exists 
      public String getSymbol (String text) {
-         final String ERROR = "NO MATCH";
+         final String ERROR = AppResources.ERROR_STRING.getResource();
          for (Entry<String, Pattern> e : mySymbols) {
              if (match(text, e.getValue())) {
                  return e.getKey();
