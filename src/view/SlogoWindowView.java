@@ -26,7 +26,7 @@ public class SlogoWindowView implements WindowView {
     private InputField myInputField;
     protected static History myHistory;
     
-    //TODO: make turtledisplay private
+    //TODO: make turtledisplay private, nonStatic
     public static TurtleDisplay myTurtleDisplay;
 
     
