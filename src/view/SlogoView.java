@@ -22,7 +22,9 @@ public class SlogoView {
     private ResourceBundle myCommands;
     private InputField myInputField;
     protected static History myHistory;
-    private TurtleDisplay myTurtleDisplay;
+    
+    //TODO: make turtledisplay private
+    public static TurtleDisplay myTurtleDisplay;
     
     public SlogoView(String language){
         myLanguage = language;
@@ -63,6 +65,10 @@ public class SlogoView {
     
     public Scene getScene () {
         return myScene;
+    }
+    
+    public TurtleDisplay getTurtleDisplay(){
+    	return myTurtleDisplay;
     }
     
     public static Double getAppWidth(){
