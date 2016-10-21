@@ -5,8 +5,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
 
 /**
- * @author noelmoon
- *
+ * @author Noel Moon
+ * @author John Martin
  */
 public class History extends TextArea {
     

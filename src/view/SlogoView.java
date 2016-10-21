@@ -1,43 +1,40 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Paint;
 import view.InputField;
 
 /**
  * @author Noel Moon
+ * @author John Martin
  *
  */
 public class SlogoView {
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources.languages/";
-    public static final Dimension DEFAULT_SIZE = new Dimension(1200, 650);
+    private static final double myAppWidth = AppResources.APP_WIDTH.getDoubleResource();
+	private static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();;
     
     protected String myLanguage;
     private Scene myScene;
-    private ResourceBundle myResources;
+    private ResourceBundle myCommands;
     private InputField myInputField;
     protected static History myHistory;
+    private TurtleDisplay myTurtleDisplay;
     
     public SlogoView(String language){
-        this.myLanguage = language;
-        this.myResources = initResourceBundle(language);
+        myLanguage = language;
+        myCommands = initResourceBundle(language);
         BorderPane root = new BorderPane();
         root.setTop(makeToolbar());
         root.setRight(makeTurtleDisplay());
         root.setLeft(makeHistory());
         root.setBottom(makeInputField());
-        myScene = new Scene(root, DEFAULT_SIZE.getWidth(), DEFAULT_SIZE.getHeight());
+        root.setId("root");
+        myScene = new Scene(root, myAppWidth, myAppHeight);
+        myScene.getStylesheets().add(getClass().getResource(AppResources.APP_CSS.getResource()).toExternalForm());
     }
     
     private Node makeToolbar () {
@@ -51,11 +48,8 @@ public class SlogoView {
     }
     
     private Node makeTurtleDisplay() {
-        StackPane sp = new StackPane();
-        Canvas canvas = new Canvas(800, 400);
-        sp.setStyle("-fx-background-color: linen");
-        sp.getChildren().add(canvas);
-        return sp;
+        myTurtleDisplay = new TurtleDisplay(null);
+        return myTurtleDisplay.getStackPane();
     }
 
     private Node makeInputField() {
@@ -69,6 +63,14 @@ public class SlogoView {
     
     public Scene getScene () {
         return myScene;
+    }
+    
+    public static Double getAppWidth(){
+    	return myAppWidth;
+    }
+    
+    public static Double getAppHeight(){
+    	return myAppHeight;
     }
     
 }
