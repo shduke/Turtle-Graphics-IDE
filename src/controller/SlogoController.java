@@ -13,7 +13,7 @@ public class SlogoController {
 	public SlogoController(SlogoWindowView view){
 		myDisplay = view; 
 		myLastCommand = "";
-		myParser = new InputParser(); 
+		myParser = new InputParser();
 		bindUserInput(); 
 	}
 	
@@ -21,10 +21,11 @@ public class SlogoController {
 		ListChangeListener bind = new ListChangeListener(){
 			@Override
 			public void onChanged(ListChangeListener.Change c) {
-				// TODO Auto-generated method stub
-				myLastCommand = SlogoController.this.myDisplay.getHistory().getRecentCommand();
+				// TODO Link fully to backend and command tree
+				myLastCommand = myDisplay.getHistory().getRecentCommand();
+				String lastCommandSymbol = myParser.getSymbol(myLastCommand);
 				System.out.println(myLastCommand);
-				System.out.println(myParser.getSymbol(myLastCommand));
+				System.out.println(lastCommandSymbol);
 			};
 		};
 		myDisplay.setHistoryBinding(bind);

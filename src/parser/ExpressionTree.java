@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ExpressionTree {
 
-	private List<CommandNode> myTreeRoot; 
+	//private List<CommandNode> myTreeRoot; 
 	
 	
 	
