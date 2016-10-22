@@ -1,14 +1,18 @@
 package command;
 
+import java.util.List;
+import java.util.Map;
+
 public class VariableName extends AbstractCommand {
     String myVariableName;
 
-    VariableName (String variableName) {
+    VariableName (Map<String, Variable> variableMap, List<AbstractCommand> inputs, String variableName) {
+        super(variableMap, inputs);
         myVariableName = variableName;
     }
 
     @Override
-    double execute () {
+    public double execute () {
         // TODO Auto-generated method stub
         return 0;
     }
