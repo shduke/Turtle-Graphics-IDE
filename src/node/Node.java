@@ -18,5 +18,12 @@ public class Node {
 		return myValue; 
 	}
 	
+	@Override 
+	public String toString(){
+		String toReturn = "";
+		toReturn +="{"+myType+","+myValue+"}";
+		return toReturn; 
+	}
+	
 	
 }

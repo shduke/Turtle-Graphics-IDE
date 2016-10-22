@@ -27,7 +27,7 @@ public class SlogoController {
 				myLastCommand = myDisplay.getHistory().getRecentCommand();
 				String lastCommandSymbol = myParser.getSymbol(myLastCommand);
 				myExpressionTree = myParser.parse(myLastCommand);
-			
+				System.out.println(myExpressionTree);
 			};
 		};
 		myDisplay.setHistoryBinding(bind);
