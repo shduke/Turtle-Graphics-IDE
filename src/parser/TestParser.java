@@ -8,6 +8,8 @@ public class TestParser {
 		System.out.println(test.getSymbol("what"));
 		System.out.println(test.getSymbol("+"));
 		System.out.println(test.getSymbol("2"));
+		System.out.println(test.getSymbol("["));
+		System.out.println(test.getSymbol("]"));
 	}
 	
 	

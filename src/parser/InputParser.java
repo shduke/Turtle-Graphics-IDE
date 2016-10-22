@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import node.Node;
 import view.AppResources;
 
 public class InputParser {
@@ -29,6 +30,35 @@ public class InputParser {
                             // THIS IS THE IMPORTANT LINE
                             Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
          }
+     }
+     
+     public ExpressionTree parse(String input){
+    	 String[]split = input.split("\\s+");
+    	 ExpressionTree construct = new ExpressionTree(); 
+    	 for(int i=0;i<split.length;i++){
+    		 System.out.println(split[i]);
+    	 }
+    	 for(int i=0;i<split.length;i++){
+    		 if(getSymbol(split[i]).equals("COMMAND")){
+    			 construct.add(new Node(split[i],"-1"));
+    		 }
+    		 else if(getSymbol(split[i]).equals("VARIABLE")){
+    			 construct.add(new Node(split[i],"-1"));
+    		 }
+    		 else if(getSymbol(split[i]).equals("OPERATIONS")){
+    			 construct.add(new Node(split[i],"-1"));
+    		 }
+    		 else if(getSymbol(split[i]).equals("RIGHTBRACKET")){
+    			 construct.add(new Node("MULTILINE","-1"));
+    		 }
+    		 else if(getSymbol(split[i]).equals("LEFTBRACKET")){
+    			 construct.add(new Node("END_MULTILINE","-1"));
+    		 }
+    		 else{
+    			 construct.add(new Node("CONSTANT",split[i]));
+    		 }
+    	 }
+    	 return construct; 
      }
  
      // returns the language's type associated with the given text if one exists 
