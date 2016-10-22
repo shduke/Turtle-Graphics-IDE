@@ -33,8 +33,11 @@ public class InputParser {
      }
      
      public ExpressionTree parse(String input){
-    	 String[]split = input.split("\\s+|\\[|\\]");
+    	 String[]split = input.split("\\s+");
     	 ExpressionTree construct = new ExpressionTree(); 
+    	 for(int i=0;i<split.length;i++){
+    		 System.out.println(split[i]);
+    	 }
     	 for(int i=0;i<split.length;i++){
     		 if(getSymbol(split[i]).equals("COMMAND")){
     			 construct.add(new Node(split[i],"-1"));
