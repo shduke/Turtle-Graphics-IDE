@@ -35,7 +35,7 @@ public class Toolbar extends HorizontalGUIObject {
 	private class ResetEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			SlogoWindowView.myHistory.myTextArea.clear();
+			SlogoWindowView.myHistory.getTextArea().clear();
 			InputField.myTextField.clear();
 		}
 	}

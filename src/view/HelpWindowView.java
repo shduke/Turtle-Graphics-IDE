@@ -26,9 +26,9 @@ public class HelpWindowView implements WindowView {
 	private Node makePageDisplay() {
 		WebView browser = new WebView();
 		WebEngine webEngine = browser.getEngine();
-		webEngine.load("http://www.cs.duke.edu/courses/compsci308/fall16/assign/03_slogo/commands.php");
+		webEngine.load(AppResources.SLOGO_COMMANDS_URL.getResource());
         
-		ErrorMessage error = new ErrorMessage("Error: ");
+		ErrorMessage error = new ErrorMessage(AppResources.DEFAULT_ERROR_MESSAGE.getResource());
 		error.getScene();
 		
 		return browser;
