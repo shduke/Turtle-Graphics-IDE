@@ -53,7 +53,7 @@ public class Coordinate {
      * @return
      */
     public Coordinate translate (double distance, double angle) {
-        return new Coordinate(myX + Math.cos(angle) * distance, myY + Math.sin(angle));
+        return new Coordinate(myX + Math.cos(Math.toRadians(angle)) * distance, myY + Math.sin(Math.toRadians(angle)) * distance);
     }
 
     @Override
