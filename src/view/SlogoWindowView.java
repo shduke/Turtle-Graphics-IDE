@@ -35,7 +35,8 @@ public class SlogoWindowView implements WindowView {
         myCommands = initResourceBundle(language);
         BorderPane root = new BorderPane();
         root.setTop(makeToolbar());
-        root.setRight(makeTurtleDisplay());
+        root.setRight(makeVarDisplay());
+        root.setCenter(makeTurtleDisplay());
         root.setLeft(makeHistory());
         root.setBottom(makeInputField());
         root.setId("root");
@@ -80,6 +81,17 @@ public class SlogoWindowView implements WindowView {
     private Node makeTurtleDisplay() {
         myTurtleDisplay = new TurtleDisplay(null);
         return myTurtleDisplay.getStackPane();
+    }
+    
+    private Node makeVarDisplay() {
+    	VariablesAndCommands vc = new VariablesAndCommands();
+    	vc.addVariable("x", "1");
+    	vc.addVariable("x", "2");
+    	vc.addVariable("y", "fheio");
+    	vc.addVariable("x", "sfioj");
+    	vc.addCommand("command5");
+    	vc.addCommand("command3");
+    	return vc.getTextArea();
     }
 
     private Node makeInputField() {
