@@ -3,8 +3,8 @@ package cursor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cursor {
-    private List<CursorCreatedItem> myCreatedItems; 
+public class Cursor implements Drawable{
+    private List<CreatedItem> myCreatedItems; //maybe create a drawableObject?
     private Coordinate myCoordinate;
     private double myOrientation;
     private Boolean myIsPenUp;
@@ -12,10 +12,10 @@ public class Cursor {
     private String myColor;
     //private String dog
     
-    public Cursor(Coordinate coordinate) {
-        myCreatedItems = new ArrayList<CursorCreatedItem>();
+    public Cursor() {
+        myCreatedItems = new ArrayList<CreatedItem>();
         myOrientation = 90;
-        setCoordinate(coordinate);
+        myCoordinate = new Coordinate(0,0);
         myIsPenUp = false;
         myIsVisible = true;
         myColor = "Black";
@@ -29,8 +29,23 @@ public class Cursor {
         return myOrientation;
     }
     
-    public void setCoordinate (Coordinate myCoordinate) {
-        this.myCoordinate = myCoordinate;
+    public void setCoordinate (Coordinate coordinate) {
+        createItem(coordinate);
+        myCoordinate = coordinate;
         System.out.println(myCoordinate);
     }
+    
+    
+    public void createItem(Coordinate nextCoordinate) {
+        if(!myIsPenUp){
+            myCreatedItems.add(new CreatedItem(myCoordinate, nextCoordinate));
+        }
+    }
+
+    @Override
+    public List<Coordinate> getCreateItems () {
+        List<Coordinate> drawCoordinates = new ArrayList<Coordinate>();
+        return drawCoordinates;
+    }
+    
 }
