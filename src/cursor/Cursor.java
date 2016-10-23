@@ -2,6 +2,7 @@ package cursor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Cursor implements Drawable{
     private List<CreatedItem> myCreatedItems; //maybe create a drawableObject?
@@ -40,6 +41,10 @@ public class Cursor implements Drawable{
         if(!myIsPenUp){
             myCreatedItems.add(new CreatedItem(myCoordinate, nextCoordinate));
         }
+    }
+    
+    public void updateCoordinate(Consumer<Coordinate> func) {
+        func.accept(myCoordinate);
     }
 
     @Override

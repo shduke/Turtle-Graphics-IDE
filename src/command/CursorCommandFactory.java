@@ -32,7 +32,8 @@ public class CursorCommandFactory extends CommandFactory {
     protected List<Object> getClassCommandArgument (int numberOfParameters, Node node) {
         List<Object> classCommandArguments = new ArrayList<Object>();
         for (int i = 0; i < numberOfParameters; i++) {
-            AbstractCommand commandParameter = getNextCommandNode(node).createCommand();
+            node = getNextCommandNode(node);
+            AbstractCommand commandParameter = node.createCommand();
             classCommandArguments.add(commandParameter);
         }
         return classCommandArguments;
