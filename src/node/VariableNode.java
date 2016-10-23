@@ -12,4 +12,8 @@ public class VariableNode extends Node {
 		return myValue; 
 	}
 	
+	public String toString(){
+		return "VariableNode" +"{"+this.getType()+"}";
+	}
+	
 }

@@ -2,14 +2,12 @@ package node;
 
 public class NameNode extends Node {
 
-	private String myName;
 	
-	public NameNode(String type, String name){
+	public NameNode(String type){
 		super(type);
-		myName = name; 
 	}
 	
-	public String getName(){
-		return myName; 
+	public String toString(){
+		return "NameNode" +"{"+this.getType()+"}";
 	}
 }

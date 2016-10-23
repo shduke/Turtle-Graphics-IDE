@@ -7,6 +7,7 @@ public abstract class Node {
 	
 	public Node(String type){
 		myType = type; 
+		myNext = null; 
 	}
 	
 	public String getType(){
@@ -15,6 +16,10 @@ public abstract class Node {
 	
 	public void setNext(Node next){
 		myNext = next; 
+	}
+	
+	public String toString(){
+		return "Node" +"{"+this.getType()+"}";
 	}
 	
 }

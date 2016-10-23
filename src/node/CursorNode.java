@@ -15,4 +15,8 @@ public class CursorNode extends Node {
 		return myTurtle; 
 	}
 	
+	public String toString(){
+		return "CursorNode" +"{"+this.getType()+"}";
+	}
+	
 }

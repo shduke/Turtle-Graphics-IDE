@@ -6,4 +6,7 @@ public class OperationNode extends Node {
 		super(type);
 	}
 	
+	public String toString(){
+		return "OperationNode" +"{"+this.getType()+"}";
+	}
 }

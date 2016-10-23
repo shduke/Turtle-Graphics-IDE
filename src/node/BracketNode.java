@@ -1,16 +1,12 @@
 package node;
 
 public class BracketNode extends Node{
-	public String myBracket;
 	
-	public BracketNode(String type, String bracket){
+	public BracketNode(String type){
 		super(type);
-		myBracket = bracket; 
 	}
 	
-	public String getValue(){
-		return myBracket;  
+	public String toString(){
+		return "BracketNode" +"{"+this.getType()+"}";
 	}
-
-
 }

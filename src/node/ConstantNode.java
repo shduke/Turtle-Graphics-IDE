@@ -1,15 +1,13 @@
 package node;
 
 public class ConstantNode extends Node {
-	private int myValue;
 	
-	public ConstantNode(String type, int value){
+	public ConstantNode(String type){
 		super(type);
-		myValue = value; 
 	}
 	
-	public int getValue(){
-		return myValue; 
+	public String toString(){
+		return "ConstantNode" +"{"+this.getType()+"}";
 	}
-	
+
 }
