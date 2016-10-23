@@ -35,15 +35,16 @@ public class Toolbar extends HorizontalGUIObject {
 	private class ResetEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			SlogoWindowView.myHistory.getTextArea().clear();
+			SlogoWindowView.myHistory.clear();
 			InputField.myTextField.clear();
+			SlogoWindowView.myVC.clear();
 		}
 	}
 	
 	private class HelpEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			HelpWindowView display = new HelpWindowView();
+			HelpWindow display = new HelpWindow();
 			Stage helpStage = new Stage();
 			helpStage.setTitle(myResources.getString("HelpButton"));
 			helpStage.setScene(display.getScene());

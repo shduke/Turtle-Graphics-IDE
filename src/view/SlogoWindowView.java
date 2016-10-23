@@ -24,7 +24,8 @@ public class SlogoWindowView implements WindowView {
     private Scene myScene;
     private ResourceBundle myCommands;
     private InputField myInputField;
-    protected static History myHistory;
+    static VariablesAndCommands myVC;
+    static History myHistory;
     
     //TODO: make turtledisplay private, nonStatic
     public static TurtleDisplay myTurtleDisplay;
@@ -35,7 +36,8 @@ public class SlogoWindowView implements WindowView {
         myCommands = initResourceBundle(language);
         BorderPane root = new BorderPane();
         root.setTop(makeToolbar());
-        root.setRight(makeTurtleDisplay());
+        root.setRight(makeVarDisplay());
+        root.setCenter(makeTurtleDisplay());
         root.setLeft(makeHistory());
         root.setBottom(makeInputField());
         root.setId("root");
@@ -45,6 +47,10 @@ public class SlogoWindowView implements WindowView {
     
     public History getHistory(){
     	return myHistory;
+    }
+    
+    public void clearHistory(){
+    	myHistory.clear();
     }
     
     public Scene getScene () {
@@ -80,6 +86,17 @@ public class SlogoWindowView implements WindowView {
     private Node makeTurtleDisplay() {
         myTurtleDisplay = new TurtleDisplay(null);
         return myTurtleDisplay.getStackPane();
+    }
+    
+    private Node makeVarDisplay() {
+    	myVC = new VariablesAndCommands();
+    	myVC.addVariable("x", "1");
+    	myVC.addVariable("x", "2");
+    	myVC.addVariable("y", "fheio");
+    	myVC.addVariable("x", "sfioj");
+    	myVC.addCommand("command5");
+    	myVC.addCommand("command3");
+    	return myVC.getTextArea();
     }
 
     private Node makeInputField() {

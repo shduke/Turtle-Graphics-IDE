@@ -11,13 +11,13 @@ import javafx.scene.web.WebView;
  * @author Noel Moon (nm142)
  *
  */
-public class HelpWindowView implements WindowView {
+public class HelpWindow {
 
 	public static final Dimension DEFAULT_SIZE = new Dimension(1000, 700);
 	
 	private Scene myScene;
 	
-	public HelpWindowView() {
+	public HelpWindow() {
 		BorderPane root = new BorderPane();
 		root.setCenter(makePageDisplay());
 		myScene = new Scene(root, DEFAULT_SIZE.getWidth(), DEFAULT_SIZE.getHeight());
@@ -34,7 +34,6 @@ public class HelpWindowView implements WindowView {
 		return browser;
 	}
 	
-	@Override
 	public Scene getScene() {
 		return myScene;
 	}
