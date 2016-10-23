@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import command.utility.Constant;
 import command.utility.MultiLine;
 import command.utility.Variable;
@@ -19,6 +20,7 @@ import node.OperationNode;
 
 
 public abstract class CommandFactory {
+    private ResourceBundle myCommandResources;
     public static final Map<String, Variable> myVariableMap = new HashMap<String, Variable>(); /// TODO:
                                                                                                /// Refactor
                                                                                                /// this,
@@ -114,7 +116,7 @@ public abstract class CommandFactory {
      */
 
     CommandFactory () {
-
+        myCommandResources = ResourceBundle.getBundle("expressions");
     }
 
     protected Node getNextCommandNode (Node commandNode) {
@@ -124,7 +126,7 @@ public abstract class CommandFactory {
 
     public AbstractCommand createCommand (Node node) {
         try {
-            Class commandClass = Class.forName(node.getType());
+            Class commandClass = Class.forName(myCommandResources.getString(node.getType().toUpperCase()));
 
             Class[] classParams = getClassParameters();
             Constructor commandConstructor = commandClass.getDeclaredConstructor(classParams);
@@ -217,22 +219,22 @@ public abstract class CommandFactory {
 
     public static void main (String[] args) {
 
-        // Node node1 = new CursorNode("command.cursor.Forward");
-        // Node node2 = new ConstantNode("command.utility.Constant");
-        // node1.setNext(node2);
-        // AbstractCommand command = node1.createCommand();
-        // command.execute();
+//         Node node1 = new CursorNode("command.cursor.Forward");
+//         Node node2 = new ConstantNode("command.utility.Constant");
+//         node1.setNext(node2);
+//         AbstractCommand command = node1.createCommand();
+//         command.execute();
 
-         Cursor cursor = new Cursor();
-         Node node1 = new CursorNode("command.cursor.Forward", cursor);
-         Node node2 = new CursorNode("command.cursor.Forward", cursor);
-         node1.setNext(node2);
-         Node node3 = new CursorNode("command.cursor.Forward", cursor);
-         node2.setNext(node3);
-         Node node4 = new ConstantNode("command.utility.Constant", 10);
-         node3.setNext(node4);
-         AbstractCommand testCommand = node1.createCommand();
-         testCommand.execute();
+//         Cursor cursor = new Cursor();
+//         Node node1 = new CursorNode("command.cursor.Forward", cursor);
+//         Node node2 = new CursorNode("command.cursor.Forward", cursor);
+//         node1.setNext(node2);
+//         Node node3 = new CursorNode("command.cursor.Forward", cursor);
+//         node2.setNext(node3);
+//         Node node4 = new ConstantNode("command.utility.Constant", 10);
+//         node3.setNext(node4);
+//         AbstractCommand testCommand = node1.createCommand();
+//         testCommand.execute();
 
 //        Node node1 = new OperationNode("command.math.Sum");
 //        Node node2 = new ConstantNode("command.utility.Constant", 10);
