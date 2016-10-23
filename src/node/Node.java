@@ -1,5 +1,7 @@
 package node;
 
+import command.AbstractCommand;
+
 public abstract class Node {
 	
 	public Node myNext;
@@ -18,8 +20,14 @@ public abstract class Node {
 		myNext = next; 
 	}
 	
+	public Node getNext() {
+	    return myNext;
+	}
+	
 	public String toString(){
 		return "Node" +"{"+this.getType()+"}";
 	}
+	
+	public abstract AbstractCommand createCommand();
 	
 }
