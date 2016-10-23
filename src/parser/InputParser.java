@@ -8,15 +8,27 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import node.BracketNode;
+import node.ConstantNode;
+import node.CursorNode;
+import node.NameNode;
 import node.Node;
+import node.OperationNode;
+import node.VariableNode;
+import turtle.Turtle;
 import view.AppResources;
 
 public class InputParser {
 	 private List<Entry<String, Pattern>> mySymbols;
+	 private List<String> myMethodNames; 
+	 private ResourceBundle myCursorSyntax, myOperationSyntax;
 	 
      public InputParser () {
          mySymbols = new ArrayList<>();
+         myMethodNames = new ArrayList<>(); 
          addPatterns(AppResources.PATTERNS_STRING.getResource());//hardcoded probably need to change
+         myCursorSyntax = ResourceBundle.getBundle("cursor");//hardcoded probably need to change
+         myOperationSyntax = ResourceBundle.getBundle("operations");//hardcoded probably need to change
      }
  
      // adds the given resource file to this language's recognized types
@@ -36,28 +48,32 @@ public class InputParser {
     	 String[]split = input.split("\\s+");
     	 ExpressionTree construct = new ExpressionTree(); 
     	 for(int i=0;i<split.length;i++){
-    		 System.out.println(split[i]);
-    	 }
-    	 for(int i=0;i<split.length;i++){
     		 if(getSymbol(split[i]).equals("COMMAND")){
-    			 construct.add(new Node(split[i],"-1"));
+    			 if(myCursorSyntax.containsKey(split[i])){
+    				 construct.add(new CursorNode(split[i],new Turtle()));
+    			 }
+    			 else if(myOperationSyntax.containsKey(split[i])){
+    				 construct.add(new OperationNode(split[i]));
+    			 }
+    			 else if(!myMethodNames.contains(split[i])){
+    				 construct.add(new NameNode(split[i]));
+    				 myMethodNames.add(split[i]);
+    			 }
+    			 else if(myMethodNames.contains(split[i])){
+    				 construct.add(new OperationNode(split[i]));
+    			 }
+    		 }
+    		 else if(getSymbol(split[i]).equals("RIGHTBRACKET")||getSymbol(split[i]).equals("LEFTBRACKET")){
+    			 construct.add(new BracketNode(split[i]));
+    		 }
+    		 else if(getSymbol(split[i]).equals("CONSTANT")){
+    			 construct.add(new ConstantNode(split[i]));
     		 }
     		 else if(getSymbol(split[i]).equals("VARIABLE")){
-    			 construct.add(new Node(split[i],"-1"));
-    		 }
-    		 else if(getSymbol(split[i]).equals("OPERATIONS")){
-    			 construct.add(new Node(split[i],"-1"));
-    		 }
-    		 else if(getSymbol(split[i]).equals("RIGHTBRACKET")){
-    			 construct.add(new Node("MULTILINE","-1"));
-    		 }
-    		 else if(getSymbol(split[i]).equals("LEFTBRACKET")){
-    			 construct.add(new Node("END_MULTILINE","-1"));
-    		 }
-    		 else{
-    			 construct.add(new Node("CONSTANT",split[i]));
+    			 construct.add(new VariableNode(split[i],null));   			
     		 }
     	 }
+    	 
     	 return construct; 
      }
  
