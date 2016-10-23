@@ -11,7 +11,7 @@ import javafx.scene.control.TextArea;
  * @author Noel Moon
  * @author John Martin
  */
-public class History extends TextArea {
+public class History {
     
     private TextArea myTextArea;
     private ListChangeListener myEventHandler;
@@ -29,6 +29,10 @@ public class History extends TextArea {
     public void setBinding(ListChangeListener bind){
     	myEventHandler = bind; 
     	myObservableList.addListener(myEventHandler); 
+    }
+    
+    public void clear() {
+    	myTextArea.clear();
     }
     
     public String getRecentCommand(){

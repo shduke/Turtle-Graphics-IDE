@@ -12,4 +12,10 @@ public interface WindowView {
 
 	public Scene getScene();
 	
+	public History getHistory();
+	
+	public void clearHistory();
+	
+	public TurtleDisplay getTurtleDisplay();
+	
 }
