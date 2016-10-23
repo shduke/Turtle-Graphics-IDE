@@ -2,10 +2,13 @@ package command.cursor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import command.AbstractCommand;
 import command.utility.Variable;
 import cursor.Cursor;
+import cursor.Coordinate;
 
+//TODO - use more lambdas
 public class Forward extends CursorCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
     
@@ -16,7 +19,7 @@ public class Forward extends CursorCommand {
 
     @Override
     public double execute() {
-        double distance = getInputs().get(0).execute();
+        double distance = getFirstCommand().execute();
         getCursor().setCoordinate(getCursor().getCoordinate().translate(distance, getCursor().getOrientation()));
         return distance;
     }

@@ -10,7 +10,7 @@ import cursor.Cursor;
 public abstract class CursorCommand extends AbstractCommand {
     Cursor myCursor;
 
-    CursorCommand (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
+    protected CursorCommand (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
         super(variableMap, inputs);
         myCursor = cursor;
     }
