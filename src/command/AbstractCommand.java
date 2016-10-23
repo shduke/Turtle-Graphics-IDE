@@ -2,12 +2,13 @@ package command;
 
 import java.util.List;
 import java.util.Map;
+import command.utility.Variable;
 
 public abstract class AbstractCommand {
     private Map<String, Variable> myVariableMap;
     private List<AbstractCommand> myInputs;
     
-    public AbstractCommand(Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
+    protected AbstractCommand(Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
         myVariableMap = variableMap;
         myInputs = inputs;
     }

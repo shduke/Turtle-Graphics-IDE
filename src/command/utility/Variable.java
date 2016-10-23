@@ -1,8 +1,9 @@
-package command;
+package command.utility;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import command.AbstractCommand;
 
 public class Variable extends AbstractCommand{
     Queue<AbstractCommand> myCommand;

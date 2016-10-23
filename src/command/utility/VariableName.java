@@ -1,7 +1,8 @@
-package command;
+package command.utility;
 
 import java.util.List;
 import java.util.Map;
+import command.AbstractCommand;
 
 public class VariableName extends AbstractCommand {
     String myVariableName;

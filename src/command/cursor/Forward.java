@@ -3,7 +3,7 @@ package command.cursor;
 import java.util.List;
 import java.util.Map;
 import command.AbstractCommand;
-import command.Variable;
+import command.utility.Variable;
 import cursor.Cursor;
 
 public class Forward extends CursorCommand {
