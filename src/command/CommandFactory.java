@@ -7,17 +7,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import command.CommandFactory.Node;
 import command.utility.Constant;
 import command.utility.MultiLine;
 import command.utility.Variable;
 import cursor.Coordinate;
 import cursor.Cursor;
+import node.ConstantNode;
+import node.CursorNode;
+import node.Node;
 
 
 public abstract class CommandFactory {
     public static final Map<String, Variable> myVariableMap = new HashMap<String, Variable>(); ///TODO: Refactor this, temporary just until we figure out the factory structure more (maybe create a headNode or an ExpressionFactory)
-    public static Cursor testCursor = new Cursor(new Coordinate(0,0));
+    /*public static Cursor testCursor = new Cursor(new Coordinate(0,0));
     /// Just for Testing
     public interface Node {
         AbstractCommand createCommand();
@@ -81,7 +83,7 @@ public abstract class CommandFactory {
         public String getCommandType () {
             return myCommandType;
         }
-    }
+    }*/
     
 
     CommandFactory () {
@@ -95,7 +97,7 @@ public abstract class CommandFactory {
 
     public AbstractCommand createCommand (Node node) {
         try {
-            Class commandClass = Class.forName(node.getCommandType());
+            Class commandClass = Class.forName(node.getType());
 
             Class[] classParams = getClassParameters();
             Constructor commandConstructor = commandClass.getDeclaredConstructor(classParams);
@@ -193,13 +195,13 @@ public abstract class CommandFactory {
 //        node1.setNext(node2);
 //        AbstractCommand command = node1.createCommand();
 //        command.execute();
-        
-        Node node1 = new CursorNode("command.cursor.Forward");
-        Node node2 = new CursorNode("command.cursor.Forward");
+        Cursor cursor = new Cursor();
+        Node node1 = new CursorNode("command.cursor.Forward", cursor);
+        Node node2 = new CursorNode("command.cursor.Forward", cursor);
         node1.setNext(node2);
-        Node node3 = new CursorNode("command.cursor.Forward");
+        Node node3 = new CursorNode("command.cursor.Forward", cursor);
         node2.setNext(node3);
-        Node node4 = new ConstantNode("command.utility.Constant");
+        Node node4 = new ConstantNode("command.utility.Constant", 10);
         node3.setNext(node4);
         AbstractCommand testCommand = node1.createCommand();
         testCommand.execute();

@@ -6,25 +6,21 @@ import command.utility.MultiLine;
 import cursor.Cursor;
 import node.Node;
 
-public class CursorCommandFactory extends CommandFactory {
-    private Cursor myCursor;
+public class OperationCommandFactory extends CommandFactory {
     
-    public CursorCommandFactory (Cursor cursor) {
+    public OperationCommandFactory () {
         super();
-        myCursor = cursor;
     }
 
     @Override
     protected List<Class> getClassSpecificParameters () {  //TODO - should these be stored as instance vars?
         List<Class> classSpecificParameters = new ArrayList<Class>();
-        classSpecificParameters.add(Cursor.class);
         return classSpecificParameters;
     }
 
     @Override
     protected List<Object> getClassSpecificArguments () {
         List<Object> classSpecificArguments = new ArrayList<Object>();
-        classSpecificArguments.add(myCursor);
         return classSpecificArguments;
     }
 
@@ -36,8 +32,7 @@ public class CursorCommandFactory extends CommandFactory {
             classCommandArguments.add(commandParameter);
         }
         return classCommandArguments;
-    }
-    
+    } 
     
     
 }
