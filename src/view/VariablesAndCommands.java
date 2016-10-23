@@ -26,6 +26,12 @@ public class VariablesAndCommands {
     	return myTextArea;
     }
     
+    public void clear() {
+    	myTextArea.clear();
+    	myVariables.clear();
+    	myCommands.clear();
+    }
+    
     private void updateTextArea(){
     	myTextArea.clear();
     	myTextArea.appendText("Variables\n\n");
