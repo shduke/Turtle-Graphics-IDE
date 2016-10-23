@@ -19,8 +19,8 @@ public abstract class AbstractCommand {
         return myExpression;
     }
     
-    protected List<AbstractCommand> getVariableMap () {
-        return myExpression;
+    protected Map<String, Variable> getVariableMap () {
+        return myVariableMap;
     }
     
     protected AbstractCommand getFirstCommand() {

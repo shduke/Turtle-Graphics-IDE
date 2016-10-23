@@ -55,6 +55,11 @@ public class Coordinate {
     public Coordinate translate (double distance, double angle) {
         return new Coordinate(myX + Math.cos(Math.toRadians(angle)) * distance, myY + Math.sin(Math.toRadians(angle)) * distance);
     }
+    
+    
+    public double calculateDistance(Coordinate coordinate) {
+        return Math.sqrt(Math.pow(coordinate.getX() - myX, 2) + Math.pow(coordinate.getY() - myY, 2));
+    }
 
     @Override
     public boolean equals (Object obj) {
