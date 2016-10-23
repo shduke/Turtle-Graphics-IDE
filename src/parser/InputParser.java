@@ -43,13 +43,13 @@ public class InputParser {
          }
      }
      
-     public ExpressionTree parse(String input){
+     public ExpressionTree parse(String input,Cursor cursor){
     	 String[]split = input.split("\\s+");
     	 ExpressionTree construct = new ExpressionTree(); 
     	 for(int i=0;i<split.length;i++){
     		 if(getSymbol(split[i]).equals("COMMAND")){
     			 if(myCursorSyntax.containsKey(split[i])){
-    				 construct.add(new CursorNode(split[i],new Cursor()));
+    				 construct.add(new CursorNode(split[i],cursor));
     			 }
     			 else if(myOperationSyntax.containsKey(split[i])){
     				 construct.add(new OperationNode(split[i]));
@@ -66,7 +66,7 @@ public class InputParser {
     			 construct.add(new BracketNode(split[i]));
     		 }
     		 else if(getSymbol(split[i]).equals("CONSTANT")){
-    			 construct.add(new ConstantNode(split[i]));
+    			 construct.add(new ConstantNode("constant",Double.parseDouble(split[i])));
     		 }
     		 else if(getSymbol(split[i]).equals("VARIABLE")){
     			 construct.add(new VariableNode(split[i],null));   			

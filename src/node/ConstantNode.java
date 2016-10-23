@@ -12,7 +12,7 @@ public class ConstantNode extends Node {
 	}
 	
 	public String toString(){
-		return "ConstantNode" +"{"+this.getType()+"}";
+		return "ConstantNode" +"{"+myValue+"}";
 	}
 
         @Override
