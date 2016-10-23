@@ -20,6 +20,7 @@ public class History extends TextArea {
     
     public History () {
         myTextArea = new TextArea();
+        myTextArea.setPrefWidth(300);
         myTextArea.setEditable(false);
         myObservableList = FXCollections.observableArrayList();
        
