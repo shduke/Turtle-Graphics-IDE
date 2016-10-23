@@ -2,21 +2,22 @@ package cursor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class Cursor {
-    private List<CursorCreatedItem> myCreatedItems; 
+public class Cursor implements Drawable{
+    private List<CreatedItem> myCreatedItems; //maybe create a drawableObject?
     private Coordinate myCoordinate;
     private double myOrientation;
-    private Boolean myIsPenUp;
+    private Boolean isPenDown;
     private Boolean myIsVisible;
     private String myColor;
     //private String dog
     
-    public Cursor(Coordinate coordinate) {
-        myCreatedItems = new ArrayList<CursorCreatedItem>();
+    public Cursor() {
+        myCreatedItems = new ArrayList<CreatedItem>();
         myOrientation = 90;
-        setCoordinate(coordinate);
-        myIsPenUp = false;
+        myCoordinate = new Coordinate(0,0);
+        isPenDown = false;
         myIsVisible = true;
         myColor = "Black";
     }
@@ -29,8 +30,51 @@ public class Cursor {
         return myOrientation;
     }
     
-    public void setCoordinate (Coordinate myCoordinate) {
-        this.myCoordinate = myCoordinate;
+    public void setOrientation(double orientation) {
+        myOrientation = orientation % 360; //TODO - check for negative values weird module vs remainder thing
+    }
+    
+    public void setCoordinate (Coordinate coordinate) {
+        createItem(coordinate);
+        myCoordinate = coordinate;
         System.out.println(myCoordinate);
     }
+    
+    public void clearCreatedItems() {
+        myCreatedItems.clear();
+    }
+    
+    
+    public void createItem(Coordinate nextCoordinate) {
+        if(!isPenDown){
+            myCreatedItems.add(new CreatedItem(myCoordinate, nextCoordinate));
+        }
+    }
+    
+    public void updateCoordinate(Consumer<Coordinate> func) {
+        func.accept(myCoordinate);
+    }
+
+    @Override
+    public List<Coordinate> getCreateItems () {
+        List<Coordinate> drawCoordinates = new ArrayList<Coordinate>();
+        return drawCoordinates;
+    }
+
+    public Boolean getIsPenDown () {
+        return isPenDown;
+    }
+
+    public void setIsPenDown (Boolean myIsPenUp) {
+        this.isPenDown = myIsPenUp;
+    }
+
+    public Boolean getIsVisible () {
+        return myIsVisible;
+    }
+
+    public void setIsVisible (Boolean myIsVisible) {
+        this.myIsVisible = myIsVisible;
+    }
+    
 }

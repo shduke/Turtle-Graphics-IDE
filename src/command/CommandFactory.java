@@ -7,71 +7,134 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import command.utility.Constant;
+import command.utility.MultiLine;
+import command.utility.Variable;
 import cursor.Coordinate;
 import cursor.Cursor;
+import node.ConstantNode;
+import node.CursorNode;
+import node.Node;
+import node.OperationNode;
 
 
-public class CommandFactory {
-    Map<String, Variable> myVariableMap;
-    Cursor myCursor;
+public abstract class CommandFactory {
+    public static final Map<String, Variable> myVariableMap = new HashMap<String, Variable>(); /// TODO:
+                                                                                               /// Refactor
+                                                                                               /// this,
+                                                                                               /// temporary
+                                                                                               /// just
+                                                                                               /// until
+                                                                                               /// we
+                                                                                               /// figure
+                                                                                               /// out
+                                                                                               /// the
+                                                                                               /// factory
+                                                                                               /// structure
+                                                                                               /// more
+                                                                                               /// (maybe
+                                                                                               /// create
+                                                                                               /// a
+                                                                                               /// headNode
+                                                                                               /// or
+                                                                                               /// an
+                                                                                               /// ExpressionFactory)
+    /*
+     * public static Cursor testCursor = new Cursor(new Coordinate(0,0));
+     * /// Just for Testing
+     * public interface Node {
+     * AbstractCommand createCommand();
+     * Node getNext();
+     * void setNext(Node nextNode);
+     * String getCommandType();
+     * }
+     * 
+     * public static class CursorNode implements Node{
+     * public String myCommandType; //Abstract
+     * public Cursor myCursor; //child
+     * public Node myNext;
+     * 
+     * CursorNode (String commandType) {
+     * myCommandType = commandType;
+     * myCursor = testCursor;
+     * }
+     * 
+     * @Override
+     * public AbstractCommand createCommand() {
+     * CursorCommandFactory cmf = new CursorCommandFactory(myCursor);
+     * return cmf.createCommand(this);
+     * }
+     * 
+     * @Override
+     * public Node getNext () {
+     * return myNext;
+     * }
+     * 
+     * @Override
+     * public void setNext (Node nextNode) {
+     * myNext = nextNode;
+     * }
+     * 
+     * @Override
+     * public String getCommandType () {
+     * return myCommandType;
+     * }
+     * }
+     * public static class ConstantNode implements Node{
+     * public String myCommandType; //Abstract
+     * public double myValue; //child
+     * public Node myNext;
+     * 
+     * ConstantNode (String commandType) {
+     * myCommandType = commandType;
+     * myValue = 10;
+     * }
+     * 
+     * @Override
+     * public AbstractCommand createCommand() {
+     * ConstantCommandFactory cmf = new ConstantCommandFactory(myValue);
+     * return cmf.createCommand(this);
+     * }
+     * 
+     * @Override
+     * public Node getNext () {
+     * return myNext;
+     * }
+     * 
+     * @Override
+     * public void setNext (Node nextNode) {
+     * myNext = nextNode;
+     * }
+     * 
+     * @Override
+     * public String getCommandType () {
+     * return myCommandType;
+     * }
+     * }
+     */
 
-    /// Just for Testing
-    public static class Node {
-        public String myCommandType;
-        public String myValue;
-        public Node myNext;
-
-        Node (String commandType, String value) {
-            myCommandType = commandType;
-            myValue = value;
-        }
+    CommandFactory () {
 
     }
 
-    CommandFactory (Cursor cursor) {
-        myCursor = cursor;
-        myVariableMap = new HashMap<String, Variable>();
-
-    }
-
-    private Node getNextCommandNode (Node commandNode) {
-        commandNode = commandNode.myNext;
+    protected Node getNextCommandNode (Node commandNode) {
+        commandNode = commandNode.getNext(); //TODO - is there a way to set the passed in commandNode reference to now point to this?
         return commandNode;
     }
 
-    public AbstractCommand createCommand (Node commandNode) {
+    public AbstractCommand createCommand (Node node) {
         try {
-            Class commandClass = Class.forName(commandNode.myCommandType);
+            Class commandClass = Class.forName(node.getType());
 
-            Field commandField = commandClass.getField("MY_NUMBER_OF_COMMAND_PARAMETERS");
-            int commandNumberOfParameters = commandField.getInt(null);
-
-            Class[] classParams = new Class[] { Map.class, List.class, Cursor.class };
-            if (commandNode.myCommandType == "command.Constant") {
-                classParams = new Class[] { Map.class, List.class};
-            } 
+            Class[] classParams = getClassParameters();
             Constructor commandConstructor = commandClass.getDeclaredConstructor(classParams);
-            List<Object> initArgsList = new ArrayList<Object>();
 
-            List<Object> initParamList = new ArrayList<Object>();
-            initArgsList.add(0, myVariableMap);
-            initArgsList.add(1, initParamList);
-            if (commandNode.myCommandType == "command.cursor.Forward") {
-                initArgsList.add(2, myCursor);
-            }
-            for (int i = 0; i < commandNumberOfParameters; i++) {
-                AbstractCommand commandParameter = createCommand(getNextCommandNode(commandNode));
-                if (commandNode.myCommandType == "endMultiLine") {
-                    break;
-                }
-                initParamList.add(commandParameter);
-            }
-            Object[] initArgs = initArgsList.toArray();
+            Object[] initArgs = getClassArguments(node, getNumberOfParameters(commandClass));
 
             AbstractCommand command = (AbstractCommand) commandConstructor.newInstance(initArgs);
-            if (commandNode.myCommandType == "command.Constant") {
-                ((Constant) command).myValue = Double.parseDouble(commandNode.myValue);
-            }
+            // List<MultiLine> commndList = new ArrayList();
+            // MultiLine newCommand = new MultiLine(myVariableMap, command);
+            // gueue it up
             return command;
         }
         catch (ClassNotFoundException e) {
@@ -109,24 +172,75 @@ public class CommandFactory {
         return null;
     }
 
+    private int getNumberOfParameters (Class commandClass) throws NoSuchFieldException,
+                                                           IllegalAccessException {
+        Field commandField = commandClass.getField("MY_NUMBER_OF_COMMAND_PARAMETERS");
+        int commandNumberOfParameters = commandField.getInt(null);
+        return commandNumberOfParameters;
+    }
+
+    protected abstract List<Class> getClassSpecificParameters ();
+
+    protected Class[] getClassParameters () {
+        List<Class> parameters = new ArrayList<Class>();
+        parameters.add(Map.class);
+        parameters.add(List.class);
+        parameters.addAll(getClassSpecificParameters());
+        return parameters.toArray(new Class[parameters.size()]);
+    }
+
+    protected abstract List<Object> getClassSpecificArguments ();
+
+    protected abstract List<Object> getClassCommandArgument (int numberOfParameters, Node node);
+
+    /*
+     * private MultiLine getInputCommand(int numberOfParameters, Node node) {
+     * List<Object> initParamList = new ArrayList<Object>();
+     * initParamList.add(myVariableMap);
+     * for (int i = 0; i < numberOfParameters; i++) {
+     * MultiLine commandParameter = createCommand(getNextCommandNode(node));
+     * if (node.myCommandType == "endMultiLine") {
+     * break;
+     * }
+     * initParamList.add(commandParameter);
+     * }
+     * }
+     */
+
+    private Object[] getClassArguments (Node node, int numberOfParameters) {
+        List<Object> arguments = new ArrayList<Object>();
+        arguments.add(myVariableMap);
+        arguments.add(getClassCommandArgument(numberOfParameters, node));
+        arguments.addAll(getClassSpecificArguments());
+        return arguments.toArray(new Object[arguments.size()]);
+    }
+
     public static void main (String[] args) {
-        CommandFactory testFactory = new CommandFactory(new Cursor(new Coordinate(0, 0)));
-        /*Node node1 = new Node("command.cursor.Forward", "");
-        Node node2 = new Node("command.Constant", "10");
-        node1.myNext = node2;
-        AbstractCommand testCommand = testFactory.createCommand(node1);
-        testCommand.execute();*/
-        
-        Node node1 = new Node("command.cursor.Forward", "");
-        Node node2 = new Node("command.cursor.Forward", "");
-        node1.myNext = node2;
-        Node node3 = new Node("command.cursor.Forward", "");
-        node2.myNext = node3;
-        Node node4 = new Node("command.Constant", "10");
-        node3.myNext = node4;
-        AbstractCommand testCommand = testFactory.createCommand(node1);
-        testCommand.execute();
-        
+
+        // Node node1 = new CursorNode("command.cursor.Forward");
+        // Node node2 = new ConstantNode("command.utility.Constant");
+        // node1.setNext(node2);
+        // AbstractCommand command = node1.createCommand();
+        // command.execute();
+
+         Cursor cursor = new Cursor();
+         Node node1 = new CursorNode("command.cursor.Forward", cursor);
+         Node node2 = new CursorNode("command.cursor.Forward", cursor);
+         node1.setNext(node2);
+         Node node3 = new CursorNode("command.cursor.Forward", cursor);
+         node2.setNext(node3);
+         Node node4 = new ConstantNode("command.utility.Constant", 10);
+         node3.setNext(node4);
+         AbstractCommand testCommand = node1.createCommand();
+         testCommand.execute();
+
+//        Node node1 = new OperationNode("command.math.Sum");
+//        Node node2 = new ConstantNode("command.utility.Constant", 10);
+//        Node node3 = new ConstantNode("command.utility.Constant", 20);
+//        node1.setNext(node2);
+//        node2.setNext(node3);
+//        AbstractCommand testCommand = node1.createCommand();
+//        System.out.println(testCommand.execute());
     }
 
 }

@@ -1,16 +1,15 @@
-package command.cursor;
+package command;
 
 import java.util.List;
 import java.util.Map;
-import command.AbstractCommand;
-import command.Variable;
+import command.utility.Variable;
 import cursor.Cursor;
 
 
 public abstract class CursorCommand extends AbstractCommand {
     Cursor myCursor;
 
-    CursorCommand (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
+    protected CursorCommand (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
         super(variableMap, inputs);
         myCursor = cursor;
     }

@@ -7,7 +7,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
+import cursor.Cursor;
 import node.BracketNode;
 import node.ConstantNode;
 import node.CursorNode;
@@ -15,7 +15,6 @@ import node.NameNode;
 import node.Node;
 import node.OperationNode;
 import node.VariableNode;
-import turtle.Turtle;
 import view.AppResources;
 
 public class InputParser {
@@ -50,7 +49,7 @@ public class InputParser {
     	 for(int i=0;i<split.length;i++){
     		 if(getSymbol(split[i]).equals("COMMAND")){
     			 if(myCursorSyntax.containsKey(split[i])){
-    				 construct.add(new CursorNode(split[i],new Turtle()));
+    				 construct.add(new CursorNode(split[i],new Cursor()));
     			 }
     			 else if(myOperationSyntax.containsKey(split[i])){
     				 construct.add(new OperationNode(split[i]));

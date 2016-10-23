@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import command.utility.Variable;
 
 public class ParameterCommand extends AbstractCommand {
     HashMap<String, Variable> myParameterMap;
     
-    ParameterCommand(Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
+    protected ParameterCommand(Map<String, Variable> variableMap, List<AbstractCommand> inputs) {//myParameterMap = inputs[1]
         super(variableMap, inputs);
     }
 

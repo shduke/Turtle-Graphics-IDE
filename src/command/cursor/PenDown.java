@@ -10,19 +10,18 @@ import cursor.Cursor;
 import cursor.Coordinate;
 
 //TODO - use more lambdas
-public class Forward extends CursorCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
+public class PenDown extends CursorCommand {
+    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public Forward (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
+    public PenDown (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
         super(variableMap, inputs, cursor);
         // TODO Auto-generated constructor stub
     }
 
     @Override
     public double execute() {
-        double distance = getFirstCommand().execute();
-        getCursor().setCoordinate(getCursor().getCoordinate().translate(distance, getCursor().getOrientation()));
-        return distance;
+        getCursor().setIsPenDown(true);
+        return 1;
     }
     
 }

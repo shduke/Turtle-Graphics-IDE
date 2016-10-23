@@ -10,19 +10,20 @@ import cursor.Cursor;
 import cursor.Coordinate;
 
 //TODO - use more lambdas
-public class Forward extends CursorCommand {
+public class SetHeading extends CursorCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
     
-    public Forward (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
+    public SetHeading (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
         super(variableMap, inputs, cursor);
         // TODO Auto-generated constructor stub
     }
 
-    @Override
+    @Override //TODO assume less than 360? of over 360 is it mod or absolute?
     public double execute() {
-        double distance = getFirstCommand().execute();
-        getCursor().setCoordinate(getCursor().getCoordinate().translate(distance, getCursor().getOrientation()));
-        return distance;
+        double orientation = getFirstCommand().execute();
+        double degreesMoved = (orientation % 360) - getCursor().getOrientation();
+        getCursor().setOrientation(orientation);
+        return degreesMoved;
     }
     
 }

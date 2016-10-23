@@ -10,19 +10,18 @@ import cursor.Cursor;
 import cursor.Coordinate;
 
 //TODO - use more lambdas
-public class Forward extends CursorCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
+public class HideTurtle extends CursorCommand {
+    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public Forward (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
+    public HideTurtle (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
         super(variableMap, inputs, cursor);
         // TODO Auto-generated constructor stub
     }
 
     @Override
     public double execute() {
-        double distance = getFirstCommand().execute();
-        getCursor().setCoordinate(getCursor().getCoordinate().translate(distance, getCursor().getOrientation()));
-        return distance;
+        getCursor().setIsVisible(false);
+        return 0;
     }
     
 }
