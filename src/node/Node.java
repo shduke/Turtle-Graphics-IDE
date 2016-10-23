@@ -4,6 +4,7 @@ public class Node {
 	
 	private String myType; 
 	private String myValue; 
+	private Node myNext; 
 	
 	public Node(String type, String value){
 		myType = type; 
