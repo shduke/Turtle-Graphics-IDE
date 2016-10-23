@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import command.AbstractCommand;
 import command.CalculationCommand;
-import command.cursor.CursorCommand;
+import command.CursorCommand;
 import command.utility.Variable;
 import cursor.Cursor;
 

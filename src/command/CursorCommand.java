@@ -1,8 +1,7 @@
-package command.cursor;
+package command;
 
 import java.util.List;
 import java.util.Map;
-import command.AbstractCommand;
 import command.utility.Variable;
 import cursor.Cursor;
 

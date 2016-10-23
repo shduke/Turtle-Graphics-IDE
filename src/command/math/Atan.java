@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Map;
 import command.AbstractCommand;
 import command.CalculationCommand;
-import command.cursor.CursorCommand;
+import command.CursorCommand;
 import command.utility.Variable;
 import cursor.Cursor;
 
 public class Atan extends CalculationCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
+    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
     
     public Atan (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
         super(variableMap, inputs);
