@@ -10,7 +10,7 @@ import cursor.Cursor;
 import cursor.Coordinate;
 
 public class Not extends AbstractCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
+    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
     
     public Not (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
         super(variableMap, inputs);
