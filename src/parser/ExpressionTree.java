@@ -8,29 +8,34 @@ import node.Node;
 
 public class ExpressionTree {
 
-	private List<Node> myTree; 
+	private Node myRoot; 
 	
 	public ExpressionTree(){
-		myTree = new ArrayList<>();
+		myRoot = null; 
 	}
 	
 	public void add(Node n){
-		myTree.add(n);
-	}
-	
-	public Node get(int index){
-		return myTree.get(index);
+		if(myRoot==null){
+			myRoot = n; 
+			return; 
+		}
+		Node temp = myRoot; 
+		while(temp.myNext!=null){
+			temp = temp.myNext; 
+		}
+		temp.myNext = n; 
 	}
 	
 	@Override
 	public String toString(){
-		String toReturn = "";
-		for(int i=0;i<myTree.size();i++){
-			toReturn +=myTree.get(i)+"\n";
+		Node temp = myRoot;
+		String printing = "";
+		while(temp!=null){
+			printing +=temp.toString()+"\n";
+			temp=temp.myNext;
 		}
-		return toReturn; 
+		return printing; 
 	}
-	
 	
 	
 }

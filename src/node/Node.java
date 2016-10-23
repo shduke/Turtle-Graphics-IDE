@@ -1,29 +1,25 @@
 package node;
 
-public class Node {
+public abstract class Node {
 	
-	private String myType; 
-	private String myValue; 
+	public Node myNext;
+	protected String myType; 
 	
-	public Node(String type, String value){
+	public Node(String type){
 		myType = type; 
-		myValue = value; 
+		myNext = null; 
 	}
 	
 	public String getType(){
 		return myType; 
 	}
 	
-	public String getValue(){
-		return myValue; 
+	public void setNext(Node next){
+		myNext = next; 
 	}
 	
-	@Override 
 	public String toString(){
-		String toReturn = "";
-		toReturn +="{"+myType+","+myValue+"}";
-		return toReturn; 
+		return "Node" +"{"+this.getType()+"}";
 	}
-	
 	
 }
