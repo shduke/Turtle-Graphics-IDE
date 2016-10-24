@@ -116,7 +116,7 @@ public abstract class CommandFactory {
      */
 
     CommandFactory () {
-        myCommandResources = ResourceBundle.getBundle("expressions");
+        myCommandResources = ResourceBundle.getBundle("commands");
     }
 
     protected Node getNextCommandNode (Node commandNode) {
@@ -126,7 +126,7 @@ public abstract class CommandFactory {
 
     public AbstractCommand createCommand (Node node) {
         try {
-            Class commandClass = Class.forName(myCommandResources.getString(node.getType().toUpperCase()));
+            Class commandClass = Class.forName(myCommandResources.getString(node.getType()));
 
             Class[] classParams = getClassParameters();
             Constructor commandConstructor = commandClass.getDeclaredConstructor(classParams);
