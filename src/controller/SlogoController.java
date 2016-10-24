@@ -40,7 +40,8 @@ public class SlogoController {
 				myExpressionTree = myParser.parse(myLastCommand,myCursors.get(0));
 				System.out.println(myExpressionTree);
 				AbstractCommand command = myExpressionTree.createCommand();
-				command.execute();
+				double result = command.execute();
+				System.out.println("Testing:"+result);
 				
 				//receive information from backend
 				System.out.println(myCursors.get(0).getCoordinate());
@@ -48,7 +49,8 @@ public class SlogoController {
 				//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
 				
 				myDisplay.getTurtleDisplay().redrawAll(createdItems);
-				
+				myDisplay.myVC.addResults(""+result);
+				myDisplay.myVC.updateTextArea();
 				
 			};
 		};

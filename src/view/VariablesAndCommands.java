@@ -12,6 +12,7 @@ public class VariablesAndCommands {
 	private TextArea myTextArea;
 	private Map<String, String> myVariables;
 	private List<String> myCommands;
+	private List<String> myResults; 
 	
 	public VariablesAndCommands() {
 		myTextArea = new TextArea();
@@ -19,6 +20,7 @@ public class VariablesAndCommands {
 		myTextArea.setEditable(false);
 		myVariables = new TreeMap<String, String>();
 		myCommands = new ArrayList<String>();
+		myResults = new ArrayList<String>();
 	}
 	
     public TextArea getTextArea(){
@@ -30,9 +32,10 @@ public class VariablesAndCommands {
     	myTextArea.clear();
     	myVariables.clear();
     	myCommands.clear();
+    	myResults.clear(); 
     }
     
-    private void updateTextArea(){
+    public void updateTextArea(){
     	myTextArea.clear();
     	myTextArea.appendText("Variables\n\n");
     	for (String var : myVariables.keySet()) {
@@ -42,6 +45,10 @@ public class VariablesAndCommands {
     	for (String commandName : myCommands) {
     		myTextArea.appendText(commandName + "\n");
     	}
+    	myTextArea.appendText("------------------------\n" + "Console\n\n");
+    	for(String result: myResults){
+    		myTextArea.appendText(result + "\n");
+    	}
     }
     
     public void addVariable(String varName, String varValue) {
@@ -50,6 +57,10 @@ public class VariablesAndCommands {
     
     public void addCommand(String commandName) {
     	myCommands.add(commandName);
+    }
+    
+    public void addResults(String result){
+    	myResults.add(result);
     }
 	
 }

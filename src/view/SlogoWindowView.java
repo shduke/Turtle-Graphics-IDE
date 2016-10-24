@@ -25,8 +25,8 @@ public class SlogoWindowView implements Window {
     private Scene myScene;
     private ResourceBundle myCommands;
     private InputField myInputField;
-    static VariablesAndCommands myVC;
-    static History myHistory;
+    public static VariablesAndCommands myVC;
+    public static History myHistory;
     
     private Display myTurtleDisplay;
 
