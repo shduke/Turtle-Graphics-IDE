@@ -52,8 +52,10 @@ public class TurtleDisplay implements Display {
         myCursorCanvas.toFront();
         myLineCanvas.toBack();
         myBGCanvas.toBack();
-        turtleX = myCursorCanvas.getWidth()/2 - myTurtleWidth/2;
-        turtleY = myCursorCanvas.getHeight()/2 - myTurtleHeight/2;
+        strokeCanvas();
+        setBackgroundColor(AppResources.CANVAS_COLOUR.getColorResource());
+        turtleX = myCursorCanvas.getWidth()/2;
+        turtleY = myCursorCanvas.getHeight()/2;
         drawTurtle(turtleX, turtleY);
         
 	}
@@ -87,10 +89,10 @@ public class TurtleDisplay implements Display {
 	private void drawTurtle(double x, double y){
 		turtleX = x;
 		turtleY = y;
-		double turtleTopX = x - myTurtleWidth;
-		double turtleTopY = y - myTurtleWidth;
+		double turtleCornerX = x - myTurtleWidth/2;
+		double turtleCornerY = y - myTurtleHeight/2;
 		cursorGC.setFill(myTurtleFill);
-        cursorGC.fillRect(x, y, turtleTopX, turtleTopY);
+        cursorGC.fillRect(turtleCornerX, turtleCornerY, myTurtleWidth, myTurtleHeight);
 	}
 	
 	private void clearCanvas(){
@@ -114,7 +116,7 @@ public class TurtleDisplay implements Display {
 		return myStackPane;
 	}
 	
-	public void setBackgroundColour(Color color){
+	public void setBackgroundColor(Color color){
 		bgGC.setFill(color);
 		bgGC.fillRect(0, 0, myBGCanvas.getWidth(), myBGCanvas.getHeight());
 	}

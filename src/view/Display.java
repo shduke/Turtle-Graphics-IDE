@@ -14,7 +14,7 @@ public interface Display {
 	
 	public void redrawAll(List<Drawable> drawables);
 	
-	public void setBackgroundColour(Color color);
+	public void setBackgroundColor(Color color);
 	
 	public Node getStackPane();
 	

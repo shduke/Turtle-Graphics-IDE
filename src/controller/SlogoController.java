@@ -47,7 +47,7 @@ public class SlogoController {
 				List<CreatedItem>createdItems = myCursors.get(0).myCreatedItems; 
 				List<Drawable>toFrontEnd = convertToDrawable(createdItems);
 				
-				
+				myDisplay.getTurtleDisplay().redrawAll(toFrontEnd);
 				
 				
 			};
