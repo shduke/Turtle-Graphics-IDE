@@ -2,6 +2,8 @@ package view;
 
 import java.util.List;
 
+import cursor.Coordinate;
+import cursor.Drawable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -20,85 +22,96 @@ public class TurtleDisplay {
 	
 	private EventHandler<ActionEvent> myEvent;
 	private StackPane myStackPane = new StackPane();
-	private Canvas myCanvas = new Canvas(AppResources.CANVAS_WIDTH.getDoubleResource(), AppResources.CANVAS_HEIGHT.getDoubleResource());
-	private GraphicsContext myGC = myCanvas.getGraphicsContext2D();
-	private Rectangle myRectangle1, myRectangle2;
-	private double turtleWidth = AppResources.TURTLE_WIDTH.getDoubleResource();
-	private double turtleHeight = AppResources.TURTLE_HEIGHT.getDoubleResource();
+	
+	// Canvas Layers
+	private Canvas myBGCanvas = new Canvas(AppResources.CANVAS_WIDTH.getDoubleResource(), AppResources.CANVAS_HEIGHT.getDoubleResource());
+	private GraphicsContext bgGC = myBGCanvas.getGraphicsContext2D();
+	private Canvas myCursorCanvas = new Canvas(AppResources.CANVAS_WIDTH.getDoubleResource(), AppResources.CANVAS_HEIGHT.getDoubleResource());
+	private GraphicsContext cursorGC = myCursorCanvas.getGraphicsContext2D();
+	private Canvas myLineCanvas = new Canvas(AppResources.CANVAS_WIDTH.getDoubleResource(), AppResources.CANVAS_HEIGHT.getDoubleResource());
+	private GraphicsContext lineGC = myLineCanvas.getGraphicsContext2D();
+	private Canvas myStampCanvas = new Canvas(AppResources.CANVAS_WIDTH.getDoubleResource(), AppResources.CANVAS_HEIGHT.getDoubleResource());
+	private GraphicsContext stampGC = myStampCanvas.getGraphicsContext2D();
+	
+	// Turtle Characteristics
+	private double myTurtleWidth = AppResources.TURTLE_WIDTH.getDoubleResource();
+	private double myTurtleHeight = AppResources.TURTLE_HEIGHT.getDoubleResource();
+	private Color myTurtleFill = AppResources.TURTLE_FILL.getColorResource();
 	private double turtleX, turtleY;
 	
-	private List<Rectangle> myTurtles;
-	private List<Line> myLines;
+	// Line Characteristics
+	private double myLineWidth = AppResources.LINE_WIDTH.getDoubleResource();
+	private Color myLineStroke = AppResources.LINE_STROKE.getColorResource();
 	
 	public TurtleDisplay(EventHandler<ActionEvent> event) {
 		myStackPane.setId("StackPane");
-        myStackPane.getChildren().add(myCanvas);
-        turtleX = myCanvas.getWidth()/2 - turtleWidth/2;
-        turtleY = myCanvas.getHeight()/2 - turtleHeight/2;
+		myStackPane.getChildren().add(myBGCanvas);
+        myStackPane.getChildren().add(myCursorCanvas);
+        myStackPane.getChildren().add(myLineCanvas);
+        myStackPane.getChildren().add(myStampCanvas);
+        myCursorCanvas.toFront();
+        myLineCanvas.toBack();
+        myBGCanvas.toBack();
+        turtleX = myCursorCanvas.getWidth()/2 - myTurtleWidth/2;
+        turtleY = myCursorCanvas.getHeight()/2 - myTurtleHeight/2;
         drawTurtle(turtleX, turtleY);
         
 	}
 	
-	private void redrawAll(List<Rectangle> turtles, List<Line> lines){
+	//TODO: Refactor "drawDrawables" method name below, cause, I mean, reall...
+	private void redrawAll(List<Drawable> drawables){
 		clearCanvas();
-		if (turtles == null){
-			turtles = myTurtles;
-		}
-		if (lines == null){
-			lines = myLines;
-		}
-		drawManyLines(lines);
-		drawManyTurtles(turtles);
-		myTurtles = turtles;
-		myLines = lines;
-	}
-	
-	private void clearCanvas(){
-		myGC.clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
-	}
-	
-	// TODO: refactor to structure of what backend passes up
-	private void drawManyLines(List<Line> lines){
-		for (Line line : lines){
-			double x1 = line.getStartX();
-			double y1 = line.getStartY();
-			double y2 = line.getEndY();
-			double x2 = line.getEndX();
-			drawLine(x1, y1, x2, y2);
-		}
-	}
-	// TODO: refactor to structure of what backend passes up
-	private void drawManyTurtles(List<Rectangle> turtles){
-		for (Rectangle turtle : turtles){
-			double x = turtle.getX();
-			double y = turtle.getY();
-			drawTurtle(x, y);
+		strokeCanvas();
+		for (Drawable drawable : drawables){
+			List<Coordinate> coordinates = drawable.getCreateItems();
+			double currentX = coordinates.get(0).getX();
+			double currentY = coordinates.get(0).getY();
+			for (Coordinate coord : coordinates.subList(1, coordinates.size())){
+				double nextX = coord.getX();
+				double nextY = coord.getY();
+				drawLine(currentX, currentY, nextX, nextY);
+				currentX = nextX; 
+				currentY = nextY;
+			}
+			double turtleX = coordinates.get(coordinates.size()).getX();
+			double turtleY = coordinates.get(coordinates.size()).getY();
+			drawTurtle(turtleX, turtleY);
 		}
 	}
 	
 	private void drawLine(double x1, double y1, double x2, double y2){
-		myGC.setStroke(AppResources.LINE_STROKE.getColorResource());
-        myGC.setLineWidth(AppResources.LINE_WIDTH.getDoubleResource());
-        myGC.strokeLine(x1, y1, x2, y2);
+		lineGC.setStroke(AppResources.LINE_STROKE.getColorResource());
+		lineGC.setLineWidth(AppResources.LINE_WIDTH.getDoubleResource());
+		lineGC.strokeLine(x1, y1, x2, y2);
 	}
 	
 	private void drawTurtle(double x, double y){
 		turtleX = x;
 		turtleY = y;
-		myGC.setFill(AppResources.TURTLE_FILL.getColorResource());
-        myGC.setStroke(AppResources.LINE_STROKE.getColorResource());
-        myGC.setLineWidth(AppResources.LINE_WIDTH.getDoubleResource());
-        myGC.fillRect(x, y, turtleWidth, turtleHeight);
-        double cWidth = myGC.getCanvas().getWidth();
-        double cHeight = myGC.getCanvas().getHeight();
-        myGC.strokeLine(0, 0, 0, cHeight);
-        myGC.strokeLine(0, 0, cWidth, 0);
-        myGC.strokeLine(cWidth, 0, cWidth, myGC.getCanvas().getHeight());
-        myGC.strokeLine(0, cHeight, cWidth, cHeight);
+		cursorGC.setFill(myTurtleFill);
+        cursorGC.fillRect(x, y, myTurtleWidth, myTurtleHeight);
+	}
+	
+	private void clearCanvas(){
+		cursorGC.clearRect(0, 0, myCursorCanvas.getWidth(), myCursorCanvas.getHeight());
+		lineGC.clearRect(0, 0, myLineCanvas.getWidth(), myLineCanvas.getHeight());
+		stampGC.clearRect(0, 0, myStampCanvas.getWidth(), myStampCanvas.getHeight());
+	}
+	
+	public void strokeCanvas(){
+		lineGC.setStroke(AppResources.LINE_STROKE.getColorResource());
+		lineGC.setLineWidth(AppResources.LINE_WIDTH.getDoubleResource());
+		double cWidth = lineGC.getCanvas().getWidth();
+        double cHeight = lineGC.getCanvas().getHeight();
+        lineGC.strokeLine(0, 0, 0, cHeight);
+        lineGC.strokeLine(0, 0, cWidth, 0);
+        lineGC.strokeLine(cWidth, 0, cWidth, cHeight);
+        lineGC.strokeLine(0, cHeight, cWidth, cHeight);
 	}
 	
 	public void advanceTurtleTest(double x, double y){
 		clearCanvas();
+		strokeCanvas();
 		double newTurtleX = turtleX + x;
         double newTurtleY = turtleY + y;
         drawLine(turtleX, turtleY, newTurtleX, newTurtleY);
@@ -108,5 +121,14 @@ public class TurtleDisplay {
 	public Node getStackPane(){
 		return myStackPane;
 	}
-
+	
+	public void setBackgroundColour(Color color){
+		bgGC.setFill(color);
+		bgGC.fillRect(0, 0, myBGCanvas.getWidth(), myBGCanvas.getHeight());
+	}
+	
+	public void setTurtleImage(){
+		//TODO SET TURTLE IMAGE
+	}
+	
 }
