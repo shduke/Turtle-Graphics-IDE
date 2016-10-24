@@ -1,4 +1,4 @@
-package view;
+package view.window;
 
 import javafx.scene.Scene;
 
@@ -11,11 +11,5 @@ public interface Window {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.languages/";
 
 	public Scene getScene();
-
-	public History getHistory();
-	
-	public void clearHistory();
-	
-	public Display getTurtleDisplay();
 
 }

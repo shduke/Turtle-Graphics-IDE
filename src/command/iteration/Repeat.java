@@ -10,8 +10,8 @@ import command.utility.Constant;
 import command.utility.Variable;
 
 public class Repeat extends ParameterCommand { //TODO - maybe subclass based on iteration
-    private static final String DEFAULT_LOOP_VARIABLE = ":repcount";
-    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
+    public static final String DEFAULT_LOOP_VARIABLE = ":repcount";
+    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     
     protected Repeat (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
         super(variableMap, inputs);
