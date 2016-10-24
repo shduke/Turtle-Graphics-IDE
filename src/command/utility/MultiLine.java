@@ -25,9 +25,9 @@ public class MultiLine extends AbstractCommand {
 
     @Override
     public String toString() {
-        /*StringBuilder sb = new StringBuilder();
-        sb. Collectors.joining(" ");
-        getExpression().forEach(p -> sb.append(p.toString()));*/
+        StringBuilder sb = new StringBuilder();
+        //sb. Collectors.joining(" ");
+        getExpression().stream().map(p -> p.toString());
         return "";
     }
 }
