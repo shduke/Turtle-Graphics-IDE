@@ -3,9 +3,11 @@ package command.iteration;
 import java.util.List;
 import java.util.Map;
 import command.AbstractCommand;
+import command.ParameterCommand;
+import command.assignment.Set;
 import command.utility.Variable;
 
-public class Repeat extends AbstractCommand {
+public class Repeat extends ParameterCommand {
 
     protected Repeat (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
         super(variableMap, inputs);
@@ -14,7 +16,7 @@ public class Repeat extends AbstractCommand {
 
     @Override
     public double execute () {
-        // TODO Auto-generated method stub
+        getVariableMap().put(getFirstCommand().toString(), createVariable());
         return 0;
     }
 
