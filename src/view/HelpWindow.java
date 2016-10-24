@@ -38,5 +38,23 @@ public class HelpWindow implements Window {
 		return myScene;
 	}
 
+	@Override
+	public History getHistory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void clearHistory() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Display getTurtleDisplay() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }
