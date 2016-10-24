@@ -74,7 +74,7 @@ public class Cursor implements Drawable{
         this.isPenDown = myIsPenUp;
     }
 
-    public Boolean getIsVisible () {
+    public boolean getIsVisible () {
         return myIsVisible;
     }
 

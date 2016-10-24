@@ -37,4 +37,9 @@ public class CreatedItem implements Drawable{
     public double getOrientation () {
         return myLayer;
     }
+
+    @Override
+    public boolean getIsVisible () {
+        return true;
+    }
 }
