@@ -12,8 +12,8 @@ import javafx.scene.layout.BorderPane;
 import view.InputField;
 
 /**
- * @author Noel Moon
- * @author John Martin
+ * @author Noel Moon (nm142)
+ * @author John Martin (jfm41)
  *
  */
 public class SlogoWindowView implements WindowView {
@@ -27,8 +27,7 @@ public class SlogoWindowView implements WindowView {
     static VariablesAndCommands myVC;
     static History myHistory;
     
-    //TODO: make turtledisplay private, nonStatic
-    public static TurtleDisplay myTurtleDisplay;
+    private Display myTurtleDisplay;
 
     
     public SlogoWindowView(String language){
@@ -57,7 +56,7 @@ public class SlogoWindowView implements WindowView {
         return myScene;
     }
     
-    public TurtleDisplay getTurtleDisplay(){
+    public Display getTurtleDisplay(){
     	return myTurtleDisplay;
     }
     

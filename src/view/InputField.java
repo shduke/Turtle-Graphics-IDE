@@ -26,8 +26,6 @@ public class InputField extends HorizontalGUIObject {
         public void handle (ActionEvent event) {
             String input = myTextArea.getText();
             SlogoWindowView.myHistory.addHistory(input);
-            // TODO: Delete following line, just a test line
-            SlogoWindowView.myTurtleDisplay.advanceTurtleTest(50, 50);
             myTextArea.clear();
         }
     }

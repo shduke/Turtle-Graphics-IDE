@@ -18,7 +18,7 @@ import javafx.scene.shape.Rectangle;
  * @author John Martin
  *
  */
-public class TurtleDisplay {
+public class TurtleDisplay implements Display {
 	
 	private EventHandler<ActionEvent> myEvent;
 	private StackPane myStackPane = new StackPane();
@@ -52,13 +52,15 @@ public class TurtleDisplay {
         myCursorCanvas.toFront();
         myLineCanvas.toBack();
         myBGCanvas.toBack();
-        turtleX = myCursorCanvas.getWidth()/2 - myTurtleWidth/2;
-        turtleY = myCursorCanvas.getHeight()/2 - myTurtleHeight/2;
+        strokeCanvas();
+        setBackgroundColor(AppResources.CANVAS_COLOUR.getColorResource());
+        turtleX = myCursorCanvas.getWidth()/2;
+        turtleY = myCursorCanvas.getHeight()/2;
         drawTurtle(turtleX, turtleY);
         
 	}
 	
-	private void redrawAll(List<Drawable> drawables){
+	public void redrawAll(List<Drawable> drawables){
 		clearCanvas();
 		strokeCanvas();
 		for (Drawable drawable : drawables){
@@ -87,8 +89,10 @@ public class TurtleDisplay {
 	private void drawTurtle(double x, double y){
 		turtleX = x;
 		turtleY = y;
+		double turtleCornerX = x - myTurtleWidth/2;
+		double turtleCornerY = y - myTurtleHeight/2;
 		cursorGC.setFill(myTurtleFill);
-        cursorGC.fillRect(x, y, myTurtleWidth, myTurtleHeight);
+        cursorGC.fillRect(turtleCornerX, turtleCornerY, myTurtleWidth, myTurtleHeight);
 	}
 	
 	private void clearCanvas(){
@@ -97,7 +101,7 @@ public class TurtleDisplay {
 		stampGC.clearRect(0, 0, myStampCanvas.getWidth(), myStampCanvas.getHeight());
 	}
 	
-	public void strokeCanvas(){
+	private void strokeCanvas(){
 		lineGC.setStroke(AppResources.LINE_STROKE.getColorResource());
 		lineGC.setLineWidth(AppResources.LINE_WIDTH.getDoubleResource());
 		double cWidth = lineGC.getCanvas().getWidth();
@@ -108,20 +112,11 @@ public class TurtleDisplay {
         lineGC.strokeLine(0, cHeight, cWidth, cHeight);
 	}
 	
-	public void advanceTurtleTest(double x, double y){
-		clearCanvas();
-		strokeCanvas();
-		double newTurtleX = turtleX + x;
-        double newTurtleY = turtleY + y;
-        drawLine(turtleX, turtleY, newTurtleX, newTurtleY);
-        drawTurtle(newTurtleX, newTurtleY);
-	}
-	
 	public Node getStackPane(){
 		return myStackPane;
 	}
 	
-	public void setBackgroundColour(Color color){
+	public void setBackgroundColor(Color color){
 		bgGC.setFill(color);
 		bgGC.fillRect(0, 0, myBGCanvas.getWidth(), myBGCanvas.getHeight());
 	}

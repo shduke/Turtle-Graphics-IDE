@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 
 /**
  * @author Noel Moon (nm142)
- *
+ * @author John Martin (jfm41)
  */
 public interface WindowView {
 	
@@ -16,6 +16,6 @@ public interface WindowView {
 	
 	public void clearHistory();
 	
-	public TurtleDisplay getTurtleDisplay();
+	public Display getTurtleDisplay();
 	
 }
