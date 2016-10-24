@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class Cursor implements Drawable{
-    private List<CreatedItem> myCreatedItems; //maybe create a drawableObject?
+    public List<CreatedItem> myCreatedItems; //maybe create a drawableObject?
     private Coordinate myCoordinate;
     private double myOrientation;
     private Boolean isPenDown;

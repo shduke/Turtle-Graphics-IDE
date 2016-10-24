@@ -9,4 +9,6 @@ public class BracketNode extends Node{
 	public String toString(){
 		return "BracketNode" +"{"+this.getType()+"}";
 	}
+	
+	
 }
