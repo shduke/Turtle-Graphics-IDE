@@ -44,6 +44,7 @@ public class InputParser {
      
      public ExpressionTree parse(String input,Cursor cursor){
     	 String[]split = input.split("\\s+");
+    	 split = fixBrackets(split);
     	 ExpressionTree construct = new ExpressionTree(); 
     	 for(int i=0;i<split.length;i++){
     		 if(getSymbol(split[i]).equals("COMMAND")){
@@ -85,6 +86,29 @@ public class InputParser {
          }
          
          return ERROR;
+     }
+     
+     private String[] fixBrackets(String[]initParse){
+    	 ArrayList<String>transfer = new ArrayList<>(); 
+    	 for(int i=0;i<initParse.length;i++){
+    		 int index =0;
+    		 for(int j=0;j<initParse[i].length();j++){
+    			 if(initParse[i].charAt(j)=='['||initParse[i].charAt(j)==']'){
+    				 transfer.add(initParse[i].substring(index, j));
+    				 transfer.add(initParse[i].charAt(j)+"");
+    				 index = j+1;
+    			 }
+    		 }
+    		 transfer.add(initParse[i].substring(index, initParse[i].length()));
+    	 }
+    	 for(int i=transfer.size()-1;i>=0;i--){
+    		 if(transfer.get(i).equals("")){
+    			 transfer.remove(i);
+    		 }
+    	 }
+    	 String[]fixed = new String[transfer.size()];
+    	 transfer.toArray(fixed);
+    	 return fixed; 
      }
  
      // returns true if the given text matches the given regular expression pattern
