@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import view.InputField;
 import view.window.Window;
@@ -31,9 +32,11 @@ public class SlogoWindowView implements Window {
     
     private Display myTurtleDisplay;
     private EventHandler<ActionEvent> myResetHandler;
+    private EventHandler<ActionEvent> myFileChooseHandler;
 
     
-    public SlogoWindowView(String language){
+    public SlogoWindowView(String language, EventHandler<ActionEvent> fileChooseEvent){
+    	myFileChooseHandler = fileChooseEvent;
     	myResetHandler = new ResetEvent();
         myLanguage = language;
         myCommands = initResourceBundle(language);
@@ -80,10 +83,9 @@ public class SlogoWindowView implements Window {
 			InputField.myTextArea.clear();
 		}
 	}
-	
     
     private Node makeToolbar () {
-    	Toolbar toolbar = new Toolbar(myLanguage, myResetHandler);
+    	Toolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooseHandler);
 		return toolbar.getToolbar();
     }
     

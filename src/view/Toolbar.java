@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.stage.Stage;
 import view.window.BackgroundColorWindow;
 import view.window.ChooseLanguageWindow;
 import view.window.HelpWindow;
+import view.window.PenColorWindow;
 
 
 /**
@@ -25,11 +27,18 @@ public class Toolbar extends HorizontalGUIObject {
 	private ResourceBundle myResources;
 	private HBox myHBox;
     
-	public Toolbar(String language, EventHandler<ActionEvent> resetHandler) {
+	private EventHandler<ActionEvent> myFileChooseHandler;
+	
+	public Toolbar(String language, EventHandler<ActionEvent> resetHandler, EventHandler<ActionEvent> fileChooseHandler) {
 		super(language);
 		myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
 		myResetHandler = resetHandler;
+		
+		myCursorImageHandler = fileChooseHandler;
+		
 		addButtons();
+		
+		
 	}
     
 	public HBox getToolbar() {
@@ -39,7 +48,7 @@ public class Toolbar extends HorizontalGUIObject {
 	private void addButtons() {
 		myHelpHandler = new HelpEvent();
 		myBackgroundHandler = new BackgroundEvent();
-		myCursorImageHandler = new CursorImageEvent();
+		//myCursorImageHandler = new CursorImageEvent();
 		myPenColorHandler = new PenColorEvent();
 		
 		myHBox = new HBox();
@@ -65,24 +74,15 @@ public class Toolbar extends HorizontalGUIObject {
 		@Override
 		public void handle(ActionEvent event) {
 			BackgroundColorWindow window = new BackgroundColorWindow();
-			Stage stage = new Stage();
-			stage.setTitle("Choose Background Color");
-			stage.setScene(window.getScene());
-			stage.show();
-		}
-	}
-	
-	private class CursorImageEvent implements EventHandler<ActionEvent> {
-		@Override
-		public void handle(ActionEvent event) {
-			
+			window.start();
 		}
 	}
 	
 	private class PenColorEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			
+			PenColorWindow window = new PenColorWindow();
+			window.start();
 		}
 	}
 
