@@ -11,7 +11,6 @@ import cursor.Cursor;
 import node.BracketNode;
 import node.ConstantNode;
 import node.CursorNode;
-import node.NameNode;
 import node.Node;
 import node.OperationNode;
 import node.VariableNode;
@@ -55,7 +54,7 @@ public class InputParser {
     				 construct.add(new OperationNode(split[i],construct.getMap()));
     			 }
     			 else if(!myMethodNames.contains(split[i])){
-    				 construct.add(new NameNode(split[i]));
+    				 construct.add(new VariableNode("variable",split[i],null));
     				 myMethodNames.add(split[i]);
     			 }
     			 else if(myMethodNames.contains(split[i])){

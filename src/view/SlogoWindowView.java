@@ -9,14 +9,15 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import view.InputField;
 
 /**
- * @author Noel Moon
- * @author John Martin
+ * @author Noel Moon (nm142)
+ * @author John Martin (jfm41)
  *
  */
-public class SlogoWindowView implements WindowView {
+public class SlogoWindowView implements Window {
     private static final double myAppWidth = AppResources.APP_WIDTH.getDoubleResource();
 	private static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();;
     
@@ -27,8 +28,7 @@ public class SlogoWindowView implements WindowView {
     static VariablesAndCommands myVC;
     static History myHistory;
     
-    //TODO: make turtledisplay private, nonStatic
-    public static TurtleDisplay myTurtleDisplay;
+    private Display myTurtleDisplay;
 
     
     public SlogoWindowView(String language){
@@ -57,7 +57,7 @@ public class SlogoWindowView implements WindowView {
         return myScene;
     }
     
-    public TurtleDisplay getTurtleDisplay(){
+    public Display getTurtleDisplay(){
     	return myTurtleDisplay;
     }
     

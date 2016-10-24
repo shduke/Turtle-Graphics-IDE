@@ -11,7 +11,7 @@ import javafx.scene.web.WebView;
  * @author Noel Moon (nm142)
  *
  */
-public class HelpWindow {
+public class HelpWindow implements Window {
 
 	public static final Dimension DEFAULT_SIZE = new Dimension(1000, 700);
 	
@@ -36,6 +36,24 @@ public class HelpWindow {
 	
 	public Scene getScene() {
 		return myScene;
+	}
+
+	@Override
+	public History getHistory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void clearHistory() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Display getTurtleDisplay() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
