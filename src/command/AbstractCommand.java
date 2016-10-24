@@ -19,6 +19,10 @@ public abstract class AbstractCommand {
         return myExpression;
     }
     
+    protected void setExpression(List<AbstractCommand> command) {
+        myExpression = command;
+    }
+    
     protected Map<String, Variable> getVariableMap () {
         return myVariableMap;
     }
@@ -30,7 +34,10 @@ public abstract class AbstractCommand {
     protected AbstractCommand getCommandFromIndex(int index) {
         return myExpression.get(index);
     }
-    
-    
+        
+    @Override
+    public String toString() {
+        return this.getClass().getName().toUpperCase();
+    }
 
 }

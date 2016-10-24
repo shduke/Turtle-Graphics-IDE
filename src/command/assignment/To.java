@@ -1,5 +1,6 @@
-package command.variable;
+package command.assignment;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,7 @@ import command.ParameterCommand;
 import command.utility.Variable;
 
 public class To extends ParameterCommand{
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 3;
-    HashMap<String, Variable> variableMap = new HashMap<String, Variable>();
-    //variableMap.put(mlc1.toString(), mlc1) override tostring in MLC
+    private static int MY_NUMBER_OF_COMMAND_PARAMETERS = 0; //maybe switch to getNumberOfParameter()
     
     To(Map<String, Variable> variableMap, List<AbstractCommand> inputs) { //inputs[NameCommand, MultiLine, MultiLine ]
         super(variableMap, inputs);
@@ -19,11 +18,8 @@ public class To extends ParameterCommand{
     
     @Override
     public double execute () {
-        // TODO Auto-generated method stub
-        return 0;
+        getVariableMap().put(getCommandFromIndex(0).toString(), createVariable());
+        return getVariableMap().get(getCommandFromIndex(0).toString()).execute();
     }
     
-    private void createVariable() {
-        
-    }
 }
