@@ -58,7 +58,6 @@ public class TurtleDisplay {
         
 	}
 	
-	//TODO: Refactor "drawDrawables" method name below, cause, I mean, reall...
 	private void redrawAll(List<Drawable> drawables){
 		clearCanvas();
 		strokeCanvas();
@@ -80,8 +79,8 @@ public class TurtleDisplay {
 	}
 	
 	private void drawLine(double x1, double y1, double x2, double y2){
-		lineGC.setStroke(AppResources.LINE_STROKE.getColorResource());
-		lineGC.setLineWidth(AppResources.LINE_WIDTH.getDoubleResource());
+		lineGC.setStroke(myLineStroke);
+		lineGC.setLineWidth(myLineWidth);
 		lineGC.strokeLine(x1, y1, x2, y2);
 	}
 	
