@@ -16,28 +16,42 @@ public class Toolbar extends HorizontalGUIObject {
 
 	private EventHandler<ActionEvent> myResetHandler;
 	private EventHandler<ActionEvent> myHelpHandler;
+	private EventHandler<ActionEvent> myLanguageHandler;
+	private EventHandler<ActionEvent> myBackgroundHandler;
+	private EventHandler<ActionEvent> myCursorImageHandler;
+	private EventHandler<ActionEvent> myPenColorHandler;
 	private ResourceBundle myResources;
+	private HBox myHBox;
     
 	public Toolbar(String language) {
 		super(language);
 		myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
 		myResetHandler = new ResetEvent();
 		myHelpHandler = new HelpEvent();
+		myLanguageHandler = new LanguageEvent();
+		myBackgroundHandler = new BackgroundEvent();
+		myCursorImageHandler = new CursorImageEvent();
+		myPenColorHandler = new PenColorEvent();
+		
+		myHBox = new HBox();
+		myHBox.getChildren().add(makeButton("ResetButton", myResetHandler));
+		myHBox.getChildren().add(makeButton("HelpButton", myHelpHandler));
+		myHBox.getChildren().add(makeButton("LanguageButton", myLanguageHandler));
+		myHBox.getChildren().add(makeButton("BackgroundButton", myBackgroundHandler));
+		myHBox.getChildren().add(makeButton("CursorImageButton", myCursorImageHandler));
+		myHBox.getChildren().add(makeButton("PenColorButton", myPenColorHandler));
 	}
     
 	public HBox getToolbar() {
-		HBox result = new HBox();
-		result.getChildren().add(makeButton("ResetButton", myResetHandler));
-		result.getChildren().add(makeButton("HelpButton", myHelpHandler));
-		return result;
+		return myHBox;
 	}
     
 	private class ResetEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
 			SlogoWindowView.myHistory.clear();
-			InputField.myTextField.clear();
 			SlogoWindowView.myVC.clear();
+			InputField.myTextArea.clear();
 		}
 	}
 	
@@ -49,6 +63,34 @@ public class Toolbar extends HorizontalGUIObject {
 			helpStage.setTitle(myResources.getString("HelpButton"));
 			helpStage.setScene(display.getScene());
 			helpStage.show();
+		}
+	}
+	
+	private class LanguageEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			
+		}
+	}
+	
+	private class BackgroundEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			
+		}
+	}
+	
+	private class CursorImageEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			
+		}
+	}
+	
+	private class PenColorEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			
 		}
 	}
 
