@@ -35,21 +35,26 @@ public class SlogoController {
 			@Override
 			public void onChanged(ListChangeListener.Change c) {
 				// TODO Link fully to backend and command tree
-				myLastCommand = myDisplay.getHistory().getRecentCommand();
-				String lastCommandSymbol = myParser.getSymbol(myLastCommand);
-				myExpressionTree = myParser.parse(myLastCommand,myCursors.get(0));
-				System.out.println(myExpressionTree);
-				AbstractCommand command = myExpressionTree.createCommand();
-				double result = command.execute();
-				
-				//receive information from backend
-				List<Drawable>createdItems = myCursors.get(0).myCreatedItems; 
-				
-				//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
-				
-				myDisplay.getTurtleDisplay().redrawAll(createdItems);
-				myDisplay.myVC.addResults(""+result);
-				myDisplay.myVC.updateTextArea();
+				try{
+					myLastCommand = myDisplay.getHistory().getRecentCommand();
+					String lastCommandSymbol = myParser.getSymbol(myLastCommand);
+					myExpressionTree = myParser.parse(myLastCommand,myCursors.get(0));
+					System.out.println(myExpressionTree);
+					AbstractCommand command = myExpressionTree.createCommand();
+					double result = command.execute();
+					
+					//receive information from backend
+					List<Drawable>createdItems = myCursors.get(0).myCreatedItems; 
+					
+					//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
+					
+					myDisplay.getTurtleDisplay().redrawAll(createdItems);
+					myDisplay.myVC.addResults(""+result);
+					myDisplay.myVC.updateTextArea();
+				}
+				catch (Exception e){
+					
+				}
 				
 			};
 		};
