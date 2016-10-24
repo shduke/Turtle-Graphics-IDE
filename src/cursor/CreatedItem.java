@@ -6,10 +6,12 @@ import java.util.List;
 
 public class CreatedItem implements Drawable{
     List<Coordinate> myCoordinates;
+    private Double myLayer;
 
 
     CreatedItem(Coordinate...coordinates) {
         myCoordinates = new ArrayList<Coordinate>(Arrays.asList(coordinates));
+        myLayer = 10.0;
     }
     
     public List<Coordinate> getCoordinates () {
@@ -23,5 +25,10 @@ public class CreatedItem implements Drawable{
     @Override
     public List<Coordinate> getCreateItems () {
         return myCoordinates;
+    }
+
+    @Override
+    public double getLayer () {
+        return myLayer;
     }
 }

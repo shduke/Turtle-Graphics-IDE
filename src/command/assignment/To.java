@@ -19,7 +19,7 @@ public class To extends ParameterCommand{
     @Override
     public double execute () {
         getVariableMap().put(getCommandFromIndex(0).toString(), createVariable());
-        return getVariableMap().get(getCommandFromIndex(0).toString()).execute();
+        return 1;
     }
     
 }

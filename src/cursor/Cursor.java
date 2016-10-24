@@ -5,21 +5,24 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class Cursor implements Drawable{
-    public List<CreatedItem> myCreatedItems; //maybe create a drawableObject?
+    public List<Drawable> myCreatedItems; //maybe create a drawableObject?
     private Coordinate myCoordinate;
     private double myOrientation;
     private Boolean isPenDown;
     private Boolean myIsVisible;
     private String myColor;
+    private Double myLayer;
     //private String dog
     
     public Cursor() {
-        myCreatedItems = new ArrayList<CreatedItem>();
+        myCreatedItems = new ArrayList<Drawable>();
+        myCreatedItems.add(this); //TODO - better way to add this?
         myOrientation = 90;
         myCoordinate = new Coordinate(0,0);
         isPenDown = false;
         myIsVisible = true;
         myColor = "Black";
+        myLayer = 10.0;
     }
 
     public Coordinate getCoordinate () {
@@ -58,6 +61,7 @@ public class Cursor implements Drawable{
     @Override
     public List<Coordinate> getCreateItems () {
         List<Coordinate> drawCoordinates = new ArrayList<Coordinate>();
+        drawCoordinates.add(myCoordinate);
         return drawCoordinates;
     }
 
@@ -75,6 +79,11 @@ public class Cursor implements Drawable{
 
     public void setIsVisible (Boolean myIsVisible) {
         this.myIsVisible = myIsVisible;
+    }
+
+    @Override
+    public double getLayer () {
+        return myLayer;
     }
     
 }

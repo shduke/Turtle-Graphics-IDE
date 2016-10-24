@@ -6,7 +6,7 @@ import command.utility.MultiLine;
 import cursor.Cursor;
 import node.Node;
 
-public class OperationCommandFactory extends CommandFactory {
+public class OperationCommandFactory extends CommandFactory { //TODO - split into ParameterCommandFactory
     
     public OperationCommandFactory () {
         super();

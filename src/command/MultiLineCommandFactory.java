@@ -6,8 +6,8 @@ import command.utility.MultiLine;
 import cursor.Cursor;
 import node.Node;
 
-public class MultiLineCommandFactory extends CommandFactory {
-    private static final String MULTILINE_TERMINATOR = "ENDMULTILINE";
+public class MultiLineCommandFactory extends CommandFactory { 
+    private static final String MULTILINE_TERMINATOR = "]";
     
     public MultiLineCommandFactory () {
         super();
@@ -26,7 +26,7 @@ public class MultiLineCommandFactory extends CommandFactory {
     }
 
     @Override
-    protected List<Object> getClassCommandArgument (int numberOfParameters, Node node) {
+    protected List<Object> getClassCommandArgument (int numberOfParameters, Node node) { //TODO - condense into operation factory
         List<Object> classCommandArguments = new ArrayList<Object>();
         while (node.getType() != MULTILINE_TERMINATOR) {
             node = getNextCommandNode(node);
