@@ -1,4 +1,4 @@
-package view;
+package view.window;
 
 import java.awt.Dimension;
 
@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import view.SlogoWindowView;
 
 public class ChooseLanguageWindow implements Window {
 	
@@ -17,7 +18,7 @@ public class ChooseLanguageWindow implements Window {
 	private Scene myScene;
 	private ComboBox<String> myComboBox;
 	private String myLanguage;
-	private Stage stage1;
+	private Stage stage;
 	
 	public ChooseLanguageWindow() {
 		BorderPane root = new BorderPane();
@@ -27,14 +28,14 @@ public class ChooseLanguageWindow implements Window {
 	}
 	
 	public void start() {
-		stage1 = new Stage();
-		stage1.setTitle("Choose Language");
-		stage1.setScene(getScene());
-		stage1.show();
+		stage = new Stage();
+		stage.setTitle("Choose Language");
+		stage.setScene(getScene());
+		stage.show();
 	}
 	
 	public void close() {
-		stage1.close();
+		stage.close();
 	}
 	
 	public String getLanguage() {
@@ -51,7 +52,7 @@ public class ChooseLanguageWindow implements Window {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             	myLanguage = newValue;
-            	stage1.close();
+            	stage.close();
             	Stage stage = new Stage();
             	SlogoWindowView display = new SlogoWindowView(getLanguage());
                 stage.setTitle("SLogo");
@@ -63,21 +64,4 @@ public class ChooseLanguageWindow implements Window {
 		return myComboBox;
 	}
 
-	@Override
-	public History getHistory() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void clearHistory() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Display getTurtleDisplay() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

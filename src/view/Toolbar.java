@@ -6,6 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import view.window.BackgroundColorWindow;
+import view.window.ChooseLanguageWindow;
+import view.window.HelpWindow;
 
 
 /**
@@ -16,16 +19,16 @@ public class Toolbar extends HorizontalGUIObject {
 
 	private EventHandler<ActionEvent> myResetHandler;
 	private EventHandler<ActionEvent> myHelpHandler;
-	private EventHandler<ActionEvent> myLanguageHandler;
 	private EventHandler<ActionEvent> myBackgroundHandler;
 	private EventHandler<ActionEvent> myCursorImageHandler;
 	private EventHandler<ActionEvent> myPenColorHandler;
 	private ResourceBundle myResources;
 	private HBox myHBox;
     
-	public Toolbar(String language) {
+	public Toolbar(String language, EventHandler<ActionEvent> resetHandler) {
 		super(language);
 		myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
+		myResetHandler = resetHandler;
 		addButtons();
 	}
     
@@ -34,9 +37,7 @@ public class Toolbar extends HorizontalGUIObject {
 	}
 	
 	private void addButtons() {
-		myResetHandler = new ResetEvent();
 		myHelpHandler = new HelpEvent();
-		myLanguageHandler = new LanguageEvent();
 		myBackgroundHandler = new BackgroundEvent();
 		myCursorImageHandler = new CursorImageEvent();
 		myPenColorHandler = new PenColorEvent();
@@ -44,19 +45,9 @@ public class Toolbar extends HorizontalGUIObject {
 		myHBox = new HBox();
 		myHBox.getChildren().add(makeButton("ResetButton", myResetHandler));
 		myHBox.getChildren().add(makeButton("HelpButton", myHelpHandler));
-		//myHBox.getChildren().add(makeButton("LanguageButton", myLanguageHandler));
 		myHBox.getChildren().add(makeButton("BackgroundButton", myBackgroundHandler));
 		myHBox.getChildren().add(makeButton("CursorImageButton", myCursorImageHandler));
 		myHBox.getChildren().add(makeButton("PenColorButton", myPenColorHandler));
-	}
-    
-	private class ResetEvent implements EventHandler<ActionEvent> {
-		@Override
-		public void handle(ActionEvent event) {
-			SlogoWindowView.myHistory.clear();
-			SlogoWindowView.myVC.clear();
-			InputField.myTextArea.clear();
-		}
 	}
 	
 	private class HelpEvent implements EventHandler<ActionEvent> {
@@ -70,21 +61,14 @@ public class Toolbar extends HorizontalGUIObject {
 		}
 	}
 	
-	private class LanguageEvent implements EventHandler<ActionEvent> {
-		@Override
-		public void handle(ActionEvent event) {
-			ChooseLanguageWindow window = new ChooseLanguageWindow();
-			Stage stage = new Stage();
-			stage.setTitle("Choose Language");
-			stage.setScene(window.getScene());
-			stage.show();
-		}
-	}
-	
 	private class BackgroundEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			
+			BackgroundColorWindow window = new BackgroundColorWindow();
+			Stage stage = new Stage();
+			stage.setTitle("Choose Background Color");
+			stage.setScene(window.getScene());
+			stage.show();
 		}
 	}
 	
