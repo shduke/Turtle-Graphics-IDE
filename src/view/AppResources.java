@@ -2,6 +2,11 @@ package view;
 
 import javafx.scene.paint.Color;
 
+/**
+ * @author John Martin (jfm41)
+ *
+ */
+
 public enum AppResources {
     APP_TITLE("SLogo 10"),
     APP_WIDTH(1300),
