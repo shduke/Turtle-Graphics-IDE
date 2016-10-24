@@ -29,6 +29,7 @@ public class Cursor implements Drawable{
         return myCoordinate;
     }
 
+    @Override
     public double getOrientation() {
         return myOrientation;
     }

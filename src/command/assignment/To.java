@@ -18,6 +18,8 @@ public class To extends ParameterCommand{
     
     @Override
     public double execute () {
+        String[] parameters = getCommandFromIndex(0).toString().split(",");
+        
         getVariableMap().put(getCommandFromIndex(0).toString(), createVariable());
         return 1;
     }

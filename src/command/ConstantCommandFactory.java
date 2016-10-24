@@ -14,7 +14,7 @@ public class ConstantCommandFactory extends CommandFactory {
         myValue = value;
     }
 
-    @Override
+    @Override //TODO - Constants don't need to take in any expressions, re-order hierarchy, ask if subclassing based on parameters is bad?
     protected List<Class> getClassSpecificParameters () {  //TODO - should these be stored as instance vars? Probably, then I can iterate over them and reduce code
         List<Class> classSpecificParameters = new ArrayList<Class>();
         classSpecificParameters.add(double.class);
