@@ -19,14 +19,18 @@ import view.AppResources;
 public class InputParser {
 	 private List<Entry<String, Pattern>> mySymbols;
 	 private List<String> myMethodNames; 
-	 private ResourceBundle myCursorSyntax, myOperationSyntax;
+	 private ResourceBundle myCursorSyntax, myOperationSyntax, myTranslator;
+	 private String myLanguage; 
 	 
-     public InputParser () {
+     public InputParser (String language) {
+    	 myLanguage = language.toLowerCase(); 
          mySymbols = new ArrayList<>();
          myMethodNames = new ArrayList<>(); 
          addPatterns(AppResources.PATTERNS_STRING.getResource());//hardcoded probably need to change
-         myCursorSyntax = ResourceBundle.getBundle("cursor");//hardcoded probably need to change
-         myOperationSyntax = ResourceBundle.getBundle("operations");//hardcoded probably need to change
+         myCursorSyntax = ResourceBundle.getBundle("cursor_"+language);//hardcoded probably need to change
+         myOperationSyntax = ResourceBundle.getBundle("operations_"+language);//hardcoded probably need to change
+         System.out.println(myLanguage);
+         myTranslator = ResourceBundle.getBundle(myLanguage);
      }
  
      // adds the given resource file to this language's recognized types

@@ -26,7 +26,7 @@ public class SlogoController {
 		myLastCommand = "";
 		myCursors=new ArrayList<>();
 		myCursors.add(new Cursor());
-		myParser = new InputParser();
+		myParser = new InputParser(myDisplay.getLanguage());
 		bindUserInput(); 
 	}
 	
@@ -41,11 +41,10 @@ public class SlogoController {
 				System.out.println(myExpressionTree);
 				AbstractCommand command = myExpressionTree.createCommand();
 				double result = command.execute();
-				System.out.println("Testing:"+result);
 				
 				//receive information from backend
-				System.out.println(myCursors.get(0).getCoordinate());
 				List<Drawable>createdItems = myCursors.get(0).myCreatedItems; 
+				
 				//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
 				
 				myDisplay.getTurtleDisplay().redrawAll(createdItems);

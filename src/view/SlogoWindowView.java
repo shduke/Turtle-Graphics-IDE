@@ -63,6 +63,10 @@ public class SlogoWindowView implements Window {
     	return myTurtleDisplay;
     }
     
+    public String getLanguage(){
+    	return myLanguage; 
+    }
+    
     public static Double getAppWidth(){
     	return myAppWidth;
     }
