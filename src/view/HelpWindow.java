@@ -11,7 +11,7 @@ import javafx.scene.web.WebView;
  * @author Noel Moon (nm142)
  *
  */
-public class HelpWindow {
+public class HelpWindow implements Window {
 
 	public static final Dimension DEFAULT_SIZE = new Dimension(1000, 700);
 	

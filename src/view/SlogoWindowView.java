@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import view.InputField;
 
 /**
@@ -16,7 +17,7 @@ import view.InputField;
  * @author John Martin (jfm41)
  *
  */
-public class SlogoWindowView implements WindowView {
+public class SlogoWindowView implements Window {
     private static final double myAppWidth = AppResources.APP_WIDTH.getDoubleResource();
 	private static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();;
     
