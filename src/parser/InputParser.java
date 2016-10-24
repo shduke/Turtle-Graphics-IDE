@@ -19,14 +19,18 @@ import view.AppResources;
 public class InputParser {
 	 private List<Entry<String, Pattern>> mySymbols;
 	 private List<String> myMethodNames; 
-	 private ResourceBundle myCursorSyntax, myOperationSyntax;
+	 private ResourceBundle myCursorSyntax, myOperationSyntax, myTranslator;
+	 private String myLanguage; 
 	 
-     public InputParser () {
+     public InputParser (String language) {
+    	 myLanguage = language.toLowerCase(); 
          mySymbols = new ArrayList<>();
          myMethodNames = new ArrayList<>(); 
          addPatterns(AppResources.PATTERNS_STRING.getResource());//hardcoded probably need to change
-         myCursorSyntax = ResourceBundle.getBundle("cursor");//hardcoded probably need to change
-         myOperationSyntax = ResourceBundle.getBundle("operations");//hardcoded probably need to change
+         myCursorSyntax = ResourceBundle.getBundle("cursor_"+language);//hardcoded probably need to change
+         myOperationSyntax = ResourceBundle.getBundle("operations_"+language);//hardcoded probably need to change
+         System.out.println(myLanguage);
+         myTranslator = ResourceBundle.getBundle(myLanguage);
      }
  
      // adds the given resource file to this language's recognized types
@@ -44,6 +48,7 @@ public class InputParser {
      
      public ExpressionTree parse(String input,Cursor cursor){
     	 String[]split = input.split("\\s+");
+    	 split = fixBrackets(split);
     	 ExpressionTree construct = new ExpressionTree(); 
     	 for(int i=0;i<split.length;i++){
     		 if(getSymbol(split[i]).equals("COMMAND")){
@@ -85,6 +90,29 @@ public class InputParser {
          }
          
          return ERROR;
+     }
+     
+     private String[] fixBrackets(String[]initParse){
+    	 ArrayList<String>transfer = new ArrayList<>(); 
+    	 for(int i=0;i<initParse.length;i++){
+    		 int index =0;
+    		 for(int j=0;j<initParse[i].length();j++){
+    			 if(initParse[i].charAt(j)=='['||initParse[i].charAt(j)==']'){
+    				 transfer.add(initParse[i].substring(index, j));
+    				 transfer.add(initParse[i].charAt(j)+"");
+    				 index = j+1;
+    			 }
+    		 }
+    		 transfer.add(initParse[i].substring(index, initParse[i].length()));
+    	 }
+    	 for(int i=transfer.size()-1;i>=0;i--){
+    		 if(transfer.get(i).equals("")){
+    			 transfer.remove(i);
+    		 }
+    	 }
+    	 String[]fixed = new String[transfer.size()];
+    	 transfer.toArray(fixed);
+    	 return fixed; 
      }
  
      // returns true if the given text matches the given regular expression pattern

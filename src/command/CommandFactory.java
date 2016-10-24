@@ -13,6 +13,8 @@ import command.utility.MultiLine;
 import command.utility.Variable;
 import cursor.Coordinate;
 import cursor.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import node.ConstantNode;
 import node.CursorNode;
 import node.Node;
@@ -139,36 +141,77 @@ public abstract class CommandFactory {
             // gueue it up
             return command;
         }
+        //PROBABLY NEED TO CHANGE TO FRONT END???
         catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
+        	Alert alert = new Alert(AlertType.ERROR);
+        	alert.setTitle("Error!");
+        	alert.setHeaderText("Fatal Error!");
+        	alert.setContentText("ClassNotFoundException!");
+        	alert.showAndWait();
             e.printStackTrace();
         }
         catch (NoSuchMethodException e) {
             // TODO Auto-generated catch block
+        	Alert alert = new Alert(AlertType.ERROR);
+        	alert.setTitle("Error!");
+        	alert.setHeaderText("Fatal Error!");
+        	alert.setContentText("NoSuchMethodException!");
+        	alert.showAndWait();
             e.printStackTrace();
         }
         catch (SecurityException e) {
             // TODO Auto-generated catch block
+        	Alert alert = new Alert(AlertType.ERROR);
+        	alert.setTitle("Error!");
+        	alert.setHeaderText("Fatal Error!");
+        	alert.setContentText("SecurityException!");
+        	alert.showAndWait();
             e.printStackTrace();
         }
         catch (NoSuchFieldException e) {
             // TODO Auto-generated catch block
+        	Alert alert = new Alert(AlertType.ERROR);
+        	alert.setTitle("Error!");
+        	alert.setHeaderText("Fatal Error!");
+        	alert.setContentText("NoSuchFieldException!");
+        	alert.showAndWait();
             e.printStackTrace();
         }
         catch (IllegalArgumentException e) {
             // TODO Auto-generated catch block
+        	Alert alert = new Alert(AlertType.ERROR);
+        	alert.setTitle("Error!");
+        	alert.setHeaderText("Fatal Error!");
+        	alert.setContentText("IllegalArgumentException!");
+        	alert.showAndWait();
             e.printStackTrace();
         }
         catch (IllegalAccessException e) {
             // TODO Auto-generated catch block
+        	Alert alert = new Alert(AlertType.ERROR);
+        	alert.setTitle("Error!");
+        	alert.setHeaderText("Fatal Error!");
+        	alert.setContentText("IllegalAccessException!");
+        	alert.showAndWait();
             e.printStackTrace();
         }
         catch (InstantiationException e) {
             // TODO Auto-generated catch block
+        	Alert alert = new Alert(AlertType.ERROR);
+        	alert.setTitle("Error!");
+        	alert.setHeaderText("Fatal Error!");
+        	alert.setContentText("InstantiationException!");
+        	alert.showAndWait();
             e.printStackTrace();
         }
         catch (InvocationTargetException e) {
             // TODO Auto-generated catch block
+        	Alert alert = new Alert(AlertType.ERROR);
+        	alert.setTitle("Error!");
+        	alert.setHeaderText("Fatal Error!");
+        	alert.setContentText("InvocationTargetException!");
+        	alert.showAndWait();
             e.printStackTrace();
         }
         return null;

@@ -8,7 +8,7 @@ import javafx.scene.Scene;
  */
 public interface Window {
 	
-	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.languages/";
+	public static final String DEFAULT_RESOURCE_PACKAGE = "";
 
 	public Scene getScene();
 
