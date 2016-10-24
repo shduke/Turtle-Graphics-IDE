@@ -18,7 +18,7 @@ public class Tan extends CalculationCommand {
 
     @Override
     public double execute () {
-        return Math.tan(getFirstCommand().execute());
+        return Math.toDegrees(Math.tan(getFirstCommand().execute()));
     }
     
 }

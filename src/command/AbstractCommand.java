@@ -15,7 +15,7 @@ public abstract class AbstractCommand {
     
     public abstract double execute();
 
-    protected List<AbstractCommand> getExpression () {
+    public List<AbstractCommand> getExpression () {
         return myExpression;
     }
     
