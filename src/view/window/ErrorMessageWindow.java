@@ -1,4 +1,4 @@
-package view;
+package view.window;
 
 import java.awt.Dimension;
 
@@ -14,22 +14,23 @@ import javafx.scene.layout.BorderPane;
  * Citations: http://code.makery.ch/blog/javafx-dialogs-official/
  *
  */
-public class ErrorMessage {
+public class ErrorMessageWindow implements Window {
 	
 	public static final Dimension DEFAULT_SIZE = new Dimension(1000, 700);
 	
 	private Alert myAlert;
 	private String errorMessage;
 	
-	public ErrorMessage(String errorMessage) {
+	public ErrorMessageWindow(String errorMessage) {
 		this.errorMessage = errorMessage;
 		myAlert = new Alert(AlertType.INFORMATION, this.errorMessage);
 		myAlert.setTitle("Error");
 		myAlert.setHeaderText(null);
 	}
 
-	public void getScene() {
+	public Scene getScene() {
 		myAlert.showAndWait();
+		return null;
 	}
 
 }

@@ -1,4 +1,4 @@
-package view;
+package view.window;
 
 import java.awt.Dimension;
 import javafx.scene.Node;
@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import view.AppResources;
 
 /**
  * @author Noel Moon (nm142)
@@ -28,7 +29,7 @@ public class HelpWindow implements Window {
 		WebEngine webEngine = browser.getEngine();
 		webEngine.load(AppResources.SLOGO_COMMANDS_URL.getResource());
         
-		ErrorMessage error = new ErrorMessage(AppResources.DEFAULT_ERROR_MESSAGE.getResource());
+		ErrorMessageWindow error = new ErrorMessageWindow(AppResources.DEFAULT_ERROR_MESSAGE.getResource());
 		error.getScene();
 		
 		return browser;
@@ -36,24 +37,6 @@ public class HelpWindow implements Window {
 	
 	public Scene getScene() {
 		return myScene;
-	}
-
-	@Override
-	public History getHistory() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void clearHistory() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Display getTurtleDisplay() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	

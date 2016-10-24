@@ -15,8 +15,7 @@ public class History {
     
     private TextArea myTextArea;
     private ListChangeListener myEventHandler;
-    private ObservableList<String>myObservableList;
-    
+    private ObservableList<String> myObservableList;
     
     public History () {
         myTextArea = new TextArea();
