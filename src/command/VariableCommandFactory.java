@@ -11,11 +11,11 @@ import cursor.Cursor;
 import node.Node;
 
 public class VariableCommandFactory extends CommandFactory {
-    private Map<String, Variable> myVariableMap;
+    private String myVariableName;
     
-    public VariableCommandFactory (Map<String, Variable> variableMap) {
+    public VariableCommandFactory (String variableName) {
         super();
-        myVariableMap = variableMap;
+        myVariableName = variableName;
     }
 
     @Override

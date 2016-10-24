@@ -7,8 +7,6 @@ import java.util.Queue;
 import command.AbstractCommand;
 
 public class Variable extends AbstractCommand{
-    Queue<AbstractCommand> myCommand;
-    Queue<AbstractCommand> myParameters;
     String myVariableName;
     
     public Variable(Map<String, Variable> variableMap, List<AbstractCommand> inputs, String variableName) {

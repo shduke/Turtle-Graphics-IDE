@@ -1,21 +1,17 @@
 package node;
 
 import java.util.HashMap;
-
+import command.AbstractCommand;
+import command.ConstantCommandFactory;
+import command.VariableCommandFactory;
 import command.utility.Variable;
 
 public class VariableNode extends Node {
-	private String myValue; 
 	private String myName; //make this
 	
 	public VariableNode(String myName, String value, String name){
 		super(myName);
-		myValue = value; 
 		myName = name;
-	}
-	
-	public String getValue(){
-		return myValue; 
 	}
 	
 	public String getName(){
@@ -25,5 +21,11 @@ public class VariableNode extends Node {
 	public String toString(){
 		return "VariableNode" +"{"+this.getType()+"}";
 	}
+
+    @Override
+    public AbstractCommand createCommand () {
+        VariableCommandFactory cmf = new VariableCommandFactory(myName);
+        return cmf.createCommand(this);
+    }
 	
 }
