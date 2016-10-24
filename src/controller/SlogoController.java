@@ -44,10 +44,10 @@ public class SlogoController {
 				
 				//receive information from backend
 				System.out.println(myCursors.get(0).getCoordinate());
-				List<CreatedItem>createdItems = myCursors.get(0).myCreatedItems; 
-				List<Drawable>toFrontEnd = convertToDrawable(createdItems);
+				List<Drawable>createdItems = myCursors.get(0).myCreatedItems; 
+				//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
 				
-				myDisplay.getTurtleDisplay().redrawAll(toFrontEnd);
+				myDisplay.getTurtleDisplay().redrawAll(createdItems);
 				
 				
 			};

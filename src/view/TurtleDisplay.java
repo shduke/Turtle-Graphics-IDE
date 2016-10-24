@@ -54,8 +54,8 @@ public class TurtleDisplay implements Display {
         myBGCanvas.toBack();
         strokeCanvas();
         setBackgroundColor(AppResources.CANVAS_COLOUR.getColorResource());
-        turtleX = myCursorCanvas.getWidth()/2;
-        turtleY = myCursorCanvas.getHeight()/2;
+        turtleX = 0;
+        turtleY = 0;
         drawTurtle(turtleX, turtleY);
         
 	}
@@ -74,23 +74,30 @@ public class TurtleDisplay implements Display {
 				currentX = nextX; 
 				currentY = nextY;
 			}
-			double turtleX = coordinates.get(coordinates.size()).getX();
-			double turtleY = coordinates.get(coordinates.size()).getY();
-			drawTurtle(turtleX, turtleY);
 		}
+		List<Coordinate> turtleCoordinates = drawables.get(drawables.size()-1).getCreateItems();
+		turtleCoordinates.get(turtleCoordinates.size()-1);
+		double turtleX = turtleCoordinates.get(turtleCoordinates.size()-1).getX();
+		double turtleY = turtleCoordinates.get(turtleCoordinates.size()-1).getY();
+		System.out.println("FrontEnd Test: " + "x = " + turtleX + " y = " + turtleY);
+		drawTurtle(turtleX, turtleY);
 	}
 	
 	private void drawLine(double x1, double y1, double x2, double y2){
+		x1 = x1 + myCursorCanvas.getWidth()/2;
+		y1 = -y1 + myCursorCanvas.getHeight()/2;
+		x2 = x2 + myCursorCanvas.getWidth()/2;
+		y2 = -y2 + myCursorCanvas.getHeight()/2;
 		lineGC.setStroke(myLineStroke);
 		lineGC.setLineWidth(myLineWidth);
 		lineGC.strokeLine(x1, y1, x2, y2);
 	}
 	
 	private void drawTurtle(double x, double y){
-		turtleX = x;
-		turtleY = y;
-		double turtleCornerX = x - myTurtleWidth/2;
-		double turtleCornerY = y - myTurtleHeight/2;
+		turtleX = x + myCursorCanvas.getWidth()/2;
+		turtleY = -y + myCursorCanvas.getHeight()/2;
+		double turtleCornerX = turtleX - myTurtleWidth/2;
+		double turtleCornerY = turtleY - myTurtleHeight/2;
 		cursorGC.setFill(myTurtleFill);
         cursorGC.fillRect(turtleCornerX, turtleCornerY, myTurtleWidth, myTurtleHeight);
 	}
