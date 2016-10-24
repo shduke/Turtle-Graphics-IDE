@@ -7,6 +7,7 @@ import java.util.List;
 public class CreatedItem implements Drawable{
     List<Coordinate> myCoordinates;
     private Double myLayer;
+    private Double myOrientation;
 
 
     CreatedItem(Coordinate...coordinates) {
@@ -29,6 +30,11 @@ public class CreatedItem implements Drawable{
 
     @Override
     public double getLayer () {
+        return myLayer;
+    }
+
+    @Override
+    public double getOrientation () {
         return myLayer;
     }
 }
