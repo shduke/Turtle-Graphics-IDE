@@ -16,8 +16,10 @@ public interface Display {
 	
 	public void setBackgroundColor(Color color);
 	
+	public void setPenColor(Color color);
+	
 	public Node getStackPane();
 	
-	public void setTurtleImage();
+	public void setTurtleImage(String path);
 	
 }

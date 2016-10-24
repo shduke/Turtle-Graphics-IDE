@@ -1,5 +1,7 @@
 package view;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import cursor.Coordinate;
@@ -9,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -37,6 +40,7 @@ public class TurtleDisplay implements Display {
 	private double myTurtleWidth = AppResources.TURTLE_WIDTH.getDoubleResource();
 	private double myTurtleHeight = AppResources.TURTLE_HEIGHT.getDoubleResource();
 	private Color myTurtleFill = AppResources.TURTLE_FILL.getColorResource();
+	private Image myTurtleImage = null;
 	private double turtleX, turtleY;
 	
 	// Line Characteristics
@@ -56,6 +60,7 @@ public class TurtleDisplay implements Display {
         setBackgroundColor(AppResources.CANVAS_COLOUR.getColorResource());
         turtleX = 0;
         turtleY = 0;
+        setTurtleImage("src/images/turtle.png");
         drawTurtle(turtleX, turtleY);
         
 	}
@@ -100,6 +105,7 @@ public class TurtleDisplay implements Display {
 		double turtleCornerY = turtleY - myTurtleHeight/2;
 		cursorGC.setFill(myTurtleFill);
         cursorGC.fillRect(turtleCornerX, turtleCornerY, myTurtleWidth, myTurtleHeight);
+        cursorGC.drawImage(myTurtleImage, turtleCornerX, turtleCornerY, myTurtleWidth, myTurtleHeight);
 	}
 	
 	private void clearCanvas(){
@@ -128,8 +134,18 @@ public class TurtleDisplay implements Display {
 		bgGC.fillRect(0, 0, myBGCanvas.getWidth(), myBGCanvas.getHeight());
 	}
 	
-	public void setTurtleImage(){
-		//TODO SET TURTLE IMAGE
+	public void setPenColor(Color color){
+		myLineStroke = color;
+	}
+	
+	public void setTurtleImage(String path){
+		try {
+			Image img = new Image(new FileInputStream(path));
+			myTurtleFill = Color.TRANSPARENT;
+			myTurtleImage = img;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
