@@ -16,6 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 
 /**
  * @author John Martin
@@ -42,6 +43,7 @@ public class TurtleDisplay implements Display {
 	private Color myTurtleFill = AppResources.TURTLE_FILL.getColorResource();
 	private Image myTurtleImage = null;
 	private double turtleX, turtleY;
+	private double myTurtleOrientation = 90;
 	
 	// Line Characteristics
 	private double myLineWidth = AppResources.LINE_WIDTH.getDoubleResource();
@@ -80,11 +82,13 @@ public class TurtleDisplay implements Display {
 				currentY = nextY;
 			}
 		}
-		List<Coordinate> turtleCoordinates = drawables.get(drawables.size()-1).getCreateItems();
+		Drawable turtleDrawable = drawables.get(drawables.size()-1);
+		List<Coordinate> turtleCoordinates = turtleDrawable.getCreateItems();
 		turtleCoordinates.get(turtleCoordinates.size()-1);
 		double turtleX = turtleCoordinates.get(turtleCoordinates.size()-1).getX();
 		double turtleY = turtleCoordinates.get(turtleCoordinates.size()-1).getY();
-		System.out.println("FrontEnd Test: " + "x = " + turtleX + " y = " + turtleY);
+		myTurtleOrientation = turtleDrawable.getOrientation();
+		System.out.println("FrontEnd Test: " + "x = " + turtleX + " y = " + turtleY + "Ori: " + myTurtleOrientation);
 		drawTurtle(turtleX, turtleY);
 	}
 	
@@ -105,7 +109,16 @@ public class TurtleDisplay implements Display {
 		double turtleCornerY = turtleY - myTurtleHeight/2;
 		cursorGC.setFill(myTurtleFill);
         cursorGC.fillRect(turtleCornerX, turtleCornerY, myTurtleWidth, myTurtleHeight);
-        cursorGC.drawImage(myTurtleImage, turtleCornerX, turtleCornerY, myTurtleWidth, myTurtleHeight);
+        drawCursorImage(turtleCornerX, turtleCornerY);
+	}
+	
+	private void drawCursorImage(double cornerX, double cornerY){
+		double angle = 90 - myTurtleOrientation;
+		cursorGC.save(); // saves the current state on stack, including the current transform
+		Rotate gcRotate = new Rotate(angle, cornerX + myTurtleWidth/2, cornerY + myTurtleHeight/2);
+		cursorGC.setTransform(gcRotate.getMxx(), gcRotate.getMyx(), gcRotate.getMxy(), gcRotate.getMyy(), gcRotate.getTx(), gcRotate.getTy());
+        cursorGC.drawImage(myTurtleImage, cornerX, cornerY, myTurtleWidth, myTurtleHeight);
+        cursorGC.restore(); // back to original state (before rotation)
 	}
 	
 	private void clearCanvas(){
