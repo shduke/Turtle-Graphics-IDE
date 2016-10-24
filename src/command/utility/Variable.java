@@ -27,5 +27,6 @@ public class Variable extends AbstractCommand{
     public void setExpressione(AbstractCommand expression) {
         setExpression(Arrays.asList(expression));
     }
+    
         
 }

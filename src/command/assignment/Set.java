@@ -19,7 +19,7 @@ public class Set extends ParameterCommand{
     
     @Override
     public double execute () {
-        getVariableMap().put(getCommandFromIndex(0).toString(), createVariable());
+        getVariableMap().put(getCommandFromIndex(0).toString(), createVariable(getCommandFromIndex(1), getCommandFromIndex(0).toString()));
         return getVariableMap().get(getCommandFromIndex(0).toString()).execute();
     }
 

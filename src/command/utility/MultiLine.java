@@ -15,7 +15,6 @@ public class MultiLine extends AbstractCommand {
 
     @Override
     public double execute () {
-        //getExpression().stream().forEach(AbstractCommand::exectute); why can't I do this?
         double value = 0;
         for(AbstractCommand command : getExpression()) {
             value = command.execute();
@@ -23,11 +22,4 @@ public class MultiLine extends AbstractCommand {
         return value;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        //sb. Collectors.joining(" ");
-        getExpression().stream().map(p -> p.toString());
-        return "";
-    }
 }

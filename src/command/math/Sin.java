@@ -18,7 +18,7 @@ public class Sin extends CalculationCommand {
 
     @Override
     public double execute () {
-        return Math.sin(getFirstCommand().execute());
+        return Math.toDegrees(Math.sin(getFirstCommand().execute()));
     }
     
 }

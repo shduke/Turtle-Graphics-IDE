@@ -18,7 +18,7 @@ public class Cos extends CalculationCommand {
 
     @Override
     public double execute () {
-        return Math.cos(getFirstCommand().execute());
+        return Math.toDegrees(Math.cos(getFirstCommand().execute()));
     }
     
 }

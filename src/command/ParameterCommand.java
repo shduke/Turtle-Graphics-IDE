@@ -18,8 +18,8 @@ public abstract class ParameterCommand extends AbstractCommand {
         return myParameterMap.get(commandKey);
     }
 
-    protected Variable createVariable() {
-        return new Variable(getVariableMap(), Arrays.asList(getCommandFromIndex(1)), getCommandFromIndex(0).toString());
+    protected Variable createVariable(AbstractCommand expression, String variableName) {
+        return new Variable(getVariableMap(), Arrays.asList(expression), variableName);
     }
     
     @Override

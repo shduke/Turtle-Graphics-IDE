@@ -20,14 +20,19 @@ public class DoTimes extends ParameterCommand { //TODO - maybe subclass based on
 
     @Override
     public double execute () {
-        getVariableMap().put(DEFAULT_LOOP_VARIABLE, createVariable());
-        double expr = getFirstCommand().execute();
         double value = 0;
-        for(double i = 0; i < expr; i++) {
-            getVariableMap().get(DEFAULT_LOOP_VARIABLE).setExpressione(new Constant(getVariableMap(), new ArrayList<AbstractCommand>(), i));
-            value = getCommandFromIndex(2).execute();
+        String variable = getCommandFromIndex(0).toString().split(",")[0];
+        double limit = getCommandFromIndex(0).getExpression().get(1).execute();
+        getVariableMap().put(variable, createVariable(createConstant(value), variable));
+        while(getVariableMap().get(variable).execute() < limit) {
+            getVariableMap().get(variable).setExpressione(new Constant(getVariableMap(), new ArrayList<AbstractCommand>(), value));
+            value = getCommandFromIndex(1).execute();
         }
         return value;
     }
 
+    public Constant createConstant(double value) {
+        return new Constant(getVariableMap(), new ArrayList<AbstractCommand>(), value);
+    }
+    
 }
