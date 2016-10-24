@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import view.InputField;
+import view.window.Window;
 
 /**
  * @author Noel Moon (nm142)
@@ -29,9 +30,11 @@ public class SlogoWindowView implements Window {
     static History myHistory;
     
     private Display myTurtleDisplay;
+    private EventHandler<ActionEvent> myResetHandler;
 
     
     public SlogoWindowView(String language){
+    	myResetHandler = new ResetEvent();
         myLanguage = language;
         myCommands = initResourceBundle(language);
         BorderPane root = new BorderPane();
@@ -47,10 +50,6 @@ public class SlogoWindowView implements Window {
     
     public History getHistory(){
     	return myHistory;
-    }
-    
-    public void clearHistory(){
-    	myHistory.clear();
     }
     
     public Scene getScene () {
@@ -73,8 +72,18 @@ public class SlogoWindowView implements Window {
     	myHistory.setBinding(bind); 
     }
     
+	private class ResetEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			myHistory.clear();
+			myVC.clear();
+			InputField.myTextArea.clear();
+		}
+	}
+	
+    
     private Node makeToolbar () {
-    	Toolbar toolbar = new Toolbar(myLanguage);
+    	Toolbar toolbar = new Toolbar(myLanguage, myResetHandler);
 		return toolbar.getToolbar();
     }
     
