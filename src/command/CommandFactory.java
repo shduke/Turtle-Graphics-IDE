@@ -21,7 +21,7 @@ import node.OperationNode;
 
 public abstract class CommandFactory {
     private ResourceBundle myCommandResources;
-    public static final Map<String, Variable> myVariableMap = new HashMap<String, Variable>(); /// TODO:
+    public static final Map<String, Variable> myVariableMap = new HashMap<String, Variable>(); /// TODO: //temporary, will probably remove from abstract class
                                                                                                /// Refactor
                                                                                                /// this,
                                                                                                /// temporary

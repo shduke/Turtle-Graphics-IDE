@@ -1,5 +1,6 @@
 package command.utility;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -10,9 +11,8 @@ public class Variable extends AbstractCommand{
     Queue<AbstractCommand> myParameters;
     String myVariableName;
     
-    Variable(Map<String, Variable> variableMap, List<AbstractCommand> inputs, Queue<AbstractCommand> command, String variableName) {
+    public Variable(Map<String, Variable> variableMap, List<AbstractCommand> inputs, String variableName) {
         super(variableMap, inputs);
-        myCommand = command;
         myVariableName = variableName.toString();
     }
     
@@ -23,7 +23,11 @@ public class Variable extends AbstractCommand{
 
     @Override
     public double execute () { //execute every command in the queue
-        // TODO Auto-generated method stub
-        return 0;
+        return getFirstCommand().execute();
     }
+    
+    public void setExpressione(AbstractCommand expression) {
+        setExpression(Arrays.asList(expression));
+    }
+        
 }
