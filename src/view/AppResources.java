@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 public enum AppResources {
     APP_TITLE("SLogo 10"),
     APP_WIDTH(1300),
-    APP_HEIGHT(650),
+    APP_HEIGHT(700),
     APP_PADDING(25),
     APP_CSS("style.css"),
     
