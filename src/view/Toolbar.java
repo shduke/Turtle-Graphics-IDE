@@ -26,6 +26,14 @@ public class Toolbar extends HorizontalGUIObject {
 	public Toolbar(String language) {
 		super(language);
 		myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
+		addButtons();
+	}
+    
+	public HBox getToolbar() {
+		return myHBox;
+	}
+	
+	private void addButtons() {
 		myResetHandler = new ResetEvent();
 		myHelpHandler = new HelpEvent();
 		myLanguageHandler = new LanguageEvent();
@@ -36,14 +44,10 @@ public class Toolbar extends HorizontalGUIObject {
 		myHBox = new HBox();
 		myHBox.getChildren().add(makeButton("ResetButton", myResetHandler));
 		myHBox.getChildren().add(makeButton("HelpButton", myHelpHandler));
-		myHBox.getChildren().add(makeButton("LanguageButton", myLanguageHandler));
+		//myHBox.getChildren().add(makeButton("LanguageButton", myLanguageHandler));
 		myHBox.getChildren().add(makeButton("BackgroundButton", myBackgroundHandler));
 		myHBox.getChildren().add(makeButton("CursorImageButton", myCursorImageHandler));
 		myHBox.getChildren().add(makeButton("PenColorButton", myPenColorHandler));
-	}
-    
-	public HBox getToolbar() {
-		return myHBox;
 	}
     
 	private class ResetEvent implements EventHandler<ActionEvent> {
@@ -58,18 +62,22 @@ public class Toolbar extends HorizontalGUIObject {
 	private class HelpEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			HelpWindow display = new HelpWindow();
-			Stage helpStage = new Stage();
-			helpStage.setTitle(myResources.getString("HelpButton"));
-			helpStage.setScene(display.getScene());
-			helpStage.show();
+			HelpWindow window = new HelpWindow();
+			Stage stage = new Stage();
+			stage.setTitle(myResources.getString("HelpButton"));
+			stage.setScene(window.getScene());
+			stage.show();
 		}
 	}
 	
 	private class LanguageEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			
+			ChooseLanguageWindow window = new ChooseLanguageWindow();
+			Stage stage = new Stage();
+			stage.setTitle("Choose Language");
+			stage.setScene(window.getScene());
+			stage.show();
 		}
 	}
 	
