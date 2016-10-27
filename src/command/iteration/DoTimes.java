@@ -11,7 +11,7 @@ import command.utility.Variable;
 
 public class DoTimes extends ParameterCommand { //TODO - maybe subclass based on iteration
     private static final String DEFAULT_LOOP_VARIABLE = ":repcount";
-    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
+    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2; //replace indicies with names
     
     protected DoTimes (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
         super(variableMap, inputs);

@@ -13,8 +13,8 @@ import cursor.Coordinate;
 public class Less extends AbstractCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     
-    public Less (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
-        super(variableMap, inputs);
+    public Less (List<AbstractCommand> inputs) {
+        super(inputs);
         // TODO Auto-generated constructor stub
     }
 

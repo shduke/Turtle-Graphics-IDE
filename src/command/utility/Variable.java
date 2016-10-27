@@ -9,8 +9,8 @@ import command.AbstractCommand;
 public class Variable extends AbstractCommand{
     String myVariableName;
     
-    public Variable(Map<String, Variable> variableMap, List<AbstractCommand> inputs, String variableName) {
-        super(variableMap, inputs);
+    public Variable(List<AbstractCommand> inputs, String variableName) {
+        super(inputs);
         myVariableName = variableName.toString();
     }
     
