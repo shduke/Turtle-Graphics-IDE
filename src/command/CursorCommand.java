@@ -9,8 +9,8 @@ import cursor.Cursor;
 public abstract class CursorCommand extends AbstractCommand {
     Cursor myCursor;
 
-    protected CursorCommand (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
-        super(variableMap, inputs);
+    protected CursorCommand (Cursor cursor, List<AbstractCommand> inputs) {
+        super(inputs);
         myCursor = cursor;
     }
     

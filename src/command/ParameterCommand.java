@@ -11,7 +11,7 @@ public abstract class ParameterCommand extends AbstractCommand {
     HashMap<String, Variable> myParameterMap;
     
     protected ParameterCommand(Map<String, Variable> variableMap, List<AbstractCommand> inputs) {//myParameterMap = inputs[1]
-        super(variableMap, inputs);
+        super(inputs);
     }
 
     protected AbstractCommand getCommand(String commandKey) {
@@ -19,7 +19,7 @@ public abstract class ParameterCommand extends AbstractCommand {
     }
 
     protected Variable createVariable(AbstractCommand expression, String variableName) {
-        return new Variable(getVariableMap(), Arrays.asList(expression), variableName);
+        return new Variable(Arrays.asList(expression), variableName);
     }
     
     @Override

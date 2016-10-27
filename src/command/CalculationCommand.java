@@ -8,7 +8,7 @@ import command.utility.Variable;
 public abstract class CalculationCommand extends AbstractCommand {
 
     protected CalculationCommand (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
-        super(variableMap, inputs);
+        super(inputs);
     }
 
 }
