@@ -18,6 +18,7 @@ public class DoTimes extends ParameterCommand { //TODO - maybe subclass based on
         // TODO Auto-generated constructor stub
     }
 
+    //TODO-Make more readable by flattening data and extending command hierarchy
     @Override
     public double execute () {
         double value = 0;

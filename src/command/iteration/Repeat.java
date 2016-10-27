@@ -19,6 +19,7 @@ public class Repeat extends ParameterCommand { //TODO - maybe subclass based on 
         // TODO Auto-generated constructor stub
     }
 
+    //TODO-Make more readable by flattening data and extending command hierarchy
     @Override
     public double execute () {
         getVariableMap().put(DEFAULT_LOOP_VARIABLE, createVariable(getCommandFromIndex(1), DEFAULT_LOOP_VARIABLE));
