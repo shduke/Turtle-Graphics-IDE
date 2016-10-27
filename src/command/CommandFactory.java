@@ -4,10 +4,14 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+import command.cursor.Forward;
 import command.utility.Constant;
 import command.utility.MultiLine;
 import command.utility.Variable;
@@ -24,25 +28,10 @@ import node.OperationNode;
 public abstract class CommandFactory {
     private ResourceBundle myCommandResources;
     public static final Map<String, Variable> myVariableMap = new HashMap<String, Variable>(); /// TODO: //temporary, will probably remove from abstract class
-                                                                                               /// Refactor
-                                                                                               /// this,
-                                                                                               /// temporary
-                                                                                               /// just
-                                                                                               /// until
-                                                                                               /// we
-                                                                                               /// figure
-                                                                                               /// out
-                                                                                               /// the
-                                                                                               /// factory
-                                                                                               /// structure
-                                                                                               /// more
-                                                                                               /// (maybe
-                                                                                               /// create
-                                                                                               /// a
-                                                                                               /// headNode
-                                                                                               /// or
-                                                                                               /// an
-                                                                                               /// ExpressionFactory)
+    private List<Class> myParameterTypes;
+    private List<Object> myArguments;
+    private List<AbstractCommand> myCommandArguments;
+
     /*
      * public static Cursor testCursor = new Cursor(new Coordinate(0,0));
      * /// Just for Testing
@@ -119,11 +108,10 @@ public abstract class CommandFactory {
 
     CommandFactory () {
         myCommandResources = ResourceBundle.getBundle("commands");
-    }
-
-    protected Node getNextCommandNode (Node commandNode) {
-        commandNode = commandNode.getNext(); //TODO - is there a way to set the passed in commandNode reference to now point to this?
-        return commandNode;
+        myParameterTypes = new ArrayList<Class>(Arrays.asList(List.class));
+        myArguments = new ArrayList<Object>();
+        myCommandArguments = new ArrayList<AbstractCommand>();
+        addArguments(myCommandArguments);
     }
 
     public AbstractCommand createCommand (Node node) {
@@ -132,17 +120,15 @@ public abstract class CommandFactory {
 
             Class[] classParams = getClassParameters();
             Constructor commandConstructor = commandClass.getDeclaredConstructor(classParams);
+            //Forward.class
 
             Object[] initArgs = getClassArguments(node, getNumberOfParameters(commandClass));
 
             AbstractCommand command = (AbstractCommand) commandConstructor.newInstance(initArgs);
-            // List<MultiLine> commndList = new ArrayList();
-            // MultiLine newCommand = new MultiLine(myVariableMap, command);
-            // gueue it up
             return command;
         }
         //PROBABLY NEED TO CHANGE TO FRONT END???
-        catch (ClassNotFoundException e) {
+        catch (ClassNotFoundException e) { //TODO-@ErrorHandlerPerson throw these errors (or a new error class) with a more descriptive message to the controller and have that open an alert view
             // TODO Auto-generated catch block
         	Alert alert = new Alert(AlertType.ERROR);
         	alert.setTitle("Error!");
@@ -216,48 +202,51 @@ public abstract class CommandFactory {
         }
         return null;
     }
-
+ 
+    protected Node getNextCommandNode (Node commandNode) {
+        commandNode = commandNode.getNext(); //TODO - is there a way to set the passed in commandNode reference to now point to this?
+        return commandNode;
+    }
+    
     private int getNumberOfParameters (Class commandClass) throws NoSuchFieldException,
                                                            IllegalAccessException {
-        Field commandField = commandClass.getField("MY_NUMBER_OF_COMMAND_PARAMETERS");
+        Field commandField = commandClass.getDeclaredField("MY_NUMBER_OF_COMMAND_PARAMETERS");
+        commandField.setAccessible(true);
         int commandNumberOfParameters = commandField.getInt(null);
         return commandNumberOfParameters;
     }
-
-    protected abstract List<Class> getClassSpecificParameters ();
-
-    protected Class[] getClassParameters () {
-        List<Class> parameters = new ArrayList<Class>();
-        parameters.add(Map.class);
-        parameters.add(List.class);
-        parameters.addAll(getClassSpecificParameters());
-        return parameters.toArray(new Class[parameters.size()]);
+    
+    protected void addParameterTypes (Class ... parameters) {
+        myParameterTypes.addAll(Arrays.asList(parameters));
     }
 
-    protected abstract List<Object> getClassSpecificArguments ();
+    protected Class[] getClassParameters () {
+        return myParameterTypes.toArray(new Class[myParameterTypes.size()]);
+    }    
+    
+    protected void getClassCommandArgument (int numberOfParameters, Node node) { //Need to be able to stream Node
+        for (int i = 0; i < numberOfParameters; i++) { //node.stream().limit(numberOfParameters).forEach(CommandFactory::createNextNode)
+            node = getNextCommandNode(node);
+            AbstractCommand commandParameter = node.createCommand();
+            myCommandArguments.add(commandParameter);
+        }
+    }
+    
+    private void createNextCommand(Node node) {
+        addArguments(getNextCommandNode(node).createCommand());
+    }
+    
+    protected void addArguments (Object ... parameters) {
+        myArguments.addAll(Arrays.asList(parameters));
+    }
 
-    protected abstract List<Object> getClassCommandArgument (int numberOfParameters, Node node);
-
-    /*
-     * private MultiLine getInputCommand(int numberOfParameters, Node node) {
-     * List<Object> initParamList = new ArrayList<Object>();
-     * initParamList.add(myVariableMap);
-     * for (int i = 0; i < numberOfParameters; i++) {
-     * MultiLine commandParameter = createCommand(getNextCommandNode(node));
-     * if (node.myCommandType == "endMultiLine") {
-     * break;
-     * }
-     * initParamList.add(commandParameter);
-     * }
-     * }
-     */
-
+    protected void addCommandArguments (AbstractCommand ... parameters) {
+        myCommandArguments.addAll(Arrays.asList(parameters));
+    }
+    
     private Object[] getClassArguments (Node node, int numberOfParameters) {
-        List<Object> arguments = new ArrayList<Object>();
-        arguments.add(myVariableMap);
-        arguments.add(getClassCommandArgument(numberOfParameters, node));
-        arguments.addAll(getClassSpecificArguments());
-        return arguments.toArray(new Object[arguments.size()]);
+        getClassCommandArgument(numberOfParameters, node);
+        return myArguments.toArray(new Object[myArguments.size()]);
     }
 
     public static void main (String[] args) {
@@ -268,16 +257,16 @@ public abstract class CommandFactory {
 //         AbstractCommand command = node1.createCommand();
 //         command.execute();
 
-//         Cursor cursor = new Cursor();
-//         Node node1 = new CursorNode("command.cursor.Forward", cursor);
-//         Node node2 = new CursorNode("command.cursor.Forward", cursor);
-//         node1.setNext(node2);
-//         Node node3 = new CursorNode("command.cursor.Forward", cursor);
-//         node2.setNext(node3);
-//         Node node4 = new ConstantNode("command.utility.Constant", 10);
-//         node3.setNext(node4);
-//         AbstractCommand testCommand = node1.createCommand();
-//         testCommand.execute();
+         Cursor cursor = new Cursor();
+         Node node1 = new CursorNode("forward", cursor);
+         Node node2 = new CursorNode("forward", cursor);
+         node1.setNext(node2);
+         Node node3 = new CursorNode("forward", cursor);
+         node2.setNext(node3);
+         Node node4 = new ConstantNode("constant", 10);
+         node3.setNext(node4);
+         AbstractCommand testCommand = node1.createCommand();
+         testCommand.execute();
 
 //        Node node1 = new OperationNode("command.math.Sum");
 //        Node node2 = new ConstantNode("command.utility.Constant", 10);

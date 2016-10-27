@@ -16,32 +16,9 @@ public class VariableCommandFactory extends CommandFactory {
     public VariableCommandFactory (String variableName) {
         super();
         myVariableName = variableName;
+        addParameterTypes(String.class);
+        addArguments(myVariableName);
     }
-
-    @Override
-    protected List<Class> getClassSpecificParameters () {  //TODO - should these be stored as instance vars?
-        List<Class> classSpecificParameters = new ArrayList<Class>();
-        return classSpecificParameters;
-    }
-
-    @Override
-    protected List<Object> getClassSpecificArguments () {
-        List<Object> classSpecificArguments = new ArrayList<Object>();
-        return classSpecificArguments;
-    }
-
-    @Override
-    protected List<Object> getClassCommandArgument (int numberOfParameters, Node node) {
-        List<Object> classCommandArguments = new ArrayList<Object>();
-        for (int i = 0; i < numberOfParameters; i++) {
-            node = getNextCommandNode(node);
-            AbstractCommand commandParameter = node.createCommand();
-            classCommandArguments.add(commandParameter);
-        }
-        return classCommandArguments;
-    }
-    
-    
     
     
 }
