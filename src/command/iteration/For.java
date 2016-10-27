@@ -16,7 +16,8 @@ public class For extends ParameterCommand { //TODO - maybe subclass based on ite
         super(variableMap, inputs);
         // TODO Auto-generated constructor stub
     }
-
+    
+    //TODO-Make more readable by flattening data and extending command hierarchy
     @Override
     public double execute () {
         String variableName = getExpression().get(0).getExpression().get(0).toString();

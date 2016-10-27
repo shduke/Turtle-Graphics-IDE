@@ -14,26 +14,12 @@ public class MultiLineCommandFactory extends CommandFactory {
     }
 
     @Override
-    protected List<Class> getClassSpecificParameters () {  //TODO - should these be stored as instance vars?
-        List<Class> classSpecificParameters = new ArrayList<Class>();
-        return classSpecificParameters;
-    }
-
-    @Override
-    protected List<Object> getClassSpecificArguments () {
-        List<Object> classSpecificArguments = new ArrayList<Object>();
-        return classSpecificArguments;
-    }
-
-    @Override
-    protected List<Object> getClassCommandArgument (int numberOfParameters, Node node) { //TODO - condense into operation factory
-        List<Object> classCommandArguments = new ArrayList<Object>();
+    protected void getClassCommandArgument (int numberOfParameters, Node node) { //TODO - condense into operation factory
         while (node.getType() != MULTILINE_TERMINATOR) {
             node = getNextCommandNode(node);
             AbstractCommand commandParameter = node.createCommand();
-            classCommandArguments.add(commandParameter);
+            addCommandArguments(commandParameter);
         }
-        return classCommandArguments;
     }
     
     

@@ -5,11 +5,10 @@ import java.util.Map;
 import command.utility.Variable;
 
 public abstract class AbstractCommand {
-    private Map<String, Variable> myVariableMap;
     private List<AbstractCommand> myExpression;
+    private Map<String, AbstractCommand> myArguments;
     
-    protected AbstractCommand(Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
-        myVariableMap = variableMap;
+    protected AbstractCommand(List<AbstractCommand> inputs) {
         myExpression = inputs;
     }
     
@@ -23,10 +22,6 @@ public abstract class AbstractCommand {
         myExpression = command;
     }
     
-    protected Map<String, Variable> getVariableMap () {
-        return myVariableMap;
-    }
-    
     protected AbstractCommand getFirstCommand() {
         return getCommandFromIndex(0);
     }
@@ -35,6 +30,10 @@ public abstract class AbstractCommand {
         return myExpression.get(index);
     }
         
+    protected void setArgument(String key, AbstractCommand value) {
+        myArguments.put(key, value);
+    }
+    
     @Override
     public String toString() {
         return this.getClass().getName().toUpperCase();

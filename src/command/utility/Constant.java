@@ -5,11 +5,11 @@ import java.util.Map;
 import command.AbstractCommand;
 
 public class Constant extends AbstractCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
+    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     Double myValue;
     
-    public Constant (Map<String, Variable> variableMap, List<AbstractCommand> inputs, double value) {
-        super(variableMap, inputs);
+    public Constant (List<AbstractCommand> inputs, double value) {
+        super(inputs);
         myValue = value;
     }
 

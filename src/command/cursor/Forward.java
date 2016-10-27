@@ -11,10 +11,10 @@ import cursor.Coordinate;
 
 //TODO - use more lambdas
 public class Forward extends CursorCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
+    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
     
-    public Forward (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
-        super(variableMap, inputs, cursor);
+    public Forward (List<AbstractCommand> inputs, Cursor cursor) {
+        super(cursor, inputs);
         // TODO Auto-generated constructor stub
     }
 
