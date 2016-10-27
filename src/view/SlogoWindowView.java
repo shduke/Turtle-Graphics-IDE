@@ -5,10 +5,12 @@ import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import view.InputField;
@@ -43,7 +45,7 @@ public class SlogoWindowView implements Window {
         BorderPane root = new BorderPane();
         root.setTop(makeToolbar());
         root.setRight(makeVarDisplay());
-        root.setCenter(makeTurtleDisplay());
+        root.setCenter(new Group(makeTurtleDisplay()));
         root.setLeft(makeHistory());
         root.setBottom(makeInputField());
         root.setId("root");
@@ -98,9 +100,9 @@ public class SlogoWindowView implements Window {
         return myHistory.getHistory();
     }
     
-    private Node makeTurtleDisplay() {
+    private Group makeTurtleDisplay() {
         myTurtleDisplay = new TurtleDisplay(null);
-        return myTurtleDisplay.getStackPane();
+        return myTurtleDisplay.getGroup();
     }
     
     private Node makeVarDisplay() {

@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 
 import cursor.Drawable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
@@ -17,8 +18,8 @@ public interface Display {
 	public void setBackgroundColor(Color color);
 	
 	public void setPenColor(Color color);
-	
-	public Node getStackPane();
+		
+	public Group getGroup();
 	
 	public void setTurtleImage(String path);
 	
