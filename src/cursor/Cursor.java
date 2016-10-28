@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 public class Cursor implements Drawable{
     public List<Drawable> myCreatedItems; //maybe create a drawableObject?
     private Coordinate myCoordinate;
-    private double myOrientation;
+    private Angle myOrientation;
     private Boolean isPenDown;
     private Boolean myIsVisible;
     private String myColor;
@@ -17,7 +17,7 @@ public class Cursor implements Drawable{
     public Cursor() {
         myCreatedItems = new ArrayList<Drawable>();
         myCreatedItems.add(this); //TODO - better way to add this?
-        myOrientation = 90;
+        myOrientation = new Angle(90);
         myCoordinate = new Coordinate(0,0);
         isPenDown = false;
         myIsVisible = true;
@@ -31,11 +31,11 @@ public class Cursor implements Drawable{
 
     @Override
     public double getOrientation() {
-        return myOrientation;
+        return myOrientation.getAngle();
     }
     
-    public void setOrientation(double orientation) {
-        myOrientation = orientation % 360; //TODO - check for negative values weird module vs remainder thing
+    public double setOrientation(double angle) {
+        return myOrientation.setAngle(angle);
     }
     
     public void setCoordinate (Coordinate coordinate) {
@@ -66,6 +66,17 @@ public class Cursor implements Drawable{
         return drawCoordinates;
     }
 
+    public double move(double distance) { //TODO - is this bad?
+        myCoordinate.translate(distance, myOrientation.getAngle());
+        System.out.println(myCoordinate);
+        return distance;
+    }
+    
+    public double rotate(double degrees) {
+        myOrientation.rotate(degrees);
+        return degrees;
+    }
+    
     public Boolean getIsPenDown () {
         return isPenDown;
     }
