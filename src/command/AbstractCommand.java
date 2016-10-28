@@ -1,41 +1,33 @@
 package command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import command.utility.Variable;
 
-public abstract class AbstractCommand {
-    private List<AbstractCommand> myExpression;
-    private Map<String, AbstractCommand> myArguments;
-    
-    protected AbstractCommand(List<AbstractCommand> inputs) {
-        myExpression = inputs;
-    }
-    
-    public abstract double execute();
 
-    public List<AbstractCommand> getExpression () {
-        return myExpression;
+public abstract class AbstractCommand {
+    private List<AbstractCommand> myArguments;
+
+    protected AbstractCommand () {
+        myArguments = new ArrayList<AbstractCommand>(); // Need to preserve insertion order
+    }
+
+    protected void setArgument(AbstractCommand ... command) {
+        myArguments.addAll(Arrays.asList(command));
     }
     
-    protected void setExpression(List<AbstractCommand> command) {
-        myExpression = command;
+    protected List<Double> executeCommands() {
+        return myArguments.stream().map(AbstractCommand::execute).collect(Collectors.toList());
     }
     
-    protected AbstractCommand getFirstCommand() {
-        return getCommandFromIndex(0);
-    }
-    
-    protected AbstractCommand getCommandFromIndex(int index) {
-        return myExpression.get(index);
-    }
-        
-    protected void setArgument(String key, AbstractCommand value) {
-        myArguments.put(key, value);
-    }
-    
+    public abstract double execute ();
+
     @Override
-    public String toString() {
+    public String toString () {
         return this.getClass().getName().toUpperCase();
     }
 

@@ -26,7 +26,7 @@ import node.Node;
 import node.OperationNode;
 
 
-public abstract class CommandFactory {
+public abstract class CommandFactory { //TODO: refactor out list? maybe
     private ResourceBundle myCommandResources;
     public static final Map<String, Variable> myVariableMap = new HashMap<String, Variable>(); /// TODO: //temporary, will probably remove from abstract class
     private List<Class> myParameterTypes;
@@ -204,7 +204,7 @@ public abstract class CommandFactory {
         return null;
     }
  
-    protected Node getNextCommandNode (Node commandNode) {
+    private Node getNextCommandNode (Node commandNode) {
         commandNode = commandNode.getNext(); //TODO - is there a way to set the passed in commandNode reference to now point to this?
         return commandNode;
     }
@@ -240,26 +240,9 @@ public abstract class CommandFactory {
         Arrays.asList(inputs).stream().forEach(arg -> {addValues(myParameterTypes, arg.getClass()); addValues(myArguments, arg);});
     }
     
-//    private <E> Class getClass(E obj) {
-//        obj.getClass().g
-//        return obj;
-//    }
-    
     private <E> void addValues(List<E> container, E ... values) {
         container.addAll(Arrays.asList(values));
     }
-    
-//    protected void addParameterTypes (Class ... parameters) {
-//        myParameterTypes.addAll(Arrays.asList(parameters));
-//    }
-//    
-//    private void addArguments (Object ... parameters) {
-//        myArguments.addAll(Arrays.asList(parameters));
-//    }
-//
-//    private void addCommandArguments (AbstractCommand ... parameters) {
-//        myCommandArguments.addAll(Arrays.asList(parameters));
-//    }
     
     private Object[] getClassArguments (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException {
         getClassCommandArgument(node, commandClass);
@@ -267,7 +250,11 @@ public abstract class CommandFactory {
     }
 
     public static void main (String[] args) {
-
+//        double angle = -360;
+//        double lapAngle = 450;
+//        System.out.println(((angle % 360) + 360) % 360);
+//        System.out.println(lapAngle % 360);
+        
 //         Node node1 = new CursorNode("command.cursor.Forward");
 //         Node node2 = new ConstantNode("command.utility.Constant");
 //         node1.setNext(node2);
