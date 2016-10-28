@@ -6,12 +6,16 @@ import command.AbstractCommand;
 
 public class Constant extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
-    Double myValue;
+    double myValue;
     
     public Constant (List<AbstractCommand> inputs, Double value) {
-        super(inputs);
+        this(value);
+    }
+    
+    public Constant (Double value) {
         myValue = value;
     }
+    
 
     @Override
     public double execute () {

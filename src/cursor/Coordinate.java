@@ -21,8 +21,9 @@ public class Coordinate {
      * @param coordinate
      * @return
      */
-    public Coordinate add (Coordinate coordinate) {
-        return new Coordinate(myX + coordinate.getX(), myY + coordinate.getY());
+    public void add (Coordinate coordinate) {
+        myX += coordinate.getX();
+        myY += coordinate.getY();
     }
 
     /**
@@ -31,8 +32,9 @@ public class Coordinate {
      * @param coordinate
      * @return
      */
-    public Coordinate subtract (Coordinate coordinate) {
-        return new Coordinate(myX - coordinate.getX(), myY - coordinate.getY());
+    public void subtract (Coordinate coordinate) {
+        myX -= coordinate.getX();
+        myY -= coordinate.getY();
     }
 
     /**
@@ -41,8 +43,9 @@ public class Coordinate {
      * @param scaleFactor
      * 
      */
-    public Coordinate scale (double scaleFactor) {
-        return new Coordinate(myX * scaleFactor, myY * scaleFactor);
+    public void scale (double scaleFactor) {
+        myX *= scaleFactor;
+        myY *= scaleFactor;
     }
 
     /**
@@ -52,8 +55,9 @@ public class Coordinate {
      * @param angle
      * @return
      */
-    public Coordinate translate (double distance, double angle) {
-        return new Coordinate(myX + Math.cos(Math.toRadians(angle)) * distance, myY + Math.sin(Math.toRadians(angle)) * distance);
+    public void translate (double distance, double angle) {
+        myX += Math.cos(Math.toRadians(angle)) * distance;
+        myY += Math.sin(Math.toRadians(angle)) * distance;
     }
     
     
