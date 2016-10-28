@@ -15,6 +15,7 @@ public class Forward extends CursorCommand {
     
     public Forward (List<AbstractCommand> inputs, Cursor cursor) {
         super(cursor, inputs);
+        //addToInPutMap("distance", input[0])
         // TODO Auto-generated constructor stub
     }
 

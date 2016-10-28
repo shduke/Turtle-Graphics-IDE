@@ -14,14 +14,13 @@ public class MultiLineCommandFactory extends CommandFactory {
     }
 
     @Override
-    protected void getClassCommandArgument (int numberOfParameters, Node node) { //TODO - condense into operation factory
-        while (node.getType() != MULTILINE_TERMINATOR) {
-            node = getNextCommandNode(node);
-            AbstractCommand commandParameter = node.createCommand();
-            addCommandArguments(commandParameter);
+    protected int getLimit(Node commandNode, Class commandClass) throws NoSuchFieldException, IllegalAccessException {
+        int count = 0;
+        while(commandNode.getType() != MULTILINE_TERMINATOR) {
+            count++;
+            commandNode = commandNode.getNext();
         }
+        return count;
     }
-    
-    
-    
+ 
 }

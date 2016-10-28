@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import com.sun.org.apache.xpath.internal.Arg;
 import command.cursor.Forward;
 import command.utility.Constant;
 import command.utility.MultiLine;
@@ -111,7 +112,7 @@ public abstract class CommandFactory {
         myParameterTypes = new ArrayList<Class>(Arrays.asList(List.class));
         myArguments = new ArrayList<Object>();
         myCommandArguments = new ArrayList<AbstractCommand>();
-        addArguments(myCommandArguments);
+        addValues(myArguments, myCommandArguments);
     }
 
     public AbstractCommand createCommand (Node node) {
@@ -122,7 +123,7 @@ public abstract class CommandFactory {
             Constructor commandConstructor = commandClass.getDeclaredConstructor(classParams);
             //Forward.class
 
-            Object[] initArgs = getClassArguments(node, getNumberOfParameters(commandClass));
+            Object[] initArgs = getClassArguments(node, commandClass);
 
             AbstractCommand command = (AbstractCommand) commandConstructor.newInstance(initArgs);
             return command;
@@ -212,20 +213,19 @@ public abstract class CommandFactory {
                                                            IllegalAccessException {
         Field commandField = commandClass.getDeclaredField("MY_NUMBER_OF_COMMAND_PARAMETERS");
         commandField.setAccessible(true);
-        int commandNumberOfParameters = commandField.getInt(null);
-        return commandNumberOfParameters;
-    }
-    
-    protected void addParameterTypes (Class ... parameters) {
-        myParameterTypes.addAll(Arrays.asList(parameters));
+        return commandField.getInt(null);
     }
 
     protected Class[] getClassParameters () {
         return myParameterTypes.toArray(new Class[myParameterTypes.size()]);
     }    
     
-    protected void getClassCommandArgument (int numberOfParameters, Node node) { //Need to be able to stream Node
-        for (int i = 0; i < numberOfParameters; i++) { //node.stream().limit(numberOfParameters).forEach(CommandFactory::createNextNode)
+    protected int getLimit(Node commandNode, Class commandClass) throws NoSuchFieldException, IllegalAccessException {
+        return getNumberOfParameters(commandClass);
+    }
+    
+    protected void getClassCommandArgument (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException { //Need to be able to stream Node. @O getLimit()
+        for (int i = 0; i < getLimit(node, commandClass); i++) { //node.stream().limit(numberOfParameters).forEach(CommandFactory::createNextNode)
             node = getNextCommandNode(node);
             AbstractCommand commandParameter = node.createCommand();
             myCommandArguments.add(commandParameter);
@@ -233,19 +233,36 @@ public abstract class CommandFactory {
     }
     
     private void createNextCommand(Node node) {
-        addArguments(getNextCommandNode(node).createCommand());
+        addValues(myArguments, getNextCommandNode(node).createCommand());
     }
     
-    protected void addArguments (Object ... parameters) {
-        myArguments.addAll(Arrays.asList(parameters));
-    }
-
-    protected void addCommandArguments (AbstractCommand ... parameters) {
-        myCommandArguments.addAll(Arrays.asList(parameters));
+    protected void addParameterAndValues(Object ... inputs) {
+        Arrays.asList(inputs).stream().forEach(arg -> {addValues(myParameterTypes, arg.getClass()); addValues(myArguments, arg);});
     }
     
-    private Object[] getClassArguments (Node node, int numberOfParameters) {
-        getClassCommandArgument(numberOfParameters, node);
+//    private <E> Class getClass(E obj) {
+//        obj.getClass().g
+//        return obj;
+//    }
+    
+    private <E> void addValues(List<E> container, E ... values) {
+        container.addAll(Arrays.asList(values));
+    }
+    
+//    protected void addParameterTypes (Class ... parameters) {
+//        myParameterTypes.addAll(Arrays.asList(parameters));
+//    }
+//    
+//    private void addArguments (Object ... parameters) {
+//        myArguments.addAll(Arrays.asList(parameters));
+//    }
+//
+//    private void addCommandArguments (AbstractCommand ... parameters) {
+//        myCommandArguments.addAll(Arrays.asList(parameters));
+//    }
+    
+    private Object[] getClassArguments (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException {
+        getClassCommandArgument(node, commandClass);
         return myArguments.toArray(new Object[myArguments.size()]);
     }
 

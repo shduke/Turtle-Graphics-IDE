@@ -8,7 +8,7 @@ public class Constant extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     Double myValue;
     
-    public Constant (List<AbstractCommand> inputs, double value) {
+    public Constant (List<AbstractCommand> inputs, Double value) {
         super(inputs);
         myValue = value;
     }
