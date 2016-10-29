@@ -2,21 +2,27 @@ package behavior;
 
 import java.util.List;
 import java.util.function.DoubleUnaryOperator;
+import java.util.function.Function;
 import command.AbstractCommand;
 
-public class MovementBehavior implements ICommandExecutionBehavior{
-    private DoubleUnaryOperator myOperation;
+public class MovementBehavior extends UnaryBehavior<Double, Double>{
     private int DISTANCE_INDEX = 0;
     private int SCALEFACTOR_INDEX = 1;
-
     
-    public MovementBehavior(DoubleUnaryOperator operation) {
-        myOperation = operation;
+    public MovementBehavior (Function<Double, Double> operation) {
+        super(operation);
     }
-    
+
     @Override
-    public double executeCommand (List<Double> arguments) {
-        return myOperation.applyAsDouble(arguments.get(SCALEFACTOR_INDEX) * arguments.get(DISTANCE_INDEX) * Math.signum(arguments.get(SCALEFACTOR_INDEX)));
+    protected <R> Double getInput1 (List<Double> arguments) {
+        return arguments.get(SCALEFACTOR_INDEX) * arguments.get(DISTANCE_INDEX);
     }
 
+    @Override
+    protected double evaluateToDouble (List<Double> arguments, Double result) {
+        return result * Math.signum(arguments.get(SCALEFACTOR_INDEX));
+    }
+    
+    
+    
 }
