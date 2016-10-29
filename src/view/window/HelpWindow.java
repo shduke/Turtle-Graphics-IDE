@@ -29,8 +29,10 @@ public class HelpWindow implements Window {
 		WebEngine webEngine = browser.getEngine();
 		webEngine.load(AppResources.SLOGO_COMMANDS_URL.getResource());
         
+		/*
 		ErrorMessageWindow error = new ErrorMessageWindow(AppResources.DEFAULT_ERROR_MESSAGE.getResource());
 		error.getScene();
+		*/
 		
 		return browser;
 	}
