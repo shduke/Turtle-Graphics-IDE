@@ -8,8 +8,9 @@ public class Angle {
         setAngle(degrees);
     }
     
-    public void rotate(double degrees) {
+    public double rotate(double degrees) {
         setAngle(myAngle + degrees);
+        return myAngle;
     }
    
     private double reduceAngle(double angle) {

@@ -8,10 +8,9 @@ public class Cursor implements Drawable{
     public List<Drawable> myCreatedItems; //maybe create a drawableObject?
     private Coordinate myCoordinate;
     private Angle myOrientation;
-    private Boolean isPenDown;
     private Boolean myIsVisible;
-    private String myColor;
     private Double myLayer;
+    private Pen myPen;
     //private String dog
     
     public Cursor() {
@@ -19,10 +18,9 @@ public class Cursor implements Drawable{
         myCreatedItems.add(this); //TODO - better way to add this?
         myOrientation = new Angle(90);
         myCoordinate = new Coordinate(0,0);
-        isPenDown = false;
         myIsVisible = true;
-        myColor = "Black";
         myLayer = 10.0;
+        myPen = new Pen();
     }
 
     public Coordinate getCoordinate () {
@@ -32,6 +30,10 @@ public class Cursor implements Drawable{
     @Override
     public double getOrientation() {
         return myOrientation.getAngle();
+    }
+    
+    public Angle getAngle() {
+        return myOrientation;
     }
     
     public double setOrientation(double angle) {
@@ -50,7 +52,7 @@ public class Cursor implements Drawable{
     
     
     public void createItem(Coordinate nextCoordinate) {
-        if(!isPenDown){
+        if(!myPen.getIsPenDown()){
             myCreatedItems.add(new CreatedItem(myCoordinate, nextCoordinate));
         }
     }
@@ -67,30 +69,24 @@ public class Cursor implements Drawable{
     }
 
     public double move(double distance) { //TODO - is this bad?
-        myCoordinate.translate(distance, myOrientation.getAngle());
-        System.out.println(myCoordinate);
-        return distance;
-    }
-    
-    public double rotate(double degrees) {
-        myOrientation.rotate(degrees);
-        return degrees;
-    }
-    
-    public Boolean getIsPenDown () {
-        return isPenDown;
-    }
-
-    public void setIsPenDown (Boolean myIsPenUp) {
-        this.isPenDown = myIsPenUp;
+        return myCoordinate.translate(distance, myOrientation.getAngle());
     }
 
     public boolean getIsVisible () {
         return myIsVisible;
     }
 
-    public void setIsVisible (Boolean myIsVisible) {
-        this.myIsVisible = myIsVisible;
+    public boolean setIsVisible(double isVisible) {
+        return setIsVisible(isVisible == 1 ? 1 : 0);
+    }
+    
+    public boolean setIsVisible (Boolean isVisible) {
+        myIsVisible = isVisible;
+        return isVisible;
+    }
+    
+    public Pen getPen() {
+        return myPen;
     }
 
     @Override
