@@ -16,7 +16,7 @@ public class SetHeading extends CursorCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
 
     public SetHeading (List<AbstractCommand> inputs, Cursor cursor) {
-        super(cursor, new MovementBehavior(cursor::setOrientation), inputs.get(0), new Constant(1.0));
+        super(cursor, new MovementBehavior(cursor.getAngle()::setAngle), inputs.get(0), new Constant(1.0));
 
 
     }

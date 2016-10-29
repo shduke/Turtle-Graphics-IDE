@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import command.utility.Variable;
 
-
+//TODO: watch out for multiple parameter order of execution. Maybe use a stack
 public abstract class AbstractCommand {
     private List<AbstractCommand> myArguments;
 

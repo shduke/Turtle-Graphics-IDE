@@ -249,7 +249,17 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
         return myArguments.toArray(new Object[myArguments.size()]);
     }
 
+    
+    public static void testFunc(String ... tests) {
+        System.out.println(tests.toString());
+    }
     public static void main (String[] args) {
+          String[] test = {"Hi, ", "Sean"};
+          String blah = " blah!";
+          testFunc(blah);
+          testFunc(test);
+          //testFunc(test, blah);
+          
 //        double angle = -360;
 //        double lapAngle = 450;
 //        System.out.println(((angle % 360) + 360) % 360);
@@ -263,7 +273,7 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 
          Cursor cursor = new Cursor();
          Node node1 = new CursorNode("forward", cursor);
-         Node node2 = new CursorNode("forward", cursor);
+         Node node2 = new CursorNode("back", cursor);
          node1.setNext(node2);
          Node node3 = new CursorNode("forward", cursor);
          node2.setNext(node3);

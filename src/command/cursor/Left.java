@@ -15,7 +15,7 @@ public class Left extends CursorCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
     
     public Left (List<AbstractCommand> inputs, Cursor cursor) {
-        super(cursor, new MovementBehavior(cursor::rotate), inputs.get(0), new Constant(1.0));
+        super(cursor, new MovementBehavior(cursor.getAngle()::rotate), inputs.get(0), new Constant(1.0));
 
 
     }
