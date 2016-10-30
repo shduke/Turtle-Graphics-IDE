@@ -1,5 +1,6 @@
 package command;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -22,7 +23,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import node.ConstantNode;
 import node.CursorNode;
+import node.INode;
 import node.Node;
+import node.NodeIterator;
 import node.OperationNode;
 
 
@@ -32,6 +35,8 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
     private List<Class> myParameterTypes;
     private List<Object> myArguments;
     private List<AbstractCommand> myCommandArguments;
+    private Node currentNode;
+    private INode nodeIterator;
 
     /*
      * public static Cursor testCursor = new Cursor(new Coordinate(0,0));
@@ -109,21 +114,23 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 
     CommandFactory () {
         myCommandResources = ResourceBundle.getBundle("commands");
-        myParameterTypes = new ArrayList<Class>(Arrays.asList(List.class));
+        myParameterTypes = new ArrayList<Class>();
         myArguments = new ArrayList<Object>();
         myCommandArguments = new ArrayList<AbstractCommand>();
-        addValues(myArguments, myCommandArguments);
+        //addValues(myArguments, myCommandArguments);
     }
 
-    public AbstractCommand createCommand (Node node) {
+    public AbstractCommand createCommand (INode node) {
+        currentNode = node.current();
+        nodeIterator = node;
         try {
-            Class commandClass = Class.forName(myCommandResources.getString(node.getType()));
+            Class commandClass = Class.forName(myCommandResources.getString(currentNode.getType()));
 
             Class[] classParams = getClassParameters();
             Constructor commandConstructor = commandClass.getDeclaredConstructor(classParams);
             //Forward.class
 
-            Object[] initArgs = getClassArguments(node, commandClass);
+            Object[] initArgs = getClassArguments(currentNode, commandClass);
 
             AbstractCommand command = (AbstractCommand) commandConstructor.newInstance(initArgs);
             return command;
@@ -204,10 +211,10 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
         return null;
     }
  
-    private Node getNextCommandNode (Node commandNode) {
-        commandNode = commandNode.getNext(); //TODO - is there a way to set the passed in commandNode reference to now point to this?
-        return commandNode;
-    }
+//    private Node getNextCommandNode (Node commandNode) {
+//        commandNode = commandNode.getNext(); //TODO - is there a way to set the passed in commandNode reference to now point to this?
+//        return commandNode;
+//    }
     
     private int getNumberOfParameters (Class commandClass) throws NoSuchFieldException,
                                                            IllegalAccessException {
@@ -217,6 +224,7 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
     }
 
     protected Class[] getClassParameters () {
+        myParameterTypes.add(AbstractCommand[].class);
         return myParameterTypes.toArray(new Class[myParameterTypes.size()]);
     }    
     
@@ -225,27 +233,32 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
     }
     
     protected void getClassCommandArgument (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException { //Need to be able to stream Node. @O getLimit()
-        for (int i = 0; i < getLimit(node, commandClass); i++) { //node.stream().limit(numberOfParameters).forEach(CommandFactory::createNextNode)
-            node = getNextCommandNode(node);
-            AbstractCommand commandParameter = node.createCommand();
-            myCommandArguments.add(commandParameter);
+        for (int i = 0; i < getLimit(currentNode, commandClass); i++) { //node.stream().limit(numberOfParameters).forEach(CommandFactory::createNextNode)
+//            currentNode = getNextCommandNode(currentNode);
+//            AbstractCommand commandParameter = currentNode.createCommand();
+//            myCommandArguments.add(commandParameter);
+              nodeIterator.next();
+              myCommandArguments.add(nodeIterator.createCommand());
         }
     }
     
-    private void createNextCommand(Node node) {
-        addValues(myArguments, getNextCommandNode(node).createCommand());
-    }
+//    private void createNextCommand(Node node) {
+//        addValues(myArguments, getNextCommandNode(node).createCommand());
+//    }
     
     protected void addParameterAndValues(Object ... inputs) {
         Arrays.asList(inputs).stream().forEach(arg -> {addValues(myParameterTypes, arg.getClass()); addValues(myArguments, arg);});
     }
+    
     
     private <E> void addValues(List<E> container, E ... values) {
         container.addAll(Arrays.asList(values));
     }
     
     private Object[] getClassArguments (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException {
+        //currentNode = node; //TODO: get rid of classwide reference
         getClassCommandArgument(node, commandClass);
+        myArguments.add(myCommandArguments.toArray(new AbstractCommand[myCommandArguments.size()]));
         return myArguments.toArray(new Object[myArguments.size()]);
     }
 
@@ -272,15 +285,28 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 //         command.execute();
 
          Cursor cursor = new Cursor();
-         Node node1 = new CursorNode("forward", cursor);
+         Node node1 = new CursorNode("setxy", cursor);
          Node node2 = new CursorNode("back", cursor);
          node1.setNext(node2);
-         Node node3 = new CursorNode("forward", cursor);
+         Node node3 = new CursorNode("back", cursor);
          node2.setNext(node3);
          Node node4 = new ConstantNode("constant", 10);
          node3.setNext(node4);
-         AbstractCommand testCommand = node1.createCommand();
-         testCommand.execute();
+         Node node5 = new CursorNode("clearscreen", cursor);
+         node4.setNext(node5);
+         INode node = new NodeIterator(node1);
+         AbstractCommand testCommand = node.createCommand();
+         System.out.println(testCommand.execute());
+         
+//         Cursor cursor = new Cursor();
+//         Node node1 = new CursorNode("penup", cursor);
+//         Node node2 = new CursorNode("right", cursor);
+//         node1.setNext(node2);
+//         Node node3 = new ConstantNode("constant", 15);
+//         node2.setNext(node3);
+//         INode node = new NodeIterator(node1);
+//         AbstractCommand testCommand = node.createCommand();
+//         System.out.println(testCommand.execute());
 
 //        Node node1 = new OperationNode("command.math.Sum");
 //        Node node2 = new ConstantNode("command.utility.Constant", 10);
