@@ -9,8 +9,7 @@ public class Angle {
     }
     
     public double rotate(double degrees) {
-        setAngle(myAngle + degrees);
-        return myAngle;
+        return Math.abs(setAngle(myAngle + degrees));
     }
    
     private double reduceAngle(double angle) {
@@ -20,7 +19,8 @@ public class Angle {
     public double setAngle(double angle) {
         double difference = reduceAngle(angle) - myAngle;
         myAngle  = reduceAngle(angle);
-        return difference;
+        System.out.print(myAngle);
+        return difference * Math.signum(angle);
     }
     
     public double setAngle(double x, double y) {

@@ -40,11 +40,11 @@ public class Cursor implements Drawable{
         return myOrientation.setAngle(angle);
     }
     
-    public void setCoordinate (Coordinate coordinate) {
-        createItem(coordinate);
-        myCoordinate = coordinate;
-        System.out.println(myCoordinate);
-    }
+//    public void setCoordinate (Coordinate coordinate) {
+//        createItem(coordinate);
+//        myCoordinate = coordinate;
+//        //System.out.println(myCoordinate);
+//    }
     
     public void clearCreatedItems() {
         myCreatedItems.clear();
@@ -82,6 +82,7 @@ public class Cursor implements Drawable{
     
     public boolean setIsVisible (Boolean isVisible) {
         myIsVisible = isVisible;
+        System.out.print(myIsVisible);
         return isVisible;
     }
     

@@ -15,12 +15,14 @@ public class MovementBehavior extends UnaryBehavior<Double, Double>{
 
     @Override
     protected <R> Double getInput1 (List<Double> arguments) {
+        double blah = arguments.get(SCALEFACTOR_INDEX) * arguments.get(DISTANCE_INDEX);
         return arguments.get(SCALEFACTOR_INDEX) * arguments.get(DISTANCE_INDEX);
     }
 
     @Override
     protected double evaluateToDouble (List<Double> arguments, Double result) {
-        return result * Math.signum(arguments.get(SCALEFACTOR_INDEX));
+        double blah = result * Math.signum(arguments.get(DISTANCE_INDEX));
+        return result * Math.signum(arguments.get(DISTANCE_INDEX));
     }
     
     

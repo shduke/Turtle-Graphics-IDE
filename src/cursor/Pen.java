@@ -21,6 +21,7 @@ public class Pen {
     
     public boolean setIsPenDown (boolean isPenDown) {
         myIsPenDown = isPenDown;
+        System.out.println(myIsPenDown);
         return isPenDown;
     }
     
