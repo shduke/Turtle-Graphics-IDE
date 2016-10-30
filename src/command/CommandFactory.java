@@ -21,6 +21,7 @@ import cursor.Coordinate;
 import cursor.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import node.BracketNode;
 import node.ConstantNode;
 import node.CursorNode;
 import node.INode;
@@ -232,14 +233,38 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
         return getNumberOfParameters(commandClass);
     }
     
+    protected boolean getLoopCondition(Node commandNode, Class commandClass, int index) throws NoSuchFieldException, IllegalAccessException {
+        return index < getNumberOfParameters(commandClass);
+    }
+    
+//    protected Object getLoopVariable(int index) {
+//        return index;
+//    }
+//    
+//    protected Object getterminator(int index) {
+//        return getNumberOfParameters();
+//    }
+    
     protected void getClassCommandArgument (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException { //Need to be able to stream Node. @O getLimit()
-        for (int i = 0; i < getLimit(currentNode, commandClass); i++) { //node.stream().limit(numberOfParameters).forEach(CommandFactory::createNextNode)
+        int index = 0;
+        //nodeIterator.next();
+        while(getLoopCondition(nodeIterator.current(), commandClass, index)) {
+            nodeIterator.next();
+            if(nodeIterator.current().getType().equals("]")) {
+                nodeIterator.next();
+                break;
+            }
+            myCommandArguments.add(nodeIterator.createCommand());
+            index++;
+        }
+
+        /*for (int i = 0; i < getLimit(currentNode, commandClass); i++) { //node.stream().limit(numberOfParameters).forEach(CommandFactory::createNextNode)
 //            currentNode = getNextCommandNode(currentNode);
 //            AbstractCommand commandParameter = currentNode.createCommand();
 //            myCommandArguments.add(commandParameter);
               nodeIterator.next();
               myCommandArguments.add(nodeIterator.createCommand());
-        }
+        }*/
     }
     
 //    private void createNextCommand(Node node) {
@@ -286,27 +311,44 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 
          Cursor cursor = new Cursor();
          Node node1 = new CursorNode("setxy", cursor);
-         Node node2 = new CursorNode("back", cursor);
+         Node node2 = new CursorNode("forward", cursor);
          node1.setNext(node2);
-         Node node3 = new CursorNode("back", cursor);
+         Node node3 = new ConstantNode("constant", 10);
          node2.setNext(node3);
-         Node node4 = new ConstantNode("constant", 10);
+         Node node4 = new OperationNode("minus");
          node3.setNext(node4);
-         Node node5 = new CursorNode("clearscreen", cursor);
+         Node node5 = new ConstantNode("constant", 50);
          node4.setNext(node5);
          INode node = new NodeIterator(node1);
          AbstractCommand testCommand = node.createCommand();
-         System.out.println(testCommand.execute());
+         System.out.println("\n" + testCommand.execute());
+         System.out.println(Math.toDegrees(Math.cos(Math.toRadians(10))));
          
-//         Cursor cursor = new Cursor();
-//         Node node1 = new CursorNode("penup", cursor);
-//         Node node2 = new CursorNode("right", cursor);
-//         node1.setNext(node2);
-//         Node node3 = new ConstantNode("constant", 15);
-//         node2.setNext(node3);
-//         INode node = new NodeIterator(node1);
-//         AbstractCommand testCommand = node.createCommand();
-//         System.out.println(testCommand.execute());
+//          Cursor cursor = new Cursor();
+//          Node node1 = new OperationNode("ifelse");
+//          Node node2 = new CursorNode("forward", cursor);
+//          node1.setNext(node2);
+//          Node node3 = new ConstantNode("constant", 1);
+//          node2.setNext(node3);
+//          Node node4 = new BracketNode("multiline");
+//          node3.setNext(node4);
+//          Node node5 = new CursorNode("home", cursor);
+//          node4.setNext(node5);
+//          Node node6 = new CursorNode("forward", cursor);
+//          node5.setNext(node6);
+//          Node node7 = new ConstantNode("constant", 30);
+//          node6.setNext(node7);
+//          Node node8 = new BracketNode("]");
+//          node7.setNext(node8);
+//          Node node9 = new BracketNode("multiline");
+//          node8.setNext(node9);
+//          Node node10 = new CursorNode("heading", cursor);
+//          node9.setNext(node10);
+//          Node node11 = new BracketNode("]");
+//          node10.setNext(node11);
+//          INode node = new NodeIterator(node1);
+//          AbstractCommand testCommand = node.createCommand();
+//          System.out.println("\n" + testCommand.execute());
 
 //        Node node1 = new OperationNode("command.math.Sum");
 //        Node node2 = new ConstantNode("command.utility.Constant", 10);

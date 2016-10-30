@@ -13,14 +13,18 @@ public class MultiLineCommandFactory extends CommandFactory {
         super();
     }
 
-    @Override
-    protected int getLimit(Node commandNode, Class commandClass) throws NoSuchFieldException, IllegalAccessException {
-        int count = 0;
-        while(commandNode.getType() != MULTILINE_TERMINATOR) {
-            count++;
-            commandNode = commandNode.getNext();
-        }
-        return count;
-    }
+//    @Override
+//    protected int getLimit(Node commandNode, Class commandClass) throws NoSuchFieldException, IllegalAccessException {
+//        int count = 0;
+//        while(commandNode.getType() != MULTILINE_TERMINATOR) {
+//            count++;
+//            commandNode = commandNode.getNext();
+//        }
+//        return count;
+//    }
  
+    @Override
+    protected boolean getLoopCondition(Node commandNode, Class commandClass, int index) throws NoSuchFieldException, IllegalAccessException {
+        return !commandNode.getType().equals(MULTILINE_TERMINATOR);
+    }
 }

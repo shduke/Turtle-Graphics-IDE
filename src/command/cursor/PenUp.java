@@ -6,17 +6,16 @@ import java.util.function.Consumer;
 import behavior.CursorBehavior;
 import behavior.MovementBehavior;
 import command.AbstractCommand;
-import command.CursorCommand;
 import command.utility.Constant;
 import command.utility.Variable;
 import cursor.Cursor;
 import cursor.Coordinate;
 
-public class PenUp extends CursorCommand {
+public class PenUp extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
     public PenUp (Cursor cursor, AbstractCommand... arguments) {
-        super(cursor, new CursorBehavior(cursor.getPen()::setIsPenDown), new Constant(0.0));
+        super(new CursorBehavior(cursor.getPen()::setIsPenDown), new Constant(0.0));
     }
     
 }
