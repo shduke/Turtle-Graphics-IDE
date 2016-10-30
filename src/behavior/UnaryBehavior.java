@@ -2,7 +2,7 @@ package behavior;
 
 import java.util.List;
 import java.util.function.Function;
-//TODO - maybe refactor it so that it takes in a list of commands as its input
+//TODO - maybe refactor it so that it takes in a list of commands as its input; Also maybe put generics in the base classes
 public abstract class UnaryBehavior<E,R> implements ICommandExecutionBehavior{
     Function<E,R> myOperation;
     
