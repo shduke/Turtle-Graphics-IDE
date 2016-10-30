@@ -12,7 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import view.InputField;
-import view.window.Window;
 
 /**
  * @author Noel Moon (nm142)

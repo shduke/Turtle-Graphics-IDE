@@ -1,4 +1,4 @@
-package view.window;
+package view;
 
 import java.awt.Dimension;
 import javafx.scene.Node;
@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import view.AppResources;
 
 /**
  * @author Noel Moon (nm142)

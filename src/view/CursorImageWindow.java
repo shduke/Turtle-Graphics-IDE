@@ -1,4 +1,4 @@
-package view.window;
+package view;
 
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;

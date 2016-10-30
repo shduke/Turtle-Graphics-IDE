@@ -7,10 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import view.window.BackgroundColorWindow;
-import view.window.ChooseLanguageWindow;
-import view.window.HelpWindow;
-import view.window.PenColorWindow;
 
 
 /**
