@@ -16,8 +16,7 @@ public class VariableCommandFactory extends CommandFactory {
     public VariableCommandFactory (String variableName) {
         super();
         myVariableName = variableName;
-        addParameterTypes(String.class);
-        addArguments(myVariableName);
+        addParameterAndValues(myVariableName);
     }
     
     

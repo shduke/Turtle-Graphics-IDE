@@ -1,24 +1,14 @@
 package command.math;
 
-import java.util.List;
-import java.util.Map;
+import behavior.DoubleBinaryBehavior;
 import command.AbstractCommand;
-import command.CalculationCommand;
-import command.CursorCommand;
-import command.utility.Variable;
 import cursor.Cursor;
 
-public class Quotient extends CalculationCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
+public class Quotient extends AbstractCommand {
+    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     
-    public Quotient (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
-        super(variableMap, inputs);
-        // TODO Auto-generated constructor stub
-    }
-
-    @Override
-    public double execute () {
-        return getCommandFromIndex(0).execute() / getCommandFromIndex(1).execute();
+    public Quotient (AbstractCommand... arguments) {
+        super(new DoubleBinaryBehavior((a, b) -> a / b), arguments);
     }
     
 }

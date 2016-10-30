@@ -16,8 +16,8 @@ public class ConstantNode extends Node {
 	}
 
         @Override
-        public AbstractCommand createCommand() {
+        public AbstractCommand createCommand(INode node) {
             ConstantCommandFactory cmf = new ConstantCommandFactory(myValue);
-            return cmf.createCommand(this);
+            return cmf.createCommand(node);
         }
 }

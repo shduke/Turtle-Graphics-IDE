@@ -3,28 +3,23 @@ package command.cursor;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import behavior.DoubleBinaryBehavior;
+import behavior.MultiBehavior;
 import command.AbstractCommand;
-import command.CursorCommand;
+import command.utility.Constant;
 import command.utility.Variable;
 import cursor.Cursor;
 import cursor.Coordinate;
 
-//TODO - use more lambdas
-public class Home extends CursorCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
+public class Home extends AbstractCommand {
+    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public Home (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
-        super(variableMap, inputs, cursor);
-        // TODO Auto-generated constructor stub
+    public Home (Cursor cursor, AbstractCommand... arguments) {
+        super(new MultiBehavior(), new SetXY(cursor, 0.0, 0.0));
+    }
+    
+    public Home (Cursor cursor) {
+        this(cursor, new AbstractCommand[0]);
     }
 
-    
-    @Override
-    public double execute() {
-        Coordinate newCoordinate = new Coordinate(0,0);
-        double distance = getCursor().getCoordinate().calculateDistance(newCoordinate);
-        getCursor().setCoordinate(newCoordinate);
-        return distance;
-    }
-    
 }

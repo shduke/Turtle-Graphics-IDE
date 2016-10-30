@@ -12,8 +12,7 @@ public class ConstantCommandFactory extends CommandFactory {
     public ConstantCommandFactory (double value) {
         super();
         myValue = value;
-        addParameterTypes(double.class);
-        addArguments(myValue);
+        addParameterAndValues(myValue);
     }  
     
 }

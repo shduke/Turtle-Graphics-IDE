@@ -3,26 +3,21 @@ package command.cursor;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import behavior.DoubleBinaryBehavior;
+import behavior.MultiBehavior;
 import command.AbstractCommand;
-import command.CursorCommand;
+import command.utility.Constant;
 import command.utility.Variable;
 import cursor.Cursor;
 import cursor.Coordinate;
 
-//TODO - use more lambdas
-public class ClearScreen extends CursorCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
+public class ClearScreen extends AbstractCommand {
+    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public ClearScreen (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
-        super(variableMap, inputs, cursor);
-        // TODO Auto-generated constructor stub
+    public ClearScreen (Cursor cursor, AbstractCommand... arguments) {
+        super(new MultiBehavior(cursor::clearCreatedItems), new Home(cursor, arguments));
+
+
     }
 
-    
-    @Override
-    public double execute() {
-        getCursor().clearCreatedItems();
-        return (new Home(getVariableMap(), getExpression(), getCursor())).execute();
-    }
-    
 }

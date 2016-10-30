@@ -7,22 +7,20 @@ import java.util.function.Consumer;
 public class Cursor implements Drawable{
     public List<Drawable> myCreatedItems; //maybe create a drawableObject?
     private Coordinate myCoordinate;
-    private double myOrientation;
-    private Boolean isPenDown;
+    private Angle myOrientation;
     private Boolean myIsVisible;
-    private String myColor;
     private Double myLayer;
+    private Pen myPen;
     //private String dog
     
     public Cursor() {
         myCreatedItems = new ArrayList<Drawable>();
         myCreatedItems.add(this); //TODO - better way to add this?
-        myOrientation = 90;
+        myOrientation = new Angle(90);
         myCoordinate = new Coordinate(0,0);
-        isPenDown = false;
         myIsVisible = true;
-        myColor = "Black";
         myLayer = 10.0;
+        myPen = new Pen();
     }
 
     public Coordinate getCoordinate () {
@@ -31,18 +29,22 @@ public class Cursor implements Drawable{
 
     @Override
     public double getOrientation() {
+        return myOrientation.getAngle();
+    }
+    
+    public Angle getAngle() {
         return myOrientation;
     }
     
-    public void setOrientation(double orientation) {
-        myOrientation = orientation % 360; //TODO - check for negative values weird module vs remainder thing
+    public double setOrientation(double angle) {
+        return myOrientation.setAngle(angle);
     }
     
-    public void setCoordinate (Coordinate coordinate) {
-        createItem(coordinate);
-        myCoordinate = coordinate;
-        System.out.println(myCoordinate);
-    }
+//    public void setCoordinate (Coordinate coordinate) {
+//        createItem(coordinate);
+//        myCoordinate = coordinate;
+//        //System.out.println(myCoordinate);
+//    }
     
     public void clearCreatedItems() {
         myCreatedItems.clear();
@@ -50,7 +52,7 @@ public class Cursor implements Drawable{
     
     
     public void createItem(Coordinate nextCoordinate) {
-        if(!isPenDown){
+        if(!myPen.getIsPenDown()){
             myCreatedItems.add(new CreatedItem(myCoordinate, nextCoordinate));
         }
     }
@@ -66,20 +68,26 @@ public class Cursor implements Drawable{
         return drawCoordinates;
     }
 
-    public Boolean getIsPenDown () {
-        return isPenDown;
-    }
-
-    public void setIsPenDown (Boolean myIsPenUp) {
-        this.isPenDown = myIsPenUp;
+    public double move(double distance) { //TODO - is this bad?
+        return myCoordinate.translate(distance, myOrientation.getAngle());
     }
 
     public boolean getIsVisible () {
         return myIsVisible;
     }
 
-    public void setIsVisible (Boolean myIsVisible) {
-        this.myIsVisible = myIsVisible;
+    public boolean setIsVisible(double isVisible) {
+        return setIsVisible(isVisible == 1 ? 1 : 0);
+    }
+    
+    public boolean setIsVisible (Boolean isVisible) {
+        myIsVisible = isVisible;
+        System.out.print(myIsVisible);
+        return isVisible;
+    }
+    
+    public Pen getPen() {
+        return myPen;
     }
 
     @Override
