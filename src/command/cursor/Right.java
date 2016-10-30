@@ -15,8 +15,8 @@ import cursor.Coordinate;
 public class Right extends CursorCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
 
-    public Right (List<AbstractCommand> inputs, Cursor cursor) {
-        super(cursor, new MovementBehavior(cursor.getAngle()::rotate), inputs.get(0), new Constant(-1.0));
+    public Right (Cursor cursor, AbstractCommand... arguments) {
+        super(cursor, new MovementBehavior(cursor.getAngle()::rotate), arguments[0], new Constant(-1.0));
 
     }
 

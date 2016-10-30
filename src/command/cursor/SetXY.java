@@ -12,19 +12,16 @@ import command.utility.Variable;
 import cursor.Cursor;
 import cursor.Coordinate;
 
-//TODO - use more lambdas
+//TODO Maybe turn List<AbstractCommand> into an AbstractCommand...
 public class SetXY extends CursorCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     
-    public SetXY (List<AbstractCommand> inputs, Cursor cursor) {
-        super(cursor, new CoordinateBehavior(cursor.getCoordinate()::setCoordinate), inputs.get(0), inputs.get(1), new Constant(1.0));
+    public SetXY (Cursor cursor, AbstractCommand... arguments) {
+        super(cursor, new CoordinateBehavior(cursor.getCoordinate()::setCoordinate), arguments[0], arguments[1], new Constant(1.0));
     }
     
-    public SetXY(double x, double y, Cursor cursor) {
-//        AbstractCommand[] blah = new AbstractCommand[]{new Constant(x), new Constant(y)};
-//        Arrays.asList(blah);
-//        Arrays.asList(new AbstractCommand[]{new Constant(x), new Constant(y)});
-        super(toList(new Constant(x), new Constant(y)), cursor)
+    public SetXY(Cursor cursor, double x, double y) {
+        this(cursor, new Constant(x), new Constant(y));
     }
 
   

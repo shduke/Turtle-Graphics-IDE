@@ -10,10 +10,10 @@ import cursor.Cursor;
 import cursor.Coordinate;
 
 //TODO - use more lambdas
-public class Showing extends CursorCommand {
+public class ShowingP extends CursorCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public Showing (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
+    public ShowingP (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
         super(variableMap, inputs, cursor);
         // TODO Auto-generated constructor stub
     }

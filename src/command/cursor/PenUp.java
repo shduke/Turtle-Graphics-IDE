@@ -15,7 +15,7 @@ import cursor.Coordinate;
 public class PenUp extends CursorCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public PenUp (List<AbstractCommand> inputs, Cursor cursor) {
+    public PenUp (Cursor cursor, AbstractCommand... arguments) {
         super(cursor, new CursorBehavior(cursor.getPen()::setIsPenDown), new Constant(0.0));
     }
     

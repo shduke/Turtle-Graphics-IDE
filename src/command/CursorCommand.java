@@ -12,9 +12,10 @@ public abstract class CursorCommand extends AbstractCommand {
     ICommandExecutionBehavior myCommandExecutionBehavior;
 
     protected CursorCommand (Cursor cursor, ICommandExecutionBehavior commandExecutionBehavior, AbstractCommand ... arguments) {
+        super(arguments);
         myCursor = cursor;
         myCommandExecutionBehavior = commandExecutionBehavior;
-        setArgument(arguments);
+        //setArgument(arguments);
     }
     
     public double execute() {

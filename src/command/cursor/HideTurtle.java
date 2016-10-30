@@ -15,7 +15,7 @@ import cursor.Coordinate;
 public class HideTurtle extends CursorCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public HideTurtle (List<AbstractCommand> inputs, Cursor cursor) {
+    public HideTurtle (Cursor cursor, AbstractCommand... arguments) {
         super(cursor, new CursorBehavior(cursor::setIsVisible), new Constant(0.0));
     }
     

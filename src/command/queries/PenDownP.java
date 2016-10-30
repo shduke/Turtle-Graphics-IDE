@@ -10,10 +10,10 @@ import cursor.Cursor;
 import cursor.Coordinate;
 
 //TODO - use more lambdas
-public class PenDown extends CursorCommand {
+public class PenDownP extends CursorCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public PenDown (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
+    public PenDownP (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
         super(variableMap, inputs, cursor);
         // TODO Auto-generated constructor stub
     }

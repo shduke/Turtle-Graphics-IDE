@@ -14,8 +14,8 @@ import cursor.Coordinate;
 public class Back extends CursorCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
     
-    public Back (List<AbstractCommand> inputs, Cursor cursor) {
-        super(cursor, new MovementBehavior(cursor::move), inputs.get(0), new Constant(-1.0));
+    public Back (Cursor cursor, AbstractCommand... arguments) {
+        super(cursor, new MovementBehavior(cursor::move), arguments[0], new Constant(-1.0));
 
     }
     

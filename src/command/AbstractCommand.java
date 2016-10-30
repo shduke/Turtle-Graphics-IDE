@@ -12,8 +12,8 @@ import command.utility.Variable;
 public abstract class AbstractCommand {
     private List<AbstractCommand> myArguments;
 
-    protected AbstractCommand () {
-        myArguments = new ArrayList<AbstractCommand>(); // Need to preserve insertion order
+    protected AbstractCommand (AbstractCommand[] arguments) {
+        myArguments = Arrays.asList(arguments); // Need to preserve insertion order
     }
 
     protected void setArgument(AbstractCommand ... command) {
@@ -22,6 +22,10 @@ public abstract class AbstractCommand {
     
     protected List<Double> executeCommands() {
         return myArguments.stream().map(AbstractCommand::execute).collect(Collectors.toList());
+    }
+    
+    protected List<AbstractCommand> toList(AbstractCommand... commands) {
+        return Arrays.asList(commands);
     }
     
     public abstract double execute ();

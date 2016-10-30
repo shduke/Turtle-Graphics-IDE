@@ -13,10 +13,10 @@ import cursor.Cursor;
 import cursor.Coordinate;
 
 public class Towards extends CursorCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
+    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     
-    public Towards (List<AbstractCommand> inputs, Cursor cursor) {
-        super(cursor, new CoordinateBehavior(cursor.getAngle()::setAngle), inputs.get(0), inputs.get(1), new Constant(1.0));
+    public Towards (Cursor cursor, AbstractCommand... arguments) {
+        super(cursor, new CoordinateBehavior(cursor.getAngle()::setAngle), arguments[0], arguments[1], new Constant(1.0));
 
 
     }

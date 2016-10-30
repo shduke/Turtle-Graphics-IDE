@@ -15,7 +15,7 @@ import cursor.Coordinate;
 public class ShowTurtle extends CursorCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public ShowTurtle (List<AbstractCommand> inputs, Cursor cursor) {
+    public ShowTurtle (Cursor cursor, AbstractCommand... arguments) {
         super(cursor, new CursorBehavior(cursor::setIsVisible), new Constant(1.0));
     }
     

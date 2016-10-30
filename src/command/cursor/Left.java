@@ -11,11 +11,12 @@ import command.utility.Variable;
 import cursor.Cursor;
 import cursor.Coordinate;
 
+//TODO: somehow add CommandClass arguments to read in input arguments
 public class Left extends CursorCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
     
-    public Left (List<AbstractCommand> inputs, Cursor cursor) {
-        super(cursor, new MovementBehavior(cursor.getAngle()::rotate), inputs.get(0), new Constant(1.0));
+    public Left (Cursor cursor, AbstractCommand... arguments) {
+        super(cursor, new MovementBehavior(cursor.getAngle()::rotate), arguments[0], new Constant(1.0));
 
 
     }
