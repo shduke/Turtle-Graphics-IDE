@@ -11,7 +11,6 @@ import javafx.collections.ListChangeListener;
 import parser.ExpressionTree;
 import parser.InputParser;
 import view.ISlogoWindowView;
-import view.SlogoWindowView;
 
 public class SlogoController {
 	
@@ -22,7 +21,7 @@ public class SlogoController {
 	private List<Cursor> myCursors; 
 	private List<Drawable> myDrawables;
 	
-	public SlogoController(SlogoWindowView view){
+	public SlogoController(ISlogoWindowView view){
 		myDisplay = view; 
 		myLastCommand = "";
 		myCursors=new ArrayList<>();

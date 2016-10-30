@@ -1,4 +1,4 @@
-package view.window;
+package view;
 
 import java.awt.Dimension;
 import java.io.File;
@@ -13,9 +13,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import view.SlogoWindowView;
 
-public class ChooseLanguageWindow implements Window {
+public class ChooseLanguageWindow implements IChooseLanguageWindow {
 	
 	public static final Dimension DEFAULT_SIZE = new Dimension(200, 100);
 	
