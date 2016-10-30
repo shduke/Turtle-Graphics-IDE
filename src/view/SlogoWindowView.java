@@ -19,15 +19,16 @@ import view.window.Window;
  * @author John Martin (jfm41)
  *
  */
-public class SlogoWindowView implements Window {
-    private static final double myAppWidth = AppResources.APP_WIDTH.getDoubleResource();
-	private static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();;
+public class SlogoWindowView implements ISlogoWindowView {
+    public static final double myAppWidth = AppResources.APP_WIDTH.getDoubleResource();
+	public static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();
+	public static final String DEFAULT_RESOURCE_PACKAGE = "";
     
     protected String myLanguage;
     private Scene myScene;
-    private ResourceBundle myCommands;
+    //private ResourceBundle myCommands;
     private InputField myInputField;
-    public static VariablesAndCommands myVC;
+    private VariablesAndCommands myVC;
     public static History myHistory;
     
     private Display myTurtleDisplay;
@@ -39,7 +40,6 @@ public class SlogoWindowView implements Window {
     	myFileChooseHandler = fileChooseEvent;
     	myResetHandler = new ResetEvent();
         myLanguage = language;
-        myCommands = initResourceBundle(language);
         BorderPane root = new BorderPane();
         root.setTop(makeToolbar());
         root.setRight(makeVarDisplay());
@@ -67,11 +67,15 @@ public class SlogoWindowView implements Window {
     	return myLanguage; 
     }
     
-    public static Double getAppWidth(){
+    public VariablesAndCommands getVariablesAndCommands() {
+    	return myVC;
+    }
+    
+    public Double getAppWidth(){
     	return myAppWidth;
     }
     
-    public static Double getAppHeight(){
+    public Double getAppHeight(){
     	return myAppHeight;
     }
     
@@ -117,10 +121,6 @@ public class SlogoWindowView implements Window {
     private Node makeInputField() {
         myInputField = new InputField(myLanguage);
         return myInputField.getInputField();
-    }
-    
-    private ResourceBundle initResourceBundle(String language){
-        return ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
     }
     
 }
