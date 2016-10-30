@@ -10,11 +10,12 @@ import cursor.Drawable;
 import javafx.collections.ListChangeListener;
 import parser.ExpressionTree;
 import parser.InputParser;
+import view.ISlogoWindowView;
 import view.SlogoWindowView;
 
 public class SlogoController {
 	
-	private SlogoWindowView myDisplay; 
+	private ISlogoWindowView myDisplay; 
 	private InputParser myParser; 
 	private String myLastCommand; 
 	private ExpressionTree myExpressionTree; 
@@ -49,8 +50,8 @@ public class SlogoController {
 					//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
 					
 					myDisplay.getTurtleDisplay().redrawAll(createdItems);
-					myDisplay.myVC.addResults(""+result);
-					myDisplay.myVC.updateTextArea();
+					myDisplay.getVariablesAndCommands().addResults(""+result);
+					myDisplay.getVariablesAndCommands().updateTextArea();
 				}
 				catch (Exception e){
 					
