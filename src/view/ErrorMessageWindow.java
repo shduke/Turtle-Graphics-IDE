@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import view.slogoWindowElements.toolbarElements.Window;
 
 /**
  * @author Noel Moon (nm142)

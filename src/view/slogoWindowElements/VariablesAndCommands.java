@@ -1,4 +1,4 @@
-package view;
+package view.slogoWindowElements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.*;
 
 import javafx.scene.control.TextArea;
 
-public class VariablesAndCommands {
+public class VariablesAndCommands implements IVariablesAndCommands {
 
 	private TextArea myTextArea;
 	private Map<String, String> myVariables;
@@ -23,7 +23,7 @@ public class VariablesAndCommands {
 		myResults = new ArrayList<String>();
 	}
 	
-    public TextArea getTextArea(){
+    public TextArea getTextArea() {
     	updateTextArea();
     	return myTextArea;
     }
@@ -35,7 +35,7 @@ public class VariablesAndCommands {
     	myResults.clear(); 
     }
     
-    public void updateTextArea(){
+    public void updateTextArea() {
     	myTextArea.clear();
     	myTextArea.appendText("Variables\n\n");
     	for (String var : myVariables.keySet()) {
@@ -59,7 +59,7 @@ public class VariablesAndCommands {
     	myCommands.add(commandName);
     }
     
-    public void addResults(String result){
+    public void addResults(String result) {
     	myResults.add(result);
     }
 	

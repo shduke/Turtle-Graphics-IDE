@@ -1,19 +1,23 @@
-package view;
+package view.slogoWindowElements;
 
-import java.io.File;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import view.SlogoWindowView;
+import view.slogoWindowElements.toolbarElements.BackgroundColorWindow;
+import view.slogoWindowElements.toolbarElements.HelpWindow;
+import view.slogoWindowElements.toolbarElements.PenColorWindow;
 
 
 /**
  * @author Noel Moon (nm142)
  *
  */
-public class Toolbar extends HorizontalGUIObject {
+public class Toolbar implements IToolbar {
 
 	private EventHandler<ActionEvent> myResetHandler;
 	private EventHandler<ActionEvent> myHelpHandler;
@@ -26,15 +30,10 @@ public class Toolbar extends HorizontalGUIObject {
 	private EventHandler<ActionEvent> myFileChooseHandler;
 	
 	public Toolbar(String language, EventHandler<ActionEvent> resetHandler, EventHandler<ActionEvent> fileChooseHandler) {
-		super(language);
 		myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
 		myResetHandler = resetHandler;
-		
 		myCursorImageHandler = fileChooseHandler;
-		
 		addButtons();
-		
-		
 	}
     
 	public HBox getToolbar() {
@@ -81,5 +80,13 @@ public class Toolbar extends HorizontalGUIObject {
 			window.start();
 		}
 	}
+	
+    private Button makeButton (String property, EventHandler<ActionEvent> handler) {
+        Button result = new Button();
+        String label = myResources.getString(property);
+        result.setText(label);
+        result.setOnAction(handler);
+        return result;
+    }
 
 }

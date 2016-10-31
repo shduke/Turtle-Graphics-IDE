@@ -1,4 +1,4 @@
-package view;
+package view.chooseLanguage;
 
 import java.awt.Dimension;
 import java.io.File;
@@ -13,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import view.SlogoWindowView;
 
 public class ChooseLanguageWindow implements IChooseLanguageWindow {
 	

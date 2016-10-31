@@ -1,8 +1,8 @@
 package main;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.ChooseLanguageWindow;
-import view.IChooseLanguageWindow;
+import view.chooseLanguage.ChooseLanguageWindow;
+import view.chooseLanguage.IChooseLanguageWindow;
 
 public class Main extends Application {
 

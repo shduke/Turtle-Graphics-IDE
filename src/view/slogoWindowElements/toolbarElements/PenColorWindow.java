@@ -1,4 +1,4 @@
-package view;
+package view.slogoWindowElements.toolbarElements;
 
 import java.awt.Dimension;
 
