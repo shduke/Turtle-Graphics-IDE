@@ -46,8 +46,9 @@ public class Cursor implements Drawable{
 //        //System.out.println(myCoordinate);
 //    }
     
-    public void clearCreatedItems() {
+    public double clearCreatedItems() {
         myCreatedItems.clear();
+        return 0;
     }
     
     
