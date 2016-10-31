@@ -1,66 +1,61 @@
 package view.slogoWindowElements;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.*;
-
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
 
 public class VariablesAndCommands implements IVariablesAndCommands {
 
-	private TextArea myTextArea;
-	private Map<String, String> myVariables;
-	private List<String> myCommands;
-	private List<String> myResults; 
+	private TextArea myVariableTextArea;
+	private TextArea myCommandTextArea;
+	private TextArea myOutputTextArea;
+	private VBox myVCDisplay;
 	
 	public VariablesAndCommands() {
-		myTextArea = new TextArea();
-		myTextArea.setPrefWidth(300);
-		myTextArea.setEditable(false);
-		myVariables = new TreeMap<String, String>();
-		myCommands = new ArrayList<String>();
-		myResults = new ArrayList<String>();
+		makeVCDisplay();
 	}
 	
-    public TextArea getTextArea() {
-    	updateTextArea();
-    	return myTextArea;
+    public VBox getVCDisplay() {
+    	return myVCDisplay;
+    }
+    
+    private VBox makeVCDisplay() {
+    	myVCDisplay = new VBox();
+    	myVariableTextArea = initTextArea(myVariableTextArea);
+    	myCommandTextArea = initTextArea(myCommandTextArea);
+    	myOutputTextArea = initTextArea(myOutputTextArea);
+    	myVCDisplay.getChildren().add(new Label("Variables"));
+    	myVCDisplay.getChildren().add(myVariableTextArea);
+    	myVCDisplay.getChildren().add(new Label("Commands"));
+    	myVCDisplay.getChildren().add(myCommandTextArea);
+    	myVCDisplay.getChildren().add(new Label("Console Output"));
+    	myVCDisplay.getChildren().add(myOutputTextArea);
+    	return myVCDisplay;
+    }
+    
+    private TextArea initTextArea(TextArea ta) {
+    	ta = new TextArea();
+		ta.setPrefWidth(300);
+		ta.setEditable(false);
+		return ta;
     }
     
     public void clear() {
-    	myTextArea.clear();
-    	myVariables.clear();
-    	myCommands.clear();
-    	myResults.clear(); 
-    }
-    
-    public void updateTextArea() {
-    	myTextArea.clear();
-    	myTextArea.appendText("Variables\n\n");
-    	for (String var : myVariables.keySet()) {
-    		myTextArea.appendText(var + " = " + myVariables.get(var) + "\n");
-    	}
-    	myTextArea.appendText("------------------------\n" + "Commands\n\n");
-    	for (String commandName : myCommands) {
-    		myTextArea.appendText(commandName + "\n");
-    	}
-    	myTextArea.appendText("------------------------\n" + "Console\n\n");
-    	for(String result: myResults){
-    		myTextArea.appendText(result + "\n");
-    	}
+    	myVariableTextArea.clear();
+    	myCommandTextArea.clear();
+    	myOutputTextArea.clear();
     }
     
     public void addVariable(String varName, String varValue) {
-    	myVariables.put(varName, varValue);
+    	myVariableTextArea.appendText(varName + " = " + varValue);
     }
     
     public void addCommand(String commandName) {
-    	myCommands.add(commandName);
+    	myVariableTextArea.appendText(commandName);
     }
     
-    public void addResults(String result) {
-    	myResults.add(result);
+    public void addOutput(String output) {
+    	myOutputTextArea.appendText(output);
     }
 	
 }

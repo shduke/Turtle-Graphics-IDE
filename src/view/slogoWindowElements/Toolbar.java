@@ -2,6 +2,7 @@ package view.slogoWindowElements;
 
 import java.util.ResourceBundle;
 
+import controller.SlogoController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -20,16 +21,17 @@ import view.slogoWindowElements.toolbarElements.PenColorWindow;
 public class Toolbar implements IToolbar {
 
 	private EventHandler<ActionEvent> myResetHandler;
+	private EventHandler<ActionEvent> myNewWindowHandler;
 	private EventHandler<ActionEvent> myHelpHandler;
 	private EventHandler<ActionEvent> myBackgroundHandler;
 	private EventHandler<ActionEvent> myCursorImageHandler;
 	private EventHandler<ActionEvent> myPenColorHandler;
 	private ResourceBundle myResources;
+	private String myLanguage;
 	private HBox myHBox;
-    
-	private EventHandler<ActionEvent> myFileChooseHandler;
 	
 	public Toolbar(String language, EventHandler<ActionEvent> resetHandler, EventHandler<ActionEvent> fileChooseHandler) {
+		myLanguage = language;
 		myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
 		myResetHandler = resetHandler;
 		myCursorImageHandler = fileChooseHandler;
@@ -41,17 +43,30 @@ public class Toolbar implements IToolbar {
 	}
 	
 	private void addButtons() {
+		myNewWindowHandler = new NewWindowEvent();
 		myHelpHandler = new HelpEvent();
 		myBackgroundHandler = new BackgroundEvent();
-		//myCursorImageHandler = new CursorImageEvent();
 		myPenColorHandler = new PenColorEvent();
 		
 		myHBox = new HBox();
 		myHBox.getChildren().add(makeButton("ResetButton", myResetHandler));
-		myHBox.getChildren().add(makeButton("HelpButton", myHelpHandler));
+		myHBox.getChildren().add(makeButton("NewWindowButton", myNewWindowHandler));
 		myHBox.getChildren().add(makeButton("BackgroundButton", myBackgroundHandler));
 		myHBox.getChildren().add(makeButton("CursorImageButton", myCursorImageHandler));
 		myHBox.getChildren().add(makeButton("PenColorButton", myPenColorHandler));
+		myHBox.getChildren().add(makeButton("HelpButton", myHelpHandler));
+	}
+	
+	private class NewWindowEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			Stage slogoStage = new Stage();
+        	SlogoWindowView display = new SlogoWindowView(myLanguage, null);
+            slogoStage.setTitle("SLogo");
+            slogoStage.setScene(display.getScene());
+            slogoStage.show();
+            SlogoController slogo = new SlogoController(display);
+		}
 	}
 	
 	private class HelpEvent implements EventHandler<ActionEvent> {
