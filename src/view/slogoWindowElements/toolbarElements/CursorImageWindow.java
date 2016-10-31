@@ -1,4 +1,4 @@
-package view.window;
+package view.slogoWindowElements.toolbarElements;
 
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;

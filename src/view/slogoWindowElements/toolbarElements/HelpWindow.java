@@ -1,4 +1,4 @@
-package view.window;
+package view.slogoWindowElements.toolbarElements;
 
 import java.awt.Dimension;
 import javafx.scene.Node;
