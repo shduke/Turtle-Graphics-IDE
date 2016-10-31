@@ -3,6 +3,7 @@ package view.slogoWindowElements;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
 
 public interface IHistory {
 
@@ -16,7 +17,7 @@ public interface IHistory {
 	
 	public TextArea getTextArea();
 	
-	public TextArea getHistory();
+	public VBox getHistory();
 	
 	public void addHistory(String input);
 }

@@ -54,6 +54,10 @@ public class SlogoWindowView implements ISlogoWindowView {
     	return myHistory;
     }
     
+    public IVariablesAndCommands getVariablesAndCommands() {
+    	return myVC;
+    }
+    
     public Scene getScene () {
         return myScene;
     }
@@ -64,10 +68,6 @@ public class SlogoWindowView implements ISlogoWindowView {
     
     public String getLanguage(){
     	return myLanguage; 
-    }
-    
-    public IVariablesAndCommands getVariablesAndCommands() {
-    	return myVC;
     }
     
     public Double getAppWidth(){
@@ -108,7 +108,7 @@ public class SlogoWindowView implements ISlogoWindowView {
     
     private Node makeVarDisplay() {
     	myVC = new VariablesAndCommands();
-    	return myVC.getTextArea();
+    	return myVC.getVCDisplay();
     }
 
     private Node makeInputField() {
