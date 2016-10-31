@@ -28,11 +28,13 @@ import node.INode;
 import node.Node;
 import node.NodeIterator;
 import node.OperationNode;
+import node.ParameterNode;
+import node.VariableNode;
 
 
 public abstract class CommandFactory { //TODO: refactor out list? maybe
     private ResourceBundle myCommandResources;
-    public static final Map<String, Variable> myVariableMap = new HashMap<String, Variable>(); /// TODO: //temporary, will probably remove from abstract class
+    //public static final Map<String, Variable> myVariableMap = new HashMap<String, Variable>(); /// TODO: //temporary, will probably remove from abstract class
     private List<Class> myParameterTypes;
     private List<Object> myArguments;
     private List<AbstractCommand> myCommandArguments;
@@ -272,12 +274,17 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 //    }
     
     protected void addParameterAndValues(Object ... inputs) {
-        Arrays.asList(inputs).stream().forEach(arg -> {addValues(myParameterTypes, arg.getClass()); addValues(myArguments, arg);});
+        Arrays.asList(inputs).stream().forEach(arg -> addClassAndValue(arg.getClass(), arg));
     }
     
     
     private <E> void addValues(List<E> container, E ... values) {
         container.addAll(Arrays.asList(values));
+    }
+    
+    protected void addClassAndValue(Class commandClass, Object value) {
+        addValues(myParameterTypes, commandClass);
+        addValues(myArguments, value);
     }
     
     private Object[] getClassArguments (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException {
@@ -326,34 +333,67 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 //         System.out.println("\n" + testCommand.execute());
 //         System.out.println(Math.toDegrees(Math.cos(Math.toRadians(10))));
          
-          Cursor cursor = new Cursor();
-          Node node1 = new OperationNode("ifelse");
-          Node node2 = new CursorNode("forward", cursor);
-          node1.setNext(node2);
-          Node node3 = new ConstantNode("constant", 0);
-          node2.setNext(node3);
-          Node node4 = new BracketNode("multiline");
-          node3.setNext(node4);
-          Node node5 = new CursorNode("home", cursor);
-          node4.setNext(node5);
-          Node node6 = new CursorNode("forward", cursor);
-          node5.setNext(node6);
-          Node node7 = new ConstantNode("constant", 30);
-          node6.setNext(node7);
-          Node node8 = new BracketNode("]");
-          node7.setNext(node8);
-          Node node9 = new BracketNode("multiline");
-          node8.setNext(node9);
-          Node node10 = new CursorNode("heading", cursor);
-          node9.setNext(node10);
-          Node node11 = new ConstantNode("constant", 72);
-          node10.setNext(node11);
-          Node node12 = new BracketNode("]");
-          node11.setNext(node12);
-          INode node = new NodeIterator(node1);
-          AbstractCommand testCommand = node.createCommand();
-          System.out.println("\n" + testCommand.execute());
-
+//          Cursor cursor = new Cursor();
+//          Node node1 = new OperationNode("ifelse");
+//          Node node2 = new CursorNode("forward", cursor);
+//          node1.setNext(node2);
+//          Node node3 = new ConstantNode("constant", 0);
+//          node2.setNext(node3);
+//          Node node4 = new BracketNode("multiline");
+//          node3.setNext(node4);
+//          Node node5 = new CursorNode("home", cursor);
+//          node4.setNext(node5);
+//          Node node6 = new CursorNode("forward", cursor);
+//          node5.setNext(node6);
+//          Node node7 = new ConstantNode("constant", 30);
+//          node6.setNext(node7);
+//          Node node8 = new BracketNode("]");
+//          node7.setNext(node8);
+//          Node node9 = new BracketNode("multiline");
+//          node8.setNext(node9);
+//          Node node10 = new CursorNode("heading", cursor);
+//          node9.setNext(node10);
+//          Node node11 = new ConstantNode("constant", 72);
+//          node10.setNext(node11);
+//          Node node12 = new BracketNode("]");
+//          node11.setNext(node12);
+//          INode node = new NodeIterator(node1);
+//          AbstractCommand testCommand = node.createCommand();
+//          System.out.println("\n" + testCommand.execute());
+        Map<String, Variable> variableMap = new HashMap<String, Variable>();
+        Cursor cursor = new Cursor();
+        Node node1 = new ParameterNode("set", variableMap);
+        Node node2 = new VariableNode("variable", ":fd50", variableMap);
+        node1.setNext(node2);
+        Node node3 = new CursorNode("forward", cursor);
+        node2.setNext(node3);
+        Node node4 = new ConstantNode("constant", 50);
+        node3.setNext(node4);
+        Node node5 = new VariableNode("instance", ":fd50", variableMap);
+        node4.setNext(node5);
+        Node node6 = new ParameterNode("set", variableMap);
+        node5.setNext(node6);
+        Node node7 = new VariableNode("variable", ":fd50", variableMap);
+        node6.setNext(node7);
+        Node node8 = new CursorNode("forward", cursor);
+        node7.setNext(node8);
+        Node node9 = new ConstantNode("constant", 30);
+        node8.setNext(node9);
+        Node node10 = new VariableNode("instance", ":fd50", variableMap);
+        node9.setNext(node10); 
+        INode test1 = new NodeIterator(node1);
+        AbstractCommand test1Command = test1.createCommand();
+        System.out.println("\n" + test1Command.execute());
+        INode test2 = new NodeIterator(node5);
+        AbstractCommand test2Command = test2.createCommand();
+        System.out.println("\n" + test2Command.execute());
+        INode test3 = new NodeIterator(node6);
+        AbstractCommand test3Command = test3.createCommand();
+        System.out.println("\n" + test3Command.execute());
+        INode test4 = new NodeIterator(node10);
+        AbstractCommand test4Command = test4.createCommand();
+        System.out.println("\n" + test4Command.execute());
+          
 //        Node node1 = new OperationNode("command.math.Sum");
 //        Node node2 = new ConstantNode("command.utility.Constant", 10);
 //        Node node3 = new ConstantNode("command.utility.Constant", 20);

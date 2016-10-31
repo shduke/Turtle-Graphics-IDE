@@ -27,6 +27,11 @@ public abstract class AbstractCommand {
         return myCommandExecutionBehavior.executeCommand();
     }
 
+    protected void setCommandExecutionBehavior(ICommandExecutionBehavior commandExecutionBehavior) {
+        myCommandExecutionBehavior = commandExecutionBehavior;
+    }
+    
+    
     @Override
     public String toString () {
         return this.getClass().getName().toUpperCase();

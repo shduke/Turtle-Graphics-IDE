@@ -1,6 +1,6 @@
 package command.utility;
 
-import behavior.MultiBehavior;
+import behavior.nonexpression.MultiBehavior;
 import command.AbstractCommand;
 
 public class MultiLine extends AbstractCommand {

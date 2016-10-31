@@ -3,31 +3,29 @@ package node;
 import java.util.Map;
 import command.AbstractCommand;
 import command.ParameterCommandFactory;
-import command.VariableCommandFactory;
 import command.utility.Variable;
 
 
-public class VariableNode extends Node {
-    private Map<String, Variable> myVariableMap;
-    private String myKey;
+public class ParameterNode extends Node {
 
-    public VariableNode (String type, String key, Map<String, Variable> variableMap) {
+    private Map<String, Variable> myVariableMap;
+
+    public ParameterNode (String type, Map<String, Variable> variableMap) {
         super(type);
-        myKey = key;
         myVariableMap = variableMap;
     }
 
-    public String getKey () {
-        return myKey;
+    public Map<String, Variable> getVariableMap () {
+        return myVariableMap;
     }
 
     public String toString () {
-        return "VariableNode" + "{" + this.getType() + "}";
+        return "ParameterNode" + "{" + this.getType() + "}";
     }
 
     @Override
     public AbstractCommand createCommand (INode node) {
-        VariableCommandFactory cmf = new VariableCommandFactory(myVariableMap, myKey);
+        ParameterCommandFactory cmf = new ParameterCommandFactory(myVariableMap);
         return cmf.createCommand(node);
     }
 

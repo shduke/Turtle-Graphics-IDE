@@ -13,10 +13,11 @@ import node.Node;
 public class VariableCommandFactory extends CommandFactory {
     private String myVariableName;
     
-    public VariableCommandFactory (String variableName) {
+    public VariableCommandFactory (Map<String, Variable> variableMap, String variableName) {
         super();
         myVariableName = variableName;
-        addParameterAndValues(myVariableName);
+        addClassAndValue(Map.class, variableMap);
+        addParameterAndValues(variableName);
     }
     
     

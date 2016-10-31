@@ -1,29 +1,22 @@
 package command;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
+import command.utility.MultiLine;
 import command.utility.Variable;
+import cursor.Cursor;
+import node.Node;
 
-public abstract class ParameterCommand extends AbstractCommand {
-    HashMap<String, Variable> myParameterMap;
+
+public class ParameterCommandFactory extends CommandFactory {
     
-    protected ParameterCommand(Map<String, Variable> variableMap, List<AbstractCommand> inputs) {//myParameterMap = inputs[1]
-        super(inputs);
+    private Map<String, Variable> myVariableMap;
+
+    public ParameterCommandFactory (Map<String, Variable> variableMap) {
+        super();
+        myVariableMap = variableMap;
+        addClassAndValue(Map.class, myVariableMap);
     }
 
-    protected AbstractCommand getCommand(String commandKey) {
-        return myParameterMap.get(commandKey);
-    }
-
-    protected Variable createVariable(AbstractCommand expression, String variableName) {
-        return new Variable(Arrays.asList(expression), variableName);
-    }
-    
-    @Override
-    public abstract double execute();
-    
-    
 }
