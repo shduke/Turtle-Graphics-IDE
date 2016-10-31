@@ -24,7 +24,7 @@ public abstract class AbstractCommand {
     }
     
     public double execute () {
-        return myCommandExecutionBehavior.executeCommand(executeCommands());
+        return myCommandExecutionBehavior.executeCommand();
     }
 
     @Override
