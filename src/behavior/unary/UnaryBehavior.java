@@ -1,21 +1,24 @@
-package behavior;
+package behavior.unary;
 
 import java.util.List;
 import java.util.function.Function;
+import behavior.AbstractCommandBehavior;
+import command.AbstractCommand;
 //TODO - maybe refactor it so that it takes in a list of commands as its input; Also maybe put generics in the base classes
-public abstract class UnaryBehavior<E,R> implements ICommandExecutionBehavior{
+public abstract class UnaryBehavior<E,R> extends AbstractCommandBehavior {
     Function<E,R> myOperation;
     
-    UnaryBehavior(Function<E,R> operation) {
+    UnaryBehavior(Function<E,R> operation, AbstractCommand... arguments) {
+        super(arguments);
         myOperation = operation;
     }
     
     @Override
-    public double executeCommand(List<Double> arguments) {
-        return evaluateToDouble(arguments, myOperation.apply(getInput1(arguments)));
+    public double executeCommand() {
+        return evaluateToDouble(myOperation.apply(getInput1()));
     }
     
-    protected abstract <R> E getInput1(List<Double> arguments);
+    protected abstract <R> E getInput1();
 
-    protected abstract double evaluateToDouble(List<Double> arguments, R result);
+    protected abstract double evaluateToDouble(R result);
 }

@@ -6,6 +6,6 @@ import command.AbstractCommand;
 
 public interface ICommandExecutionBehavior {
     
-    double executeCommand(List<Double> arguments);
+    double executeCommand();
 
 }

@@ -3,22 +3,22 @@ package behavior;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+import command.AbstractCommand;
 
-//TODO - maybe refactor it so that it takes in a list of commands as its input
-public class MultiBehavior implements ICommandExecutionBehavior{
-    List<Runnable> myOperation;
+//TODO - account for 0 length multicommands (maybe a Max())
+public class MultiBehavior extends AbstractCommandBehavior{
+    private int myNumberOfCommands;
     
-    public MultiBehavior(Runnable... operation) {
-        myOperation = Arrays.asList(operation);
+    public MultiBehavior(AbstractCommand... arguments) {
+        super(arguments);
+        myNumberOfCommands = arguments.length - 1;
     }
-    
-    public MultiBehavior() {
-        myOperation = new ArrayList<Runnable>();
-    }
-    
+
     @Override
-    public double executeCommand(List<Double> arguments) {
-        myOperation.forEach(Runnable::run);
-        return arguments.get(arguments.size()-1);
+    public double executeCommand() {
+        IntStream.rangeClosed(0, myNumberOfCommands).forEach(this::getExecutionResult);
+        return getExecutionResult(myNumberOfCommands);
     }
+
 }

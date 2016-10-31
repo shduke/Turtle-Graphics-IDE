@@ -1,23 +1,26 @@
-package behavior;
+package behavior.binary;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import behavior.AbstractCommandBehavior;
+import command.AbstractCommand;
 //TODO - maybe refactor it so that it takes in a list of commands as its input
-public abstract class BinaryBehavior<E,R> implements ICommandExecutionBehavior{
+public abstract class BinaryBehavior<E,R> extends AbstractCommandBehavior {
     BiFunction<E,E,R> myOperation;
     
-    BinaryBehavior(BiFunction<E,E,R> operation) {
+    BinaryBehavior(BiFunction<E,E,R> operation, AbstractCommand... arguments) {
+        super(arguments);
         myOperation = operation;
     }
     
     @Override
-    public double executeCommand(List<Double> arguments) {
-        return evaluateToDouble(arguments, myOperation.apply(getInput1(arguments), getInput2(arguments)));
+    public double executeCommand() {
+        return evaluateToDouble(myOperation.apply(getInput1(), getInput2()));
     }
     
-    protected abstract <R> E getInput1(List<Double> arguments);
+    protected abstract <R> E getInput1();
     
-    protected abstract <R> E getInput2(List<Double> arguments);
+    protected abstract <R> E getInput2();
 
-    protected abstract double evaluateToDouble(List<Double> arguments, R result);
+    protected abstract double evaluateToDouble(R result);
 }

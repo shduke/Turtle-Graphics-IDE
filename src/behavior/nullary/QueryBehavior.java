@@ -1,8 +1,9 @@
-package behavior;
+package behavior.nullary;
 
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import behavior.ICommandExecutionBehavior;
 //TODO - maybe refactor it so that it takes in a list of commands as its input
 public abstract class QueryBehavior<R> implements ICommandExecutionBehavior{
     Supplier<R> myOperation;
@@ -12,9 +13,9 @@ public abstract class QueryBehavior<R> implements ICommandExecutionBehavior{
     }
     
     @Override
-    public double executeCommand(List<Double> arguments) {
-        return evaluateToDouble(arguments, myOperation.get());
+    public double executeCommand() {
+        return evaluateToDouble(myOperation.get());
     }
     
-    protected abstract double evaluateToDouble(List<Double> arguments, R result);
+    protected abstract double evaluateToDouble(R result);
 }

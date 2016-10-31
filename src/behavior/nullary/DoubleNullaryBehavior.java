@@ -1,4 +1,4 @@
-package behavior;
+package behavior.nullary;
 
 import java.util.List;
 import java.util.function.Function;
@@ -11,7 +11,7 @@ public class DoubleNullaryBehavior extends QueryBehavior<Double> {
     }
     
     @Override
-    protected double evaluateToDouble(List<Double> arguments, Double result) {
+    protected double evaluateToDouble(Double result) {
         return result;
     }
 }

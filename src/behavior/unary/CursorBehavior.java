@@ -1,28 +1,26 @@
-package behavior;
+package behavior.unary;
 
 import java.util.List;
 import java.util.function.Function;
+import command.AbstractCommand;
 
 public class CursorBehavior extends UnaryBehavior<Boolean, Boolean>{
     private int IS_TRUE_INDEX = 0;
     
-    public CursorBehavior (Function<Boolean, Boolean> operation) {
-        super(operation);
+    public CursorBehavior (Function<Boolean, Boolean> operation, AbstractCommand... arguments) {
+        super(operation, arguments);
     }
 
     @Override
-    protected <R> Boolean getInput1 (List<Double> arguments) {
-        return arguments.get(IS_TRUE_INDEX) == 1;
+    protected <R> Boolean getInput1 () {
+        return getExecutionResult(IS_TRUE_INDEX) == 1;
     }
 
     @Override
-    protected double evaluateToDouble (List<Double> arguments, Boolean result) {
+    protected double evaluateToDouble (Boolean result) {
         return result ? 1 : 0;
     }
     
     
     
 }
-
-//return myOperation.test(arguments.get(IS_TRUE_INDEX)) ? 1 : 0;
-
