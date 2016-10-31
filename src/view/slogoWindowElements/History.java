@@ -1,4 +1,4 @@
-package view;
+package view.slogoWindowElements;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -11,7 +11,7 @@ import javafx.scene.control.TextArea;
  * @author Noel Moon
  * @author John Martin
  */
-public class History {
+public class History implements IHistory {
     
     private TextArea myTextArea;
     private ListChangeListener myEventHandler;
@@ -25,7 +25,7 @@ public class History {
        
     }
     
-    public void setBinding(ListChangeListener bind){
+    public void setBinding(ListChangeListener bind) {
     	myEventHandler = bind; 
     	myObservableList.addListener(myEventHandler); 
     }
@@ -34,15 +34,15 @@ public class History {
     	myTextArea.clear();
     }
     
-    public String getRecentCommand(){
+    public String getRecentCommand() {
     	return myObservableList.get(myObservableList.size()-1);
     }
     
-    public ObservableList<String> getAllCommands(){
+    public ObservableList<String> getAllCommands() {
     	return myObservableList; 
     }
     
-    public TextArea getTextArea(){
+    public TextArea getTextArea() {
     	return myTextArea; 
     }
     

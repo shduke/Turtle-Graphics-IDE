@@ -4,6 +4,8 @@
 package view;
 
 import javafx.collections.ListChangeListener;
+import view.slogoWindowElements.IHistory;
+import view.slogoWindowElements.IVariablesAndCommands;
 
 /**
  * @author Noel Moon (nm142)
@@ -11,13 +13,13 @@ import javafx.collections.ListChangeListener;
  */
 public interface ISlogoWindowView {
 
-	public History getHistory();
+	public IHistory getHistory();
+	
+	public IVariablesAndCommands getVariablesAndCommands();
 	
 	public Display getTurtleDisplay();
 	
 	public String getLanguage();
-	
-	public VariablesAndCommands getVariablesAndCommands();
 	
 	public void setHistoryBinding(ListChangeListener bind);
 }

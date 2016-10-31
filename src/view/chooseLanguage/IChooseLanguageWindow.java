@@ -1,4 +1,4 @@
-package view;
+package view.chooseLanguage;
 
 public interface IChooseLanguageWindow {
 

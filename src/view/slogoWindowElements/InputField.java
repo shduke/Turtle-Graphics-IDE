@@ -1,24 +1,35 @@
-package view;
+package view.slogoWindowElements;
+
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import view.SlogoWindowView;
 
 /**
  * @author Noel Moon
  *
  */
-public class InputField extends HorizontalGUIObject {
+public class InputField implements IInputField {
     
-    static TextArea myTextArea;
+    public static TextArea myTextArea;
     private EventHandler<ActionEvent> myEnterHandler;
+    private ResourceBundle myResources;
     
     public InputField(String language) {
-        super(language);
+        myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
         myEnterHandler = new EnterEvent();
         myTextArea = makeInputField((int) (SlogoWindowView.myAppWidth * 0.075), myEnterHandler);
+    }
+
+    public HBox getInputField() {
+        HBox result = new HBox();
+        result.getChildren().add(myTextArea);
+        result.getChildren().add(makeButton("EnterCommand", myEnterHandler));
+        return result;
     }
     
     private class EnterEvent implements EventHandler<ActionEvent> {
@@ -29,13 +40,6 @@ public class InputField extends HorizontalGUIObject {
             myTextArea.clear();
         }
     }
-
-    protected HBox getInputField() {
-        HBox result = new HBox();
-        result.getChildren().add(myTextArea);
-        result.getChildren().add(makeButton("EnterCommand", myEnterHandler));
-        return result;
-    }
     
     private TextArea makeInputField (int width, EventHandler<ActionEvent> handler) {
         TextArea result = new TextArea();
@@ -45,5 +49,11 @@ public class InputField extends HorizontalGUIObject {
         return result;
     }
     
-    
+    private Button makeButton (String property, EventHandler<ActionEvent> handler) {
+        Button result = new Button();
+        String label = myResources.getString(property);
+        result.setText(label);
+        result.setOnAction(handler);
+        return result;
+    }
 }

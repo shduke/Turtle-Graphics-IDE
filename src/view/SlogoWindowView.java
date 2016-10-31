@@ -1,17 +1,19 @@
 package view;
 
-import java.util.ResourceBundle;
-
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import view.InputField;
+import view.slogoWindowElements.History;
+import view.slogoWindowElements.IHistory;
+import view.slogoWindowElements.IInputField;
+import view.slogoWindowElements.IToolbar;
+import view.slogoWindowElements.IVariablesAndCommands;
+import view.slogoWindowElements.InputField;
+import view.slogoWindowElements.Toolbar;
+import view.slogoWindowElements.VariablesAndCommands;
 
 /**
  * @author Noel Moon (nm142)
@@ -23,17 +25,15 @@ public class SlogoWindowView implements ISlogoWindowView {
 	public static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();
 	public static final String DEFAULT_RESOURCE_PACKAGE = "";
     
-    protected String myLanguage;
-    private Scene myScene;
-    //private ResourceBundle myCommands;
-    private InputField myInputField;
-    private VariablesAndCommands myVC;
-    public static History myHistory;
+    public static IHistory myHistory;
     
+    private String myLanguage;
+    private Scene myScene;
+    private IInputField myInputField;
+    private IVariablesAndCommands myVC;
     private Display myTurtleDisplay;
     private EventHandler<ActionEvent> myResetHandler;
     private EventHandler<ActionEvent> myFileChooseHandler;
-
     
     public SlogoWindowView(String language, EventHandler<ActionEvent> fileChooseEvent){
     	myFileChooseHandler = fileChooseEvent;
@@ -50,7 +50,7 @@ public class SlogoWindowView implements ISlogoWindowView {
         myScene.getStylesheets().add(getClass().getResource(AppResources.APP_CSS.getResource()).toExternalForm());
     }
     
-    public History getHistory(){
+    public IHistory getHistory(){
     	return myHistory;
     }
     
@@ -66,7 +66,7 @@ public class SlogoWindowView implements ISlogoWindowView {
     	return myLanguage; 
     }
     
-    public VariablesAndCommands getVariablesAndCommands() {
+    public IVariablesAndCommands getVariablesAndCommands() {
     	return myVC;
     }
     
@@ -92,7 +92,7 @@ public class SlogoWindowView implements ISlogoWindowView {
 	}
     
     private Node makeToolbar () {
-    	Toolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooseHandler);
+    	IToolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooseHandler);
 		return toolbar.getToolbar();
     }
     
@@ -108,12 +108,6 @@ public class SlogoWindowView implements ISlogoWindowView {
     
     private Node makeVarDisplay() {
     	myVC = new VariablesAndCommands();
-    	myVC.addVariable("x", "1");
-    	myVC.addVariable("x", "2");
-    	myVC.addVariable("y", "fheio");
-    	myVC.addVariable("x", "sfioj");
-    	myVC.addCommand("command5");
-    	myVC.addCommand("command3");
     	return myVC.getTextArea();
     }
 
