@@ -5,9 +5,9 @@ import java.util.function.Function;
 import command.AbstractCommand;
 
 public class ConditionalUnaryBehavior extends UnaryBehavior<Double, Boolean>{
-    private int IS_TRUE_INDEX = 0;
-    private int TRUE_BRANCH_INDEX = 1;
-    private int FALSE_BRANCH_INDEX = 2;
+    private static final int IS_TRUE_INDEX = 0;
+    private static final int TRUE_BRANCH_INDEX = 1;
+    private static final int FALSE_BRANCH_INDEX = 2;
     
     public ConditionalUnaryBehavior (Function<Double, Boolean> operation, AbstractCommand... arguments) {
         super(operation, arguments);

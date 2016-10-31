@@ -6,8 +6,8 @@ import java.util.function.Function;
 import command.AbstractCommand;
 
 public class MovementBehavior extends UnaryBehavior<Double, Double>{
-    private int DISTANCE_INDEX = 0;
-    private int SCALEFACTOR_INDEX = 1;
+    private static final int DISTANCE_INDEX = 0;
+    private static final int SCALEFACTOR_INDEX = 1;
     
     public MovementBehavior (Function<Double, Double> operation, AbstractCommand... arguments) {
         super(operation, arguments);

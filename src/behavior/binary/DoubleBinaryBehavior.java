@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.function.BiFunction;
 import command.AbstractCommand;
 
-public class DoubleBinaryBehavior extends BinaryBehavior<Double, Double> {
-    private int INPUT1_INDEX = 0;
-    private int INPUT2_INDEX = 1;
+public class DoubleBinaryBehavior extends BinaryBehavior<Double, Double, Double> {
+    private static final int INPUT1_INDEX = 0;
+    private static final int INPUT2_INDEX = 1;
     
     
     public DoubleBinaryBehavior(BiFunction<Double,Double,Double> operation, AbstractCommand... arguments) {

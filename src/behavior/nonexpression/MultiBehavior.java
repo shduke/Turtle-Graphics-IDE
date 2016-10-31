@@ -1,9 +1,10 @@
-package behavior;
+package behavior.nonexpression;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+import behavior.AbstractCommandBehavior;
 import command.AbstractCommand;
 
 //TODO - account for 0 length multicommands (maybe a Max())

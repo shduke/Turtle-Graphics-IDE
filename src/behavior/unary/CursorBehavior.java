@@ -5,7 +5,7 @@ import java.util.function.Function;
 import command.AbstractCommand;
 
 public class CursorBehavior extends UnaryBehavior<Boolean, Boolean>{
-    private int IS_TRUE_INDEX = 0;
+    private static final int IS_TRUE_INDEX = 0;
     
     public CursorBehavior (Function<Boolean, Boolean> operation, AbstractCommand... arguments) {
         super(operation, arguments);

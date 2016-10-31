@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 import command.AbstractCommand;
 
-public class BooleanBinaryBehavior extends BinaryBehavior<Double, Boolean> {
+public class BooleanBinaryBehavior extends BinaryBehavior<Double, Double, Boolean> {
     private static final int INPUT1_INDEX = 0;
     private static final int INPUT2_INDEX = 1;
     

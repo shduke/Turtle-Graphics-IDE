@@ -35,6 +35,10 @@ public abstract class AbstractCommandBehavior implements ICommandExecutionBehavi
         myExecutionResults.put(index, new NullValueHolder(index));
     }
     
+    protected AbstractCommand getArgument(int index) {
+        return myArguments.get(index);
+    }
+    
     @Override
     public abstract double executeCommand ();
     
