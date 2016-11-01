@@ -50,6 +50,7 @@ public class TurtleDisplay implements Display {
 	
 	// New Stuff for Nodes
 	private Rectangle myTurtle;
+	private ImageView myTurtleImageView;
 	
 	public TurtleDisplay(EventHandler<ActionEvent> event) {
 		initPane(myBackgroundPane);
@@ -57,7 +58,10 @@ public class TurtleDisplay implements Display {
 		initPane(myTurtlePane);
         turtleX = 0;
         turtleY = 0;
-        drawTurtle(turtleX, turtleY);
+        setTurtleImage("src/images/turtle.png");
+        myTurtle = drawTurtle(turtleX, turtleY);
+        myTurtleImageView = drawCursorImage(myTurtleImage, turtleX, turtleY);
+        myTurtle.setFill(Color.TRANSPARENT);
 	}
 	
 	public void initPane(Pane p){
@@ -88,7 +92,8 @@ public class TurtleDisplay implements Display {
 		double turtleY = turtleCoordinates.get(turtleCoordinates.size()-1).getY();
 		myTurtleOrientation = turtleDrawable.getOrientation();
 		System.out.println("FrontEnd Test: " + "x = " + turtleX + " y = " + turtleY + "Ori: " + myTurtleOrientation);
-		redrawTurtle(turtleX, turtleY);
+		setRectangle(myTurtle, turtleX, turtleY);
+		setImageView(myTurtleImageView, turtleX, turtleY);
 	}
 	
 	private void checkForLine(double x1, double y1, double x2, double y2){
@@ -112,34 +117,40 @@ public class TurtleDisplay implements Display {
 		myLinePane.getChildren().add(newLine);
 	}
 	
-	private void redrawTurtle(double x, double y){
+	private void setRectangle(Rectangle t, double x, double y){
 		x += myPaneWidth/2;
 		y += myPaneHeight/2;
 		double leftX = x - myTurtleWidth/2;
 		double topY = y - myTurtleHeight/2;
-		myTurtle.setX(leftX);
-		myTurtle.setY(topY);
+		t.setX(leftX);
+		t.setY(topY);
 	}
 	
-	private void drawTurtle(double x, double y){
+	private void setImageView(ImageView iv, double x, double y){
 		x += myPaneWidth/2;
 		y += myPaneHeight/2;
 		double leftX = x - myTurtleWidth/2;
 		double topY = y - myTurtleHeight/2;
-		Rectangle turtleRect = new Rectangle(leftX, topY, myTurtleWidth, myTurtleHeight);
-		turtleRect.setFill(Color.RED);
-		myTurtlePane.getChildren().add(turtleRect);
-		myTurtle = turtleRect;
+		iv.setX(leftX);
+		iv.setY(topY);
 	}
 	
-	private void drawCursorImage(double cornerX, double cornerY){
-		if (myTurtleImage != null){
-			ImageView turtleImageView = new ImageView(myTurtleImage);
-			turtleImageView.setRotate(myTurtleOrientation);
-			myTurtlePane.getChildren().add(turtleImageView);
-			myTurtle.setFill(Color.TRANSPARENT);
-		}
-		// Rotate Cursor Image
+	private Rectangle drawTurtle(double x, double y){
+		Rectangle r = new Rectangle(x, y, myTurtleWidth, myTurtleHeight);
+		r.setFill(Color.RED);
+		myTurtlePane.getChildren().add(r);
+		setRectangle(r, x, y);
+		return r;
+	}
+	
+	private ImageView drawCursorImage(Image img, double x, double y){
+		ImageView imgView = new ImageView(img);
+		imgView.setFitWidth(myTurtleWidth);
+		imgView.setFitHeight(myTurtleHeight);
+		imgView.setRotate(myTurtleOrientation);
+		myTurtlePane.getChildren().add(imgView);
+		setImageView(imgView, x, y);
+		return imgView;
 	}
 		
 	private void strokePane(){
