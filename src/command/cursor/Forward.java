@@ -1,28 +1,16 @@
 package command.cursor;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
+import behavior.MovementBehavior;
 import command.AbstractCommand;
-import command.CursorCommand;
-import command.utility.Variable;
+import command.utility.Constant;
 import cursor.Cursor;
-import cursor.Coordinate;
 
-//TODO - use more lambdas
-public class Forward extends CursorCommand {
+public class Forward extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
     
-    public Forward (List<AbstractCommand> inputs, Cursor cursor) {
-        super(cursor, inputs);
-        // TODO Auto-generated constructor stub
-    }
-
-    @Override
-    public double execute() {
-        double distance = getFirstCommand().execute();
-        getCursor().setCoordinate(getCursor().getCoordinate().translate(distance, getCursor().getOrientation()));
-        return distance;
+    public Forward (Cursor cursor, AbstractCommand... arguments) {
+        super(new MovementBehavior(cursor::move), arguments[0], new Constant(1.0));
     }
     
 }

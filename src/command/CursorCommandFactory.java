@@ -12,8 +12,8 @@ public class CursorCommandFactory extends CommandFactory {
     public CursorCommandFactory (Cursor cursor) {
         super();
         myCursor = cursor;
-        addParameterTypes(Cursor.class);
-        addArguments(myCursor);
+        addParameterAndValues(myCursor);
+
     }  
     
 }

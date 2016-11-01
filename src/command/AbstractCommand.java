@@ -1,41 +1,34 @@
 package command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import behavior.ICommandExecutionBehavior;
 import command.utility.Variable;
 
+//TODO: watch out for multiple parameter order of execution. Maybe use a stack
 public abstract class AbstractCommand {
-    private List<AbstractCommand> myExpression;
-    private Map<String, AbstractCommand> myArguments;
-    
-    protected AbstractCommand(List<AbstractCommand> inputs) {
-        myExpression = inputs;
-    }
-    
-    public abstract double execute();
+    protected List<AbstractCommand> myArguments;//TODO: temporary until move commands into execution
+    private ICommandExecutionBehavior myCommandExecutionBehavior;
 
-    public List<AbstractCommand> getExpression () {
-        return myExpression;
+    protected AbstractCommand (ICommandExecutionBehavior commandExecutionBehavior, AbstractCommand... arguments) {
+        myCommandExecutionBehavior = commandExecutionBehavior;
+        myArguments = Arrays.asList(arguments); // Need to preserve insertion order
+    }
+
+    protected List<Double> executeCommands() {
+        return myArguments.stream().map(AbstractCommand::execute).collect(Collectors.toList());
     }
     
-    protected void setExpression(List<AbstractCommand> command) {
-        myExpression = command;
+    public double execute () {
+        return myCommandExecutionBehavior.executeCommand(executeCommands());
     }
-    
-    protected AbstractCommand getFirstCommand() {
-        return getCommandFromIndex(0);
-    }
-    
-    protected AbstractCommand getCommandFromIndex(int index) {
-        return myExpression.get(index);
-    }
-        
-    protected void setArgument(String key, AbstractCommand value) {
-        myArguments.put(key, value);
-    }
-    
+
     @Override
-    public String toString() {
+    public String toString () {
         return this.getClass().getName().toUpperCase();
     }
 

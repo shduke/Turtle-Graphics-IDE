@@ -22,9 +22,9 @@ public class CursorNode extends Node {
 	}
 
     @Override
-    public AbstractCommand createCommand() {
+    public AbstractCommand createCommand(INode node) {
         CursorCommandFactory cmf = new CursorCommandFactory(myCursor);
-        return cmf.createCommand(this);
+        return cmf.createCommand(node);
     }
 	
 }

@@ -1,29 +1,28 @@
 package command.cursor;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import behavior.DoubleBinaryBehavior;
 import command.AbstractCommand;
-import command.CursorCommand;
+import command.utility.Constant;
 import command.utility.Variable;
 import cursor.Cursor;
 import cursor.Coordinate;
 
-//TODO - use more lambdas
-public class SetXY extends CursorCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
+//TODO Maybe turn List<AbstractCommand> into an AbstractCommand...
+public class SetXY extends AbstractCommand {
+    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     
-    public SetXY (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
-        super(variableMap, inputs, cursor);
-        // TODO Auto-generated constructor stub
+    public SetXY (Cursor cursor, AbstractCommand... arguments) {
+        super(new DoubleBinaryBehavior(cursor.getCoordinate()::setCoordinate), arguments[0], arguments[1], new Constant(1.0));
+    }
+    
+    public SetXY(Cursor cursor, double x, double y) {
+        this(cursor, new Constant(x), new Constant(y));
     }
 
-    @Override
-    public double execute() {
-        Coordinate newCoordinate = new Coordinate(getCommandFromIndex(0).execute(), getCommandFromIndex(1).execute());
-        double distance = getCursor().getCoordinate().calculateDistance(newCoordinate);
-        getCursor().setCoordinate(newCoordinate);
-        return distance;
-    }
-    
+  
+
 }

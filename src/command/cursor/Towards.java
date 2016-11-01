@@ -3,26 +3,21 @@ package command.cursor;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import behavior.DoubleBinaryBehavior;
+import behavior.MovementBehavior;
 import command.AbstractCommand;
-import command.CursorCommand;
+import command.utility.Constant;
 import command.utility.Variable;
 import cursor.Cursor;
 import cursor.Coordinate;
 
-//TODO - use more lambdas
-public class Towards extends CursorCommand {
-    public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
+public class Towards extends AbstractCommand {
+    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     
-    public Towards (Map<String, Variable> variableMap, List<AbstractCommand> inputs, Cursor cursor) {
-        super(variableMap, inputs, cursor);
-        // TODO Auto-generated constructor stub
+    public Towards (Cursor cursor, AbstractCommand... arguments) {
+        super(new DoubleBinaryBehavior(cursor.getAngle()::setAngle), arguments[0], arguments[1], new Constant(1.0));
+
+
     }
 
-    @Override
-    public double execute() {
-        double theta = (getCommandFromIndex(1).execute() - getCursor().getCoordinate().getY()) / (getCommandFromIndex(0).execute() - getCursor().getCoordinate().getX());
-        getCursor().setOrientation(Math.atan(theta));
-        return Math.toDegrees(theta);
-    }
-    
 }

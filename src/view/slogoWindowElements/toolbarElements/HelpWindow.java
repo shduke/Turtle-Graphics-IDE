@@ -1,4 +1,4 @@
-package view.window;
+package view.slogoWindowElements.toolbarElements;
 
 import java.awt.Dimension;
 import javafx.scene.Node;
@@ -12,7 +12,7 @@ import view.AppResources;
  * @author Noel Moon (nm142)
  *
  */
-public class HelpWindow implements Window {
+public class HelpWindow {
 
 	public static final Dimension DEFAULT_SIZE = new Dimension(1000, 700);
 	
@@ -29,8 +29,10 @@ public class HelpWindow implements Window {
 		WebEngine webEngine = browser.getEngine();
 		webEngine.load(AppResources.SLOGO_COMMANDS_URL.getResource());
         
+		/*
 		ErrorMessageWindow error = new ErrorMessageWindow(AppResources.DEFAULT_ERROR_MESSAGE.getResource());
 		error.getScene();
+		*/
 		
 		return browser;
 	}

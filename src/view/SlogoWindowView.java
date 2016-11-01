@@ -1,47 +1,53 @@
 package view;
 
-import java.util.ResourceBundle;
-
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import view.InputField;
-import view.window.Window;
+import javafx.scene.paint.Color;
+import view.slogoWindowElements.History;
+import view.slogoWindowElements.IHistory;
+import view.slogoWindowElements.IInputField;
+import view.slogoWindowElements.IToolbar;
+import view.slogoWindowElements.IVariablesAndCommands;
+import view.slogoWindowElements.InputField;
+import view.slogoWindowElements.Toolbar;
+import view.slogoWindowElements.VariablesAndCommands;
+
 
 /**
  * @author Noel Moon (nm142)
  * @author John Martin (jfm41)
  *
  */
-public class SlogoWindowView implements Window {
-    private static final double myAppWidth = AppResources.APP_WIDTH.getDoubleResource();
-	private static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();;
+public class SlogoWindowView implements ISlogoWindowView {
+    public static final double myAppWidth = AppResources.APP_WIDTH.getDoubleResource();
+	public static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();
+	public static final String DEFAULT_RESOURCE_PACKAGE = "";
     
-    protected String myLanguage;
+    private String myLanguage;
     private Scene myScene;
-    private ResourceBundle myCommands;
-    private InputField myInputField;
-    public static VariablesAndCommands myVC;
-    public static History myHistory;
-    
+    private IHistory myHistory;
+    private IInputField myInputField;
+    private IVariablesAndCommands myVC;
     private Display myTurtleDisplay;
     private EventHandler<ActionEvent> myResetHandler;
     private EventHandler<ActionEvent> myFileChooseHandler;
-
+    private ComboBox<String> myBackgroundColorComboBox;
+    private ComboBox<String> myPenColorComboBox;
     
     public SlogoWindowView(String language, EventHandler<ActionEvent> fileChooseEvent){
     	myFileChooseHandler = fileChooseEvent;
     	myResetHandler = new ResetEvent();
         myLanguage = language;
-        myCommands = initResourceBundle(language);
+        myBackgroundColorComboBox = makeBackgroundColorComboBox();
+        myPenColorComboBox = makePenColorComboBox();
         BorderPane root = new BorderPane();
         root.setTop(makeToolbar());
         root.setRight(makeVarDisplay());
@@ -53,8 +59,12 @@ public class SlogoWindowView implements Window {
         myScene.getStylesheets().add(getClass().getResource(AppResources.APP_CSS.getResource()).toExternalForm());
     }
     
-    public History getHistory(){
+    public IHistory getHistory(){
     	return myHistory;
+    }
+    
+    public IVariablesAndCommands getVariablesAndCommands() {
+    	return myVC;
     }
     
     public Scene getScene () {
@@ -69,11 +79,11 @@ public class SlogoWindowView implements Window {
     	return myLanguage; 
     }
     
-    public static Double getAppWidth(){
+    public Double getAppWidth(){
     	return myAppWidth;
     }
     
-    public static Double getAppHeight(){
+    public Double getAppHeight(){
     	return myAppHeight;
     }
     
@@ -89,9 +99,33 @@ public class SlogoWindowView implements Window {
 			InputField.myTextArea.clear();
 		}
 	}
+	
+	private ComboBox<String> makeBackgroundColorComboBox() {
+		myBackgroundColorComboBox = new ComboBox<String>();
+		myBackgroundColorComboBox.getItems().addAll("WHITE", "BLUE", "RED", "GREEN", "YELLOW", "PINK", "PURPLE", "BLACK");
+        myBackgroundColorComboBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            	myTurtleDisplay.setBackgroundColor(Color.valueOf(newValue));
+            }
+        });
+		return myBackgroundColorComboBox;
+	}
+	
+	private ComboBox<String> makePenColorComboBox() {
+		myPenColorComboBox = new ComboBox<String>();
+		myPenColorComboBox.getItems().addAll("WHITE", "BLUE", "RED", "GREEN", "YELLOW", "PINK", "PURPLE", "BLACK");
+        myPenColorComboBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            	myTurtleDisplay.setPenColor(Color.valueOf(newValue));
+            }
+        });
+		return myPenColorComboBox;
+	}
     
     private Node makeToolbar () {
-    	Toolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooseHandler);
+    	IToolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooseHandler, myBackgroundColorComboBox, myPenColorComboBox);
 		return toolbar.getToolbar();
     }
     
@@ -107,22 +141,12 @@ public class SlogoWindowView implements Window {
     
     private Node makeVarDisplay() {
     	myVC = new VariablesAndCommands();
-    	myVC.addVariable("x", "1");
-    	myVC.addVariable("x", "2");
-    	myVC.addVariable("y", "fheio");
-    	myVC.addVariable("x", "sfioj");
-    	myVC.addCommand("command5");
-    	myVC.addCommand("command3");
-    	return myVC.getTextArea();
+    	return myVC.getVCDisplay();
     }
 
     private Node makeInputField() {
-        myInputField = new InputField(myLanguage);
+        myInputField = new InputField(myLanguage, myHistory);
         return myInputField.getInputField();
-    }
-    
-    private ResourceBundle initResourceBundle(String language){
-        return ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
     }
     
 }

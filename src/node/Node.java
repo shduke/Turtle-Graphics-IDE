@@ -29,6 +29,6 @@ public abstract class Node {
 		return "Node" +"{"+this.getType()+"}";
 	}
 	
-	public abstract AbstractCommand createCommand();
+	public abstract AbstractCommand createCommand(INode node);
 	
 }
