@@ -25,6 +25,6 @@ public class MultiLineCommandFactory extends CommandFactory {
  
     @Override
     protected boolean getLoopCondition(Node commandNode, Class commandClass, int index) throws NoSuchFieldException, IllegalAccessException {
-        return !commandNode.getType().equals(MULTILINE_TERMINATOR);
+        return true;//!commandNode.getType().equals(MULTILINE_TERMINATOR);
     }
 }

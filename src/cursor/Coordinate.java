@@ -1,12 +1,14 @@
 package cursor;
 
+import java.util.Observable;
+
 /**
  * Creates a coordinate class to utilize in the map of cells inside of the grid
  * 
  * @author Sean Hudson
  *
  */
-public class Coordinate {
+public class Coordinate extends Observable implements ICoordinate {
     private double myX;
     private double myY;
 
@@ -17,6 +19,8 @@ public class Coordinate {
 
     
     public double setCoordinate(double x, double y) {
+        setChanged();
+        notifyObservers(new Coordinate(x,y));
         double distance = calculateDistance(x, y);
         myX = x;
         myY = y;

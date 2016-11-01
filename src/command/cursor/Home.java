@@ -3,23 +3,23 @@ package command.cursor;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import behavior.DoubleBinaryBehavior;
-import behavior.MultiBehavior;
+import behavior.binary.DoubleBinaryBehavior;
+import behavior.nonexpression.MultiBehavior;
 import command.AbstractCommand;
 import command.utility.Constant;
 import command.utility.Variable;
-import cursor.Cursor;
 import cursor.Coordinate;
+import cursor.ICursor;
 
 public class Home extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public Home (Cursor cursor, AbstractCommand... arguments) {
-        super(new MultiBehavior(), new SetXY(cursor, 0.0, 0.0));
+    public Home (ICursor cursor, AbstractCommand... arguments) {
+        this(cursor);
     }
     
-    public Home (Cursor cursor) {
-        this(cursor, new AbstractCommand[0]);
+    public Home (ICursor cursor) {
+        super(new MultiBehavior(new SetXY(cursor, 0.0, 0.0)));
     }
 
 }

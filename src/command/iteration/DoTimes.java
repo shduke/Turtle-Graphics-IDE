@@ -1,39 +1,29 @@
 package command.iteration;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
+import behavior.IncrementIterationBehavior;
+import behavior.binary.BooleanBinaryBehavior;
+import behavior.unary.FunctionAssignmentBehavior;
+import behavior.unary.VariableAssignmentBehavior;
 import command.AbstractCommand;
-import command.ParameterCommand;
-import command.assignment.Set;
 import command.utility.Constant;
+import command.utility.IVariable;
 import command.utility.Variable;
 
-public class DoTimes extends ParameterCommand { //TODO - maybe subclass based on iteration
-    private static final String DEFAULT_LOOP_VARIABLE = ":repcount";
-    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2; //replace indicies with names
+public class DoTimes extends AbstractCommand {//TODO: refactor into parameter object
+    private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
+    private static final int PARAMETER_INDEX = 0;
+    private static final int BODY_INDEX = 1;
+    private static final int VARIABLE_SUB_INDEX = 0;
+    private static final int STOP_SUB_INDEX = 1;
     
-    protected DoTimes (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
-        super(variableMap, inputs);
-        // TODO Auto-generated constructor stub
-    }
-
-    //TODO-Make more readable by flattening data and extending command hierarchy
-    @Override
-    public double execute () {
-        double value = 0;
-        String variable = getCommandFromIndex(0).toString().split(",")[0];
-        double limit = getCommandFromIndex(0).getExpression().get(1).execute();
-        getVariableMap().put(variable, createVariable(createConstant(value), variable));
-        while(getVariableMap().get(variable).execute() < limit) {
-            getVariableMap().get(variable).setExpressione(new Constant(getVariableMap(), new ArrayList<AbstractCommand>(), value));
-            value = getCommandFromIndex(1).execute();
-        }
-        return value;
-    }
-
-    public Constant createConstant(double value) {
-        return new Constant(getVariableMap(), new ArrayList<AbstractCommand>(), value);
+    public DoTimes (Map<String, IVariable> variableMap, AbstractCommand... arguments) {
+        super(new IncrementIterationBehavior(variableMap, arguments[PARAMETER_INDEX].getCommandArguments().get(VARIABLE_SUB_INDEX), 
+                                             new Constant(1.0),
+                                             arguments[PARAMETER_INDEX].getCommandArguments().get(STOP_SUB_INDEX),
+                                             new Constant(1.0),
+                                             arguments[BODY_INDEX]));
     }
     
 }

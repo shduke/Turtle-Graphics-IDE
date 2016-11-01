@@ -2,17 +2,18 @@ package command;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import command.utility.MultiLine;
-import cursor.Cursor;
+import cursor.ICursor;
 import node.Node;
 
 public class CursorCommandFactory extends CommandFactory {
-    private Cursor myCursor;
+    private ICursor myCursor;
     
-    public CursorCommandFactory (Cursor cursor) {
+    public CursorCommandFactory (ICursor cursor) {
         super();
         myCursor = cursor;
-        addParameterAndValues(myCursor);
+        addClassAndValue(ICursor.class, cursor);
 
     }  
     

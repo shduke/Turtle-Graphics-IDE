@@ -1,31 +1,35 @@
 package node;
 
-import java.util.HashMap;
+import java.util.Map;
 import command.AbstractCommand;
-import command.ConstantCommandFactory;
+import command.ParameterCommandFactory;
 import command.VariableCommandFactory;
+import command.utility.IVariable;
 import command.utility.Variable;
 
+
 public class VariableNode extends Node {
-	private String myName; //make this
-	
-	public VariableNode(String myName, String value, String name){
-		super(myName);
-		myName = name;
-	}
-	
-	public String getName(){
-		return myName;
-	}
-	
-	public String toString(){
-		return "VariableNode" +"{"+this.getType()+"}";
-	}
+    private Map<String, IVariable> myVariableMap;
+    private String myKey;
+
+    public VariableNode (String type, String key, Map<String, IVariable> variableMap) {
+        super(type);
+        myKey = key;
+        myVariableMap = variableMap;
+    }
+
+    public String getKey () {
+        return myKey;
+    }
+
+    public String toString () {
+        return "VariableNode" + "{" + this.getType() + "}";
+    }
 
     @Override
-    public AbstractCommand createCommand () {
-        VariableCommandFactory cmf = new VariableCommandFactory(myName);
-        return cmf.createCommand(this);
+    public AbstractCommand createCommand (INode node) {
+        VariableCommandFactory cmf = new VariableCommandFactory(myVariableMap, myKey);
+        return cmf.createCommand(node);
     }
-	
+
 }

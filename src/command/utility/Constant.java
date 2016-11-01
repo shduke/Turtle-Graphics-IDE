@@ -10,12 +10,12 @@ public class Constant extends AbstractCommand {
     double myValue;
     
     public Constant (Double value, AbstractCommand... arguments) {
-        super(null, arguments);
-        myValue = value;
+        this(value);
     }
     
     public Constant (Double value) {
-        this(value, new AbstractCommand[0]);
+        super(null);
+        myValue = value;
     }
     
 
