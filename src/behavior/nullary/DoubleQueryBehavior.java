@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 public class DoubleQueryBehavior extends QueryBehavior<Double>{
 
-    public DoubleQueryBehavior (Supplier operation) {
+    public DoubleQueryBehavior (Supplier<Double> operation) {
         super(operation);
     }
 

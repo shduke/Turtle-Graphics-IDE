@@ -10,13 +10,13 @@ import behavior.unary.MovementBehavior;
 import command.AbstractCommand;
 import command.utility.Constant;
 import command.utility.Variable;
-import cursor.Cursor;
 import cursor.Coordinate;
+import cursor.ICursor;
 
 public class YCor extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public YCor (Cursor cursor, AbstractCommand... arguments) {
+    public YCor (ICursor cursor, AbstractCommand... arguments) {
         super(new DoubleQueryBehavior(cursor.getCoordinate()::getY));
     }
     

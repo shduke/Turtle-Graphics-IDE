@@ -7,7 +7,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-import cursor.Cursor;
+import cursor.ICursor;
 import node.BracketNode;
 import node.ConstantNode;
 import node.CursorNode;
@@ -46,7 +46,7 @@ public class InputParser {
          }
      }
      
-     public ExpressionTree parse(String input,Cursor cursor){
+     public ExpressionTree parse(String input,ICursor cursor){
     	 String[]split = input.split("\\s+");
     	 split = fixBrackets(split);
     	 ExpressionTree construct = new ExpressionTree(); 

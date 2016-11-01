@@ -8,17 +8,17 @@ import behavior.nonexpression.MultiBehavior;
 import command.AbstractCommand;
 import command.utility.Constant;
 import command.utility.Variable;
-import cursor.Cursor;
 import cursor.Coordinate;
+import cursor.ICursor;
 
 public class Home extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public Home (Cursor cursor, AbstractCommand... arguments) {
+    public Home (ICursor cursor, AbstractCommand... arguments) {
         this(cursor);
     }
     
-    public Home (Cursor cursor) {
+    public Home (ICursor cursor) {
         super(new MultiBehavior(new SetXY(cursor, 0.0, 0.0)));
     }
 

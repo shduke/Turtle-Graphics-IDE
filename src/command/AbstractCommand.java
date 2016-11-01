@@ -11,16 +11,10 @@ import command.utility.Variable;
 
 //TODO: watch out for multiple parameter order of execution. Maybe use a stack
 public abstract class AbstractCommand {
-    protected List<AbstractCommand> myArguments;//TODO: temporary until move commands into execution
     private ICommandExecutionBehavior myCommandExecutionBehavior;
 
-    protected AbstractCommand (ICommandExecutionBehavior commandExecutionBehavior, AbstractCommand... arguments) {
+    protected AbstractCommand (ICommandExecutionBehavior commandExecutionBehavior) {
         myCommandExecutionBehavior = commandExecutionBehavior;
-        myArguments = Arrays.asList(arguments); // Need to preserve insertion order
-    }
-
-    protected List<Double> executeCommands() {
-        return myArguments.stream().map(AbstractCommand::execute).collect(Collectors.toList());
     }
     
     public double execute () {

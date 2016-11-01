@@ -2,18 +2,18 @@ package node;
 
 import command.AbstractCommand;
 import command.CursorCommandFactory;
-import cursor.Cursor;
+import cursor.ICursor;
 
 public class CursorNode extends Node {
 
-	private Cursor myCursor;
+	private ICursor myCursor;
 	
-	public CursorNode(String type,Cursor turtle){
+	public CursorNode(String type,ICursor turtle){
 		super(type);
 		myCursor=turtle;
 	}
 	
-	public Cursor getTurtle(){
+	public ICursor getTurtle(){
 		return myCursor; 
 	}
 	

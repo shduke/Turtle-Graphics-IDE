@@ -10,13 +10,13 @@ import behavior.unary.MovementBehavior;
 import command.AbstractCommand;
 import command.utility.Constant;
 import command.utility.Variable;
-import cursor.Cursor;
 import cursor.Coordinate;
+import cursor.ICursor;
 
 public class Heading extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public Heading (Cursor cursor, AbstractCommand... arguments) {
+    public Heading (ICursor cursor, AbstractCommand... arguments) {
         super(new DoubleQueryBehavior(cursor.getAngle()::getAngle));
     }
     

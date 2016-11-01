@@ -9,13 +9,13 @@ import behavior.unary.MovementBehavior;
 import command.AbstractCommand;
 import command.utility.Constant;
 import command.utility.Variable;
-import cursor.Cursor;
 import cursor.Coordinate;
+import cursor.ICursor;
 
 public class PenDownP extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public PenDownP (Cursor cursor, AbstractCommand... arguments) {
+    public PenDownP (ICursor cursor, AbstractCommand... arguments) {
         super(new BooleanQueryBehavior(cursor.getPen()::getIsPenDown));
     }
     

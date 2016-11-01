@@ -6,21 +6,20 @@ import java.util.function.Consumer;
 import behavior.RunnableBehavior;
 import behavior.binary.DoubleBinaryBehavior;
 import behavior.nonexpression.MultiBehavior;
-import behavior.nullary.DoubleNullaryBehavior;
 import command.AbstractCommand;
 import command.utility.Constant;
 import command.utility.Variable;
-import cursor.Cursor;
 import cursor.Coordinate;
+import cursor.ICursor;
 
 public class DeleteCreatedItems extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public DeleteCreatedItems (Cursor cursor, AbstractCommand... arguments) {
+    public DeleteCreatedItems (ICursor cursor, AbstractCommand... arguments) {
         this(cursor);
     }
     
-    public DeleteCreatedItems(Cursor cursor) {
+    public DeleteCreatedItems(ICursor cursor) {
         super(new RunnableBehavior(cursor::clearCreatedItems));
     }
 

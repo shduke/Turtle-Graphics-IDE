@@ -14,7 +14,7 @@ public class Constant extends AbstractCommand {
     }
     
     public Constant (Double value) {
-        super(null, new AbstractCommand[0]);
+        super(null);
         myValue = value;
     }
     
