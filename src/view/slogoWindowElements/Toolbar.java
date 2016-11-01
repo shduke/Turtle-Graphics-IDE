@@ -6,6 +6,7 @@ import controller.SlogoController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import view.SlogoWindowView;
@@ -27,15 +28,20 @@ public class Toolbar implements IToolbar {
 	private EventHandler<ActionEvent> myBackgroundHandler;
 	private EventHandler<ActionEvent> myCursorImageHandler;
 	private EventHandler<ActionEvent> myPenColorHandler;
+	private ComboBox<String> myBackgroundColorComboBox;
+	private ComboBox<String> myPenColorComboBox;
 	private ResourceBundle myResources;
 	private String myLanguage;
 	private HBox myHBox;
 	
-	public Toolbar(String language, EventHandler<ActionEvent> resetHandler, EventHandler<ActionEvent> fileChooseHandler) {
+	public Toolbar(String language, EventHandler<ActionEvent> resetHandler, EventHandler<ActionEvent> fileChooseHandler, 
+			ComboBox<String> backgroundColor, ComboBox<String> penColor) {
 		myLanguage = language;
 		myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
 		myResetHandler = resetHandler;
 		myCursorImageHandler = fileChooseHandler;
+		myBackgroundColorComboBox = backgroundColor;
+		myPenColorComboBox = penColor;
 		addButtons();
 	}
     
@@ -84,7 +90,7 @@ public class Toolbar implements IToolbar {
 	private class BackgroundEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			IProperty window = new BackgroundColorProperty();
+			IProperty window = new BackgroundColorProperty(myBackgroundColorComboBox);
 			window.start();
 		}
 	}
@@ -92,7 +98,7 @@ public class Toolbar implements IToolbar {
 	private class PenColorEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			IProperty window = new PenColorProperty();
+			IProperty window = new PenColorProperty(myPenColorComboBox);
 			window.start();
 		}
 	}
