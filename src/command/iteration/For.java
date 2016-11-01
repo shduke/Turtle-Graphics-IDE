@@ -12,7 +12,7 @@ import command.utility.Variable;
 public class For extends ParameterCommand { //TODO - maybe subclass based on iteration
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     
-    protected For (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
+    protected For (Map<String, IVariable> variableMap, List<AbstractCommand> inputs) {
         super(variableMap, inputs);
         // TODO Auto-generated constructor stub
     }

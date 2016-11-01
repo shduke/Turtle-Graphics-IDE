@@ -13,7 +13,7 @@ public class DoTimes extends ParameterCommand { //TODO - maybe subclass based on
     private static final String DEFAULT_LOOP_VARIABLE = ":repcount";
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2; //replace indicies with names
     
-    protected DoTimes (Map<String, Variable> variableMap, List<AbstractCommand> inputs) {
+    protected DoTimes (Map<String, IVariable> variableMap, List<AbstractCommand> inputs) {
         super(variableMap, inputs);
         // TODO Auto-generated constructor stub
     }
