@@ -8,7 +8,7 @@ import java.util.Observable;
  * @author Sean Hudson
  *
  */
-public class Coordinate extends Observable {
+public class Coordinate extends Observable implements ICoordinate {
     private double myX;
     private double myY;
 
