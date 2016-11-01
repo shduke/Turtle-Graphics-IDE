@@ -2,6 +2,7 @@ package view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cursor.Coordinate;
@@ -9,7 +10,9 @@ import cursor.Drawable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -23,7 +26,9 @@ public class TurtleDisplay implements Display {
 	
 	private EventHandler<ActionEvent> myEvent;
 	private Group myGroup = new Group();
-	private Pane myPane = new Pane();
+	private Pane myBackgroundPane = new Pane();
+	private Pane myLinePane = new Pane();
+	private Pane myTurtlePane = new Pane();
 	private double myPaneWidth = AppResources.CANVAS_WIDTH.getDoubleResource();
 	private double myPaneHeight = AppResources.CANVAS_HEIGHT.getDoubleResource();
 	
@@ -39,24 +44,31 @@ public class TurtleDisplay implements Display {
 	private double myLineWidth = AppResources.LINE_WIDTH.getDoubleResource();
 	private Color myLineStroke = AppResources.LINE_STROKE.getColorResource();
 	
+	// Lists for Nodes
+	private List<Rectangle> myTurtles = new ArrayList<Rectangle>();
+	private List<Line> myLines = new ArrayList<Line>();
+	
 	// New Stuff for Nodes
 	private Rectangle myTurtle;
 	
 	public TurtleDisplay(EventHandler<ActionEvent> event) {
-		myPane.setId("Pane");
-		myPane.setMinWidth(myPaneWidth); myPane.setMinHeight(myPaneHeight);
-		myPane.setPrefWidth(myPaneWidth); myPane.setPrefHeight(myPaneHeight);
-		myPane.setMaxWidth(myPaneWidth); myPane.setMaxHeight(myPaneHeight);
-		myGroup.getChildren().add(myPane);
+		initPane(myBackgroundPane);
+		initPane(myLinePane);
+		initPane(myTurtlePane);
         turtleX = 0;
         turtleY = 0;
         drawTurtle(turtleX, turtleY);
-//        drawTurtle(turtleX, turtleY);   
+	}
+	
+	public void initPane(Pane p){
+		p.setId("Pane");
+		p.setMinWidth(myPaneWidth); p.setMinHeight(myPaneHeight);
+		p.setPrefWidth(myPaneWidth); p.setPrefHeight(myPaneHeight);
+		p.setMaxWidth(myPaneWidth); p.setMaxHeight(myPaneHeight);
+		myGroup.getChildren().add(p);
 	}
 	
 	public void redrawAll(List<Drawable> drawables){
-		clearPane();
-		strokePane();
 		for (Drawable drawable : drawables){
 			List<Coordinate> coordinates = drawable.getCreateItems();
 			double currentX = coordinates.get(0).getX();
@@ -64,7 +76,7 @@ public class TurtleDisplay implements Display {
 			for (Coordinate coord : coordinates.subList(1, coordinates.size())){
 				double nextX = coord.getX();
 				double nextY = coord.getY();
-				drawLine(currentX, currentY, nextX, nextY);
+				checkForLine(currentX, currentY, nextX, nextY);
 				currentX = nextX; 
 				currentY = nextY;
 			}
@@ -76,14 +88,37 @@ public class TurtleDisplay implements Display {
 		double turtleY = turtleCoordinates.get(turtleCoordinates.size()-1).getY();
 		myTurtleOrientation = turtleDrawable.getOrientation();
 		System.out.println("FrontEnd Test: " + "x = " + turtleX + " y = " + turtleY + "Ori: " + myTurtleOrientation);
-		drawTurtle(turtleX, turtleY);
+		redrawTurtle(turtleX, turtleY);
+	}
+	
+	private void checkForLine(double x1, double y1, double x2, double y2){
+		boolean match = false;
+		for (Line testLine : myLines){
+			if (testLine.getStartX() == x1 && testLine.getStartY() == y1 && testLine.getEndX() == x2 && testLine.getEndY() == y2){
+				match = true;
+			}
+		}
+		if (!match){
+			drawLine(x1, y1, x2, y2);
+		}
 	}
 	
 	private void drawLine(double x1, double y1, double x2, double y2){
-		double lineHeight = Math.abs(y2 - y1);
+		x1 += myPaneWidth/2; y1 += myPaneHeight/2;
+		x2 += myPaneWidth/2; y2 += myPaneHeight/2;
 		Line newLine = new Line(x1, y1, x2, y2);
 		newLine.setStrokeWidth(myLineWidth);
-		myPane.getChildren().add(newLine);
+		newLine.setStroke(myLineStroke);
+		myLinePane.getChildren().add(newLine);
+	}
+	
+	private void redrawTurtle(double x, double y){
+		x += myPaneWidth/2;
+		y += myPaneHeight/2;
+		double leftX = x - myTurtleWidth/2;
+		double topY = y - myTurtleHeight/2;
+		myTurtle.setX(leftX);
+		myTurtle.setY(topY);
 	}
 	
 	private void drawTurtle(double x, double y){
@@ -93,24 +128,32 @@ public class TurtleDisplay implements Display {
 		double topY = y - myTurtleHeight/2;
 		Rectangle turtleRect = new Rectangle(leftX, topY, myTurtleWidth, myTurtleHeight);
 		turtleRect.setFill(Color.RED);
-		myPane.getChildren().add(turtleRect);
+		myTurtlePane.getChildren().add(turtleRect);
+		myTurtle = turtleRect;
 	}
 	
 	private void drawCursorImage(double cornerX, double cornerY){
+		if (myTurtleImage != null){
+			ImageView turtleImageView = new ImageView(myTurtleImage);
+			turtleImageView.setRotate(myTurtleOrientation);
+			myTurtlePane.getChildren().add(turtleImageView);
+			myTurtle.setFill(Color.TRANSPARENT);
+		}
 		// Rotate Cursor Image
 	}
-	
+		
 	private void strokePane(){
-		double pWidth = myPane.getWidth();
-        double pHeight = myPane.getHeight();
+		double pWidth = myLinePane.getWidth();
+        double pHeight = myLinePane.getHeight();
 		drawLine(0, 0, 0, pHeight);
 		drawLine(0, 0, pWidth, 0);
 		drawLine(pWidth, 0, pWidth, pHeight);
 		drawLine(0, pHeight, pWidth, pHeight);
 	}
 	
-	private void clearPane(){
-		myPane.getChildren().clear();
+	private void clearAllPanes(){
+		myLinePane.getChildren().clear();
+		myTurtlePane.getChildren().clear();
 	}
 	
 	public Group getGroup(){
@@ -122,7 +165,7 @@ public class TurtleDisplay implements Display {
 		            (int)( color.getRed() * 255 ),
 		            (int)( color.getGreen() * 255 ),
 		            (int)( color.getBlue() * 255 ) );
-		myPane.setStyle("-fx-background-color: " + hex);
+		myBackgroundPane.setStyle("-fx-background-color: " + hex);
 	}
 	
 	public void setPenColor(Color color){
@@ -138,5 +181,6 @@ public class TurtleDisplay implements Display {
 			e.printStackTrace();
 		}
 	}
+
 	
 }
