@@ -3,19 +3,20 @@ package node;
 import java.util.Map;
 import command.AbstractCommand;
 import command.ParameterCommandFactory;
+import command.utility.IVariable;
 import command.utility.Variable;
 
 
 public class ParameterNode extends Node {
 
-    private Map<String, Variable> myVariableMap;
+    private Map<String, IVariable> myVariableMap;
 
-    public ParameterNode (String type, Map<String, Variable> variableMap) {
+    public ParameterNode (String type, Map<String, IVariable> variableMap) {
         super(type);
         myVariableMap = variableMap;
     }
 
-    public Map<String, Variable> getVariableMap () {
+    public Map<String, IVariable> getVariableMap () {
         return myVariableMap;
     }
 

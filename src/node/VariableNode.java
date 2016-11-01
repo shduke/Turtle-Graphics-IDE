@@ -4,14 +4,15 @@ import java.util.Map;
 import command.AbstractCommand;
 import command.ParameterCommandFactory;
 import command.VariableCommandFactory;
+import command.utility.IVariable;
 import command.utility.Variable;
 
 
 public class VariableNode extends Node {
-    private Map<String, Variable> myVariableMap;
+    private Map<String, IVariable> myVariableMap;
     private String myKey;
 
-    public VariableNode (String type, String key, Map<String, Variable> variableMap) {
+    public VariableNode (String type, String key, Map<String, IVariable> variableMap) {
         super(type);
         myKey = key;
         myVariableMap = variableMap;

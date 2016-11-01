@@ -31,6 +31,10 @@ public abstract class AbstractCommand {
         myCommandExecutionBehavior = commandExecutionBehavior;
     }
     
+    public List<AbstractCommand> getCommandArguments() {
+        return myCommandExecutionBehavior.getArguments();
+    }
+    
     
     @Override
     public String toString () {
