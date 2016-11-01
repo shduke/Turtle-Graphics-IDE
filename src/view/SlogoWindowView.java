@@ -1,11 +1,15 @@
 package view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import view.slogoWindowElements.History;
 import view.slogoWindowElements.IHistory;
 import view.slogoWindowElements.IInputField;
@@ -25,20 +29,23 @@ public class SlogoWindowView implements ISlogoWindowView {
 	public static final double myAppHeight = AppResources.APP_HEIGHT.getDoubleResource();
 	public static final String DEFAULT_RESOURCE_PACKAGE = "";
     
-    public static IHistory myHistory;
-    
     private String myLanguage;
     private Scene myScene;
+    private IHistory myHistory;
     private IInputField myInputField;
     private IVariablesAndCommands myVC;
     private Display myTurtleDisplay;
     private EventHandler<ActionEvent> myResetHandler;
     private EventHandler<ActionEvent> myFileChooseHandler;
+    private ComboBox<String> myBackgroundColorComboBox;
+    private ComboBox<String> myPenColorComboBox;
     
     public SlogoWindowView(String language, EventHandler<ActionEvent> fileChooseEvent){
     	myFileChooseHandler = fileChooseEvent;
     	myResetHandler = new ResetEvent();
         myLanguage = language;
+        myBackgroundColorComboBox = makeBackgroundColorComboBox();
+        myPenColorComboBox = makePenColorComboBox();
         BorderPane root = new BorderPane();
         root.setTop(makeToolbar());
         root.setRight(makeVarDisplay());
@@ -90,9 +97,33 @@ public class SlogoWindowView implements ISlogoWindowView {
 			InputField.myTextArea.clear();
 		}
 	}
+	
+	private ComboBox<String> makeBackgroundColorComboBox() {
+		myBackgroundColorComboBox = new ComboBox<String>();
+		myBackgroundColorComboBox.getItems().addAll("WHITE", "BLUE", "RED", "GREEN", "YELLOW", "PINK", "PURPLE", "BLACK");
+        myBackgroundColorComboBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            	myTurtleDisplay.setBackgroundColor(Color.valueOf(newValue));
+            }
+        });
+		return myBackgroundColorComboBox;
+	}
+	
+	private ComboBox<String> makePenColorComboBox() {
+		myPenColorComboBox = new ComboBox<String>();
+		myPenColorComboBox.getItems().addAll("WHITE", "BLUE", "RED", "GREEN", "YELLOW", "PINK", "PURPLE", "BLACK");
+        myPenColorComboBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            	myTurtleDisplay.setPenColor(Color.valueOf(newValue));
+            }
+        });
+		return myPenColorComboBox;
+	}
     
     private Node makeToolbar () {
-    	IToolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooseHandler);
+    	IToolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooseHandler, myBackgroundColorComboBox, myPenColorComboBox);
 		return toolbar.getToolbar();
     }
     
@@ -112,7 +143,7 @@ public class SlogoWindowView implements ISlogoWindowView {
     }
 
     private Node makeInputField() {
-        myInputField = new InputField(myLanguage);
+        myInputField = new InputField(myLanguage, myHistory);
         return myInputField.getInputField();
     }
     

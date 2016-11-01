@@ -15,6 +15,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import view.SlogoWindowView;
 
+/**
+ * @author Noel Moon (nm142)
+ *
+ */
 public class ChooseLanguageWindow implements IChooseLanguageWindow {
 	
 	public static final Dimension DEFAULT_SIZE = new Dimension(200, 100);
@@ -62,15 +66,7 @@ public class ChooseLanguageWindow implements IChooseLanguageWindow {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             	myLanguage = newValue;
             	stage.close();
-            	/*
-            	Stage stage = new Stage();
-            	SlogoWindowView display = new SlogoWindowView(getLanguage());
-                stage.setTitle("SLogo");
-                stage.setScene(display.getScene());
-                stage.show();
-                */
             	EventHandler<ActionEvent> fileChoose = new FileChooserEvent();
-            	
             	slogoStage = new Stage();
             	SlogoWindowView display = new SlogoWindowView(getLanguage(), fileChoose);
                 slogoStage.setTitle("SLogo");
