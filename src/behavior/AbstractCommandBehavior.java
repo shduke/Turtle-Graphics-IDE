@@ -19,7 +19,8 @@ public abstract class AbstractCommandBehavior implements ICommandExecutionBehavi
 
     private void initializeExecutionResults() {
         myExecutionResults = new HashMap<Integer, ValueHolder>();
-        myArguments.forEach(value -> nullifyExecutionResult(myExecutionResults.size()));
+        myExecutionResults.put(-1, new ValueHolder(0.0));
+        myArguments.forEach(value -> nullifyExecutionResult(myExecutionResults.size()-1));
     }
     
     private double executeCommand(int index) {
@@ -37,6 +38,11 @@ public abstract class AbstractCommandBehavior implements ICommandExecutionBehavi
     
     protected AbstractCommand getArgument(int index) {
         return myArguments.get(index);
+    }
+    
+    @Override
+    public List<AbstractCommand> getArguments() {
+        return myArguments;
     }
     
     @Override

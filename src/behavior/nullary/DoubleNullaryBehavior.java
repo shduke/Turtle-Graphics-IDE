@@ -3,6 +3,7 @@ package behavior.nullary;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import command.AbstractCommand;
 
 public class DoubleNullaryBehavior extends QueryBehavior<Double> {
     
@@ -14,4 +15,5 @@ public class DoubleNullaryBehavior extends QueryBehavior<Double> {
     protected double evaluateToDouble(Double result) {
         return result;
     }
+
 }

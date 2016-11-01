@@ -13,7 +13,7 @@ public class MultiBehavior extends AbstractCommandBehavior{
     
     public MultiBehavior(AbstractCommand... arguments) {
         super(arguments);
-        myNumberOfCommands = arguments.length - 1;
+        myNumberOfCommands =  arguments.length - 1;
     }
 
     @Override

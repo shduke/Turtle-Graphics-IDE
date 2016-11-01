@@ -5,13 +5,14 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import behavior.binary.BinaryBehavior;
 import command.AbstractCommand;
+import command.utility.IVariable;
 import command.utility.Variable;
 
-public class VariableAssignmentBehavior extends UnaryBehavior<String, Variable> {
+public class VariableAssignmentBehavior extends UnaryBehavior<String, IVariable> {
     private static final int EXPRESSION_KEY_INDEX = 0;    
     private static final int EXPRESSION_VALUE_INDEX = 1;    
     
-    public VariableAssignmentBehavior(Function<String, Variable> operation, AbstractCommand... arguments) {
+    public VariableAssignmentBehavior(Function<String, IVariable> operation, AbstractCommand... arguments) {
         super(operation, arguments);
     }
 
@@ -21,7 +22,7 @@ public class VariableAssignmentBehavior extends UnaryBehavior<String, Variable> 
     }
 
     @Override
-    protected double evaluateToDouble (Variable result) {
+    protected double evaluateToDouble (IVariable result) {
         result.setExpression(getArgument(EXPRESSION_VALUE_INDEX));
         return getExecutionResult(EXPRESSION_VALUE_INDEX);
     }
