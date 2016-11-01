@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.function.Consumer;
+import command.utility.Constant;
 import java.util.Observer;
 import java.util.Set;
 
@@ -140,6 +141,12 @@ public class Cursor implements Drawable, Observer, ICursor{
     @Override
     public double activateCursors (List<Double> turtles) {
         return 0;
+    }
+
+
+    @Override
+    public Constant[] getActiveCursorConstants () {
+        return null;
     }
 
     

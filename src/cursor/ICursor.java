@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 import java.util.function.Consumer;
+import command.utility.Constant;
 
 
 public interface ICursor {
@@ -41,4 +42,6 @@ public interface ICursor {
     double getNumberOfTurtles();
     
     double activateCursors(List<Double> turtles);
+    
+    Constant[] getActiveCursorConstants();
 }

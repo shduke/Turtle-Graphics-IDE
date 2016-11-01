@@ -159,10 +159,10 @@ public class CursorManager implements ICursor, Observer {
 //                    ));
 //    }
     
-    public Constant[] getActiveCursorConstants{
-        myCursors.entrySet().stream().filter(a -> a.getValue().getIsActive())
-        .map(a -> new Constant(a.getkey()))
-             .collect(Collectors.toList(Constant::new));
+    public Constant[] getActiveCursorConstants() {
+        return myCursors.entrySet().stream().filter(a -> a.getValue().getIsActive())
+        .map(a -> new Constant(a.getKey()))
+             .toArray(size -> new Constant[size]);
     }
     
 //    private void reinstateMap(Map<Double, Boolean> copyMap) {
