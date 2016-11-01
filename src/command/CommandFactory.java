@@ -321,30 +321,49 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 //         AbstractCommand command = node1.createCommand();
 //         command.execute();
 
+//          ICursor cursor = new CursorManager();
+//          Node node1 = new CursorNode("tell", cursor);
+//          Node node2 = new BracketNode("multiline");
+//          node1.setNext(node2);
+//          Node node3 = new CursorNode("forward", cursor);
+//          node2.setNext(node3);
+//          Node node4 = new ConstantNode("constant", 4);
+//          node3.setNext(node4);
+//          Node node5 = new BracketNode("]");
+//          node4.setNext(node5);
+//          Node node6 = new CursorNode("forward", cursor);
+//          node5.setNext(node6);
+//          Node node7 = new CursorNode("id", cursor);
+//          node6.setNext(node7);
+//          Node node8 = new BracketNode("]");
+//          node7.setNext(node8);
+//          INode node = new NodeIterator(node1);
+//          AbstractCommand testCommand1 = node.createCommand();
+//          System.out.println("\n" + testCommand1.execute());
+//          node = new NodeIterator(node6);
+//          AbstractCommand testCommand2 = node.createCommand();
+//          System.out.println("\n" + testCommand2.execute());
+          
           ICursor cursor = new CursorManager();
           Node node1 = new CursorNode("tell", cursor);
           Node node2 = new BracketNode("multiline");
           node1.setNext(node2);
-          Node node3 = new CursorNode("forward", cursor);
+          Node node3 = new ConstantNode("constant", 4);
           node2.setNext(node3);
-          Node node4 = new ConstantNode("constant", 4);
+          Node node4 = new BracketNode("]");
           node3.setNext(node4);
-          Node node5 = new BracketNode("]");
+          Node node5 = new CursorNode("forward", cursor);
           node4.setNext(node5);
-          Node node6 = new CursorNode("forward", cursor);
+          Node node6 = new CursorNode("id", cursor);
           node5.setNext(node6);
-          Node node7 = new ConstantNode("constant", 6);
-          node6.setNext(node7);
-          Node node8 = new BracketNode("]");
-          node7.setNext(node8);
-          INode node = new NodeIterator(node1);
-          AbstractCommand testCommand1 = node.createCommand();
-          System.out.println("\n" + testCommand1.execute());
-          node = new NodeIterator(node6);
-          AbstractCommand testCommand2 = node.createCommand();
-          System.out.println("\n" + testCommand2.execute());
+        INode node = new NodeIterator(node1);
+        AbstractCommand testCommand1 = node.createCommand();
+        System.out.println("\n" + testCommand1.execute());
+        node = new NodeIterator(node5);
+        AbstractCommand testCommand2 = node.createCommand();
+        System.out.println("\n" + testCommand2.execute());  
           
-//          
+          
 //         ICursor cursor = new Cursor(17);
 //         Node node1 = new BracketNode("multiline");
 //         Node node2 = new CursorNode("pendownp", cursor);

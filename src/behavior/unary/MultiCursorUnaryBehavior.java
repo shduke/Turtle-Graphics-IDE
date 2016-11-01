@@ -15,9 +15,8 @@ public class MultiCursorUnaryBehavior extends UnaryBehavior<List<Double>, Double
 
     @Override
     protected <R> List<Double> getInput1 () {
-        List<Double> blah = getArgument(INPUT1_INDEX).getCommandArguments().stream().map(AbstractCommand::execute).collect(Collectors.toList());
         //return getArguments().stream().map(AbstractCommand::execute).collect(Collectors.toList());
-        return blah;
+        return getArgument(INPUT1_INDEX).getCommandArguments().stream().map(AbstractCommand::execute).collect(Collectors.toList());
     }
 
     @Override
