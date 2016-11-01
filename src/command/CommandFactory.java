@@ -319,22 +319,26 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 //         AbstractCommand command = node1.createCommand();
 //         command.execute();
 
-//         Cursor cursor = new Cursor();
-//         Node node1 = new BracketNode("not");
-//         Node node2 = new ConstantNode("constant", -1);
-//         node1.setNext(node2);
-//         Node node3 = new ConstantNode("constant", 0);
-//         node2.setNext(node3);
-//         Node node4 = new ConstantNode("constant", 50);
-//         node3.setNext(node4);
-//         Node node5 = new CursorNode("ycor", cursor);
-//         node4.setNext(node5);
-//         Node node6 = new BracketNode("]");
-//         node5.setNext(node6);
-//         INode node = new NodeIterator(node1);
-//         AbstractCommand testCommand = node.createCommand();
-//         System.out.println("\n" + testCommand.execute());
-//         System.out.println(Math.toDegrees(Math.cos(Math.toRadians(10))));
+         Cursor cursor = new Cursor();
+         Node node1 = new BracketNode("multiline");
+         Node node2 = new CursorNode("pendownp", cursor);
+         node1.setNext(node2);
+         Node node3 = new CursorNode("forward", cursor);
+         node2.setNext(node3);
+         Node node4 = new ConstantNode("constant", 10);
+         node3.setNext(node4);
+         Node node5 = new CursorNode("penup", cursor);
+         node4.setNext(node5);
+         Node node6 = new CursorNode("forward", cursor);
+         node5.setNext(node6);
+         Node node7 = new ConstantNode("constant", 10);
+         node6.setNext(node7);
+         Node node8 = new BracketNode("]");
+         node7.setNext(node8);
+         INode node = new NodeIterator(node1);
+         AbstractCommand testCommand = node.createCommand();
+         System.out.println("\n" + testCommand.execute());
+         System.out.println(Math.toDegrees(Math.cos(Math.toRadians(10))));
          
 //          Cursor cursor = new Cursor();
 //          Node node1 = new OperationNode("ifelse");
@@ -490,46 +494,46 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 //          AbstractCommand test1Command = test1.createCommand();
 //          System.out.println("\n" + test1Command.execute());
           
-          Map<String, IVariable> variableMap = new HashMap<String, IVariable>();
-          Cursor cursor = new Cursor();
-          Node node1 = new ParameterNode("for", variableMap);
-          
-          Node insert1 = new BracketNode("multiline");
-          node1.setNext(insert1);
-          
-          Node node2 = new VariableNode("variable", ":runthis", variableMap);
-          insert1.setNext(node2);
-          Node node3 = new ConstantNode("constant", 10);
-          node2.setNext(node3);
-          
-          Node insert3 = new ConstantNode("constant", 27);
-          node3.setNext(insert3);
-          
-          Node insert4 = new ConstantNode("constant", 3);
-          insert3.setNext(insert4);
-          
-          Node insert2 = new BracketNode("]");
-          insert4.setNext(insert2);
-          
-          Node node4 = new BracketNode("multiline");
-          insert2.setNext(node4);
-          Node node5 = new CursorNode("forward", cursor);
-          node4.setNext(node5);
-          Node node6 = new VariableNode("instance", ":runthis", variableMap);
-          node5.setNext(node6);
-          Node node7 = new BracketNode("]");
-          node6.setNext(node7);
-          Node node8 = new VariableNode("instance", ":dist", variableMap);
-          node7.setNext(node8);
-          Node node9 = new BracketNode("]");
-          node8.setNext(node9);
-          Node node10 = new VariableNode("functioninstance", "fdX", variableMap);
-          node9.setNext(node10);
-          Node node11 = new ConstantNode("constant", 50);
-          node10.setNext(node11); 
-          INode test1 = new NodeIterator(node1);
-          AbstractCommand test1Command = test1.createCommand();
-          System.out.println("\n" + test1Command.execute());
+//          Map<String, IVariable> variableMap = new HashMap<String, IVariable>();
+//          Cursor cursor = new Cursor();
+//          Node node1 = new ParameterNode("for", variableMap);
+//          
+//          Node insert1 = new BracketNode("multiline");
+//          node1.setNext(insert1);
+//          
+//          Node node2 = new VariableNode("variable", ":runthis", variableMap);
+//          insert1.setNext(node2);
+//          Node node3 = new ConstantNode("constant", 10);
+//          node2.setNext(node3);
+//          
+//          Node insert3 = new ConstantNode("constant", 27);
+//          node3.setNext(insert3);
+//          
+//          Node insert4 = new ConstantNode("constant", 3);
+//          insert3.setNext(insert4);
+//          
+//          Node insert2 = new BracketNode("]");
+//          insert4.setNext(insert2);
+//          
+//          Node node4 = new BracketNode("multiline");
+//          insert2.setNext(node4);
+//          Node node5 = new CursorNode("forward", cursor);
+//          node4.setNext(node5);
+//          Node node6 = new VariableNode("instance", ":runthis", variableMap);
+//          node5.setNext(node6);
+//          Node node7 = new BracketNode("]");
+//          node6.setNext(node7);
+//          Node node8 = new VariableNode("instance", ":dist", variableMap);
+//          node7.setNext(node8);
+//          Node node9 = new BracketNode("]");
+//          node8.setNext(node9);
+//          Node node10 = new VariableNode("functioninstance", "fdX", variableMap);
+//          node9.setNext(node10);
+//          Node node11 = new ConstantNode("constant", 50);
+//          node10.setNext(node11); 
+//          INode test1 = new NodeIterator(node1);
+//          AbstractCommand test1Command = test1.createCommand();
+//          System.out.println("\n" + test1Command.execute());
           
           
           //INode test2 = new NodeIterator(node10);

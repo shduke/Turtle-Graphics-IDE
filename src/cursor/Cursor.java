@@ -2,9 +2,11 @@ package cursor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.function.Consumer;
+import java.util.Observer;
 
-public class Cursor implements Drawable{
+public class Cursor implements Drawable, Observer{
     public List<Drawable> myCreatedItems; //maybe create a drawableObject?
     private Coordinate myCoordinate;
     private Angle myOrientation;
@@ -21,6 +23,7 @@ public class Cursor implements Drawable{
         myIsVisible = true;
         myLayer = 10.0;
         myPen = new Pen();
+        myCoordinate.addObserver(this);
     }
 
     public Coordinate getCoordinate () {
@@ -53,7 +56,7 @@ public class Cursor implements Drawable{
     
     
     public void createItem(Coordinate nextCoordinate) {
-        if(!myPen.getIsPenDown()){
+        if(myPen.getIsPenDown()){
             myCreatedItems.add(new CreatedItem(myCoordinate, nextCoordinate));
         }
     }
@@ -95,5 +98,12 @@ public class Cursor implements Drawable{
     public double getLayer () {
         return myLayer;
     }
+
+    @Override
+    public void update (Observable o, Object arg) {
+        createItem((Coordinate)arg);
+        System.out.println("items = " + myCreatedItems.size());
+    }
+
     
 }
