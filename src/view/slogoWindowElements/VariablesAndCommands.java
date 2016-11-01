@@ -4,6 +4,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
+/**
+ * @author Noel Moon (nm142)
+ *
+ */
 public class VariablesAndCommands implements IVariablesAndCommands {
 
 	private TextArea myVariableTextArea;

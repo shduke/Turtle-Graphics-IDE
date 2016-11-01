@@ -15,6 +15,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import view.SlogoWindowView;
 
+/**
+ * @author Noel Moon (nm142)
+ *
+ */
 public class ChooseLanguageWindow implements IChooseLanguageWindow {
 	
 	public static final Dimension DEFAULT_SIZE = new Dimension(200, 100);

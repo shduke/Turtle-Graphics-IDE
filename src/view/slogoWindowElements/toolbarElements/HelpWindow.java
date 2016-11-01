@@ -12,7 +12,7 @@ import view.AppResources;
  * @author Noel Moon (nm142)
  *
  */
-public class HelpWindow implements Window {
+public class HelpWindow {
 
 	public static final Dimension DEFAULT_SIZE = new Dimension(1000, 700);
 	

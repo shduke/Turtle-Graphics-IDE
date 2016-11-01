@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
-import view.slogoWindowElements.toolbarElements.Window;
 
 /**
  * @author Noel Moon (nm142)
@@ -15,7 +14,7 @@ import view.slogoWindowElements.toolbarElements.Window;
  * Citations: http://code.makery.ch/blog/javafx-dialogs-official/
  *
  */
-public class ErrorMessageWindow implements Window {
+public class ErrorMessageWindow {
 	
 	public static final Dimension DEFAULT_SIZE = new Dimension(1000, 700);
 	
