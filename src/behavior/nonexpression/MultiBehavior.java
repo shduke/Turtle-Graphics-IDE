@@ -18,8 +18,8 @@ public class MultiBehavior extends AbstractCommandBehavior{
 
     @Override
     public double executeCommand() {
-        IntStream.rangeClosed(0, myNumberOfCommands).forEach(this::getExecutionResult);
-        return getExecutionResult(myNumberOfCommands);
+        IntStream.rangeClosed(0, myNumberOfCommands).forEach(this::executeCommand);
+        return getCachedValue(myNumberOfCommands);
     }
 
 }

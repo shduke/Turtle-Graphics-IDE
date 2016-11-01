@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import command.AbstractCommand;
+import command.utility.Constant;
 
 public abstract class AbstractCommandBehavior implements ICommandExecutionBehavior {
 
@@ -19,17 +20,22 @@ public abstract class AbstractCommandBehavior implements ICommandExecutionBehavi
 
     private void initializeExecutionResults() {
         myExecutionResults = new HashMap<Integer, ValueHolder>();
-        myExecutionResults.put(-1, new ValueHolder(0.0));
+        myExecutionResults.put(-1, new ValueHolder(0.0, new Constant(0.0)));
         myArguments.forEach(value -> nullifyExecutionResult(myExecutionResults.size()-1));
     }
     
-    private double executeCommand(int index) {
-        myExecutionResults.put(index, new ValueHolder(myArguments.get(index).execute()));
-        return getExecutionResult(index);
+    protected double executeCommand(int index) {
+        double value = myArguments.get(index).execute();
+        myExecutionResults.put(index, new ValueHolder(value, myArguments.get(index)));
+        return value;
     }
     
     protected double getExecutionResult(int index) {
         return myExecutionResults.get(index).getValue();
+    }
+    
+    protected double getCachedValue(int index) {
+        return myExecutionResults.get(index).getCachedValue();
     }
     
     protected void nullifyExecutionResult(int index) {
@@ -50,13 +56,23 @@ public abstract class AbstractCommandBehavior implements ICommandExecutionBehavi
     
     private class ValueHolder {
         private Double myValue;
+        private AbstractCommand myExpression;
         
-        ValueHolder(Double value) {
+        ValueHolder(Double value, AbstractCommand expression) {
             myValue = value;
+            myExpression = expression;
         }
         
         public double getValue() {
+            return reEvaluateExpression();
+        }
+        
+        public double getCachedValue() {
             return myValue;
+        }
+        
+        private double reEvaluateExpression(){
+            return myExpression.execute();
         }
         
      }
@@ -64,8 +80,13 @@ public abstract class AbstractCommandBehavior implements ICommandExecutionBehavi
          private int myIndex;
         
          NullValueHolder (int index) {
-             super(null);
+             super(null, null);
              myIndex = index;
+         }
+         
+         @Override
+         public double getCachedValue() {
+             return getValue();
          }
          
          @Override

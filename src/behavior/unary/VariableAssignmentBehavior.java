@@ -18,6 +18,7 @@ public class VariableAssignmentBehavior extends UnaryBehavior<String, IVariable>
 
     @Override
     protected <R> String getInput1 () {
+        AbstractCommand blah = getArgument(EXPRESSION_KEY_INDEX);
         return getArgument(EXPRESSION_KEY_INDEX).toString();
     }
 

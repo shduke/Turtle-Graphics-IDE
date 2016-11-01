@@ -20,7 +20,7 @@ public class MovementBehavior extends UnaryBehavior<Double, Double>{
 
     @Override
     protected double evaluateToDouble (Double result) {
-        return result * Math.signum(getExecutionResult(DISTANCE_INDEX));
+        return result * Math.signum(getCachedValue(DISTANCE_INDEX));
     }
      
     

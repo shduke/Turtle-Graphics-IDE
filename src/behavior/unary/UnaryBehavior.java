@@ -15,7 +15,8 @@ public abstract class UnaryBehavior<E,R> extends AbstractCommandBehavior {
     
     @Override
     public double executeCommand() {
-        return evaluateToDouble(myOperation.apply(getInput1()));
+        double blag = evaluateToDouble(myOperation.apply(getInput1()));
+        return blag;
     }
     
     protected abstract <R> E getInput1();
