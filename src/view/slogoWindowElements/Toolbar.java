@@ -9,9 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import view.SlogoWindowView;
-import view.slogoWindowElements.toolbarElements.BackgroundColorWindow;
+import view.slogoWindowElements.toolbarElements.BackgroundColorProperty;
 import view.slogoWindowElements.toolbarElements.HelpWindow;
-import view.slogoWindowElements.toolbarElements.PenColorWindow;
+import view.slogoWindowElements.toolbarElements.IProperty;
+import view.slogoWindowElements.toolbarElements.PenColorProperty;
 
 
 /**
@@ -83,7 +84,7 @@ public class Toolbar implements IToolbar {
 	private class BackgroundEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			BackgroundColorWindow window = new BackgroundColorWindow();
+			IProperty window = new BackgroundColorProperty();
 			window.start();
 		}
 	}
@@ -91,7 +92,7 @@ public class Toolbar implements IToolbar {
 	private class PenColorEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			PenColorWindow window = new PenColorWindow();
+			IProperty window = new PenColorProperty();
 			window.start();
 		}
 	}

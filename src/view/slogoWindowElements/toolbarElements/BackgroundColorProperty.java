@@ -9,44 +9,32 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class PenColorWindow implements Window {
+/**
+ * @author Noel Moon (nm142)
+ *
+ */
+public class BackgroundColorProperty extends Property {	
 	
-	public static final Dimension DEFAULT_SIZE = new Dimension(200, 100);
-
-	private Scene myScene;
 	private ComboBox<String> myComboBox;
-	private Stage myStage;
-	private String myPenColor;
+	private Stage stage;
+	private String myBackgroundColor;
 	
-	public PenColorWindow() {
-		BorderPane root = new BorderPane();
+	public BackgroundColorProperty() {
+		super();
 		myComboBox = new ComboBox<String>();
-		root.setCenter(makeBackgroundColorDisplay());
-		myScene = new Scene(root, DEFAULT_SIZE.getWidth(), DEFAULT_SIZE.getHeight());
-	}
-
-	@Override
-	public Scene getScene() {
-		return myScene;
+		setRoot(makeBackgroundColorDisplay());
 	}
 	
-	public void start() {
-		myStage = new Stage();
-		myStage.setTitle("Choose Pen Color");
-		myStage.setScene(getScene());
-		myStage.show();
-	}
-	
-	public void close() {
-		myStage.close();
+	public String getBackgroundColor() {
+		return myBackgroundColor;
 	}
 	
 	private ComboBox<String> makeBackgroundColorDisplay() {
         myComboBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	myPenColor = newValue;
-            	myStage.close();
+            	myBackgroundColor = newValue;
+            	stage.close();
             	
             	
             	
