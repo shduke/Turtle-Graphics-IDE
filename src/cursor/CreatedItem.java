@@ -24,8 +24,9 @@ public class CreatedItem implements Drawable{
     }
 
     @Override
-    public List<Coordinate> getCreateItems () {
-        return myCoordinates;
+    public List<ICoordinate> getCreateItems () {
+        List<ICoordinate> copyCoordinates = new ArrayList<ICoordinate>();
+        return copyCoordinates;
     }
 
     @Override
