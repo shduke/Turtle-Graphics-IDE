@@ -49,8 +49,8 @@ public class SlogoController {
 					//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
 					
 					myDisplay.getTurtleDisplay().redrawAll(createdItems);
-					myDisplay.getVariablesAndCommands().addResults(""+result);
-					myDisplay.getVariablesAndCommands().updateTextArea();
+					myDisplay.getVariablesAndCommands().addOutput(""+result);
+					//myDisplay.getVariablesAndCommands().updateTextArea();
 				}
 				catch (Exception e){
 					

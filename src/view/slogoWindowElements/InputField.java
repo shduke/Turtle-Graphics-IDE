@@ -18,11 +18,13 @@ public class InputField implements IInputField {
     public static TextArea myTextArea;
     private EventHandler<ActionEvent> myEnterHandler;
     private ResourceBundle myResources;
+    private IHistory myHistory;
     
-    public InputField(String language) {
+    public InputField(String language, IHistory history) {
         myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
         myEnterHandler = new EnterEvent();
         myTextArea = makeInputField((int) (SlogoWindowView.myAppWidth * 0.075), myEnterHandler);
+        myHistory = history;
     }
 
     public HBox getInputField() {
@@ -36,7 +38,7 @@ public class InputField implements IInputField {
         @Override
         public void handle (ActionEvent event) {
             String input = myTextArea.getText();
-            SlogoWindowView.myHistory.addHistory(input);
+            myHistory.addHistory(input);
             myTextArea.clear();
         }
     }

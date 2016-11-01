@@ -10,33 +10,10 @@ import javafx.scene.control.ComboBox;
  *
  */
 public class PenColorProperty extends Property {
-
-	private ComboBox<String> myComboBox;
-	private String myPenColor;
 	
-	public PenColorProperty() {
+	public PenColorProperty(ComboBox<String> penColor) {
 		super();
-		myComboBox = new ComboBox<String>();
-		setRoot(makePenColorDisplay());
-		
-	}
-	
-	public String getPenColor() {
-		return myPenColor;
-	}
-	
-	private ComboBox<String> makePenColorDisplay() {
-        myComboBox.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	myPenColor = newValue;
-            	close();
-            	
-            	
-            	
-            }
-        });
-		return myComboBox;
+		setRoot(penColor);
 	}
 
 }
