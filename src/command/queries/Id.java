@@ -11,7 +11,7 @@ public class Id extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
     public Id (ICursor cursor, AbstractCommand... arguments) {
-        super(new DoubleQueryBehavior(() -> cursor.applyToActive(b -> b.getAngle().getAngle())));
+        super(new DoubleQueryBehavior(cursor::getId));
     }
     
 }

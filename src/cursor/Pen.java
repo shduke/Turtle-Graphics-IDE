@@ -41,13 +41,15 @@ public class Pen implements IPen{
     }
 
     @Override
-    public void setPenSize (double penSize) {
+    public double setPenSize (double penSize) {
         myPenSize = penSize;
+        return penSize;
     }
 
     @Override
-    public void setPenColor (double color) {
+    public double setPenColor (double color) {
         myColor = color;
+        return color;
     }
     
     

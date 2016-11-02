@@ -10,12 +10,13 @@ import command.AbstractCommand;
 import command.utility.Constant;
 import command.utility.Variable;
 import cursor.Cursor;
+import cursor.ICursor;
 import cursor.Coordinate;
 
 public class ShowingP extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     
-    public ShowingP (Cursor cursor, AbstractCommand... arguments) {
+    public ShowingP (ICursor cursor, AbstractCommand... arguments) {
         super(new BooleanQueryBehavior(cursor::getIsVisible));
     }
     
