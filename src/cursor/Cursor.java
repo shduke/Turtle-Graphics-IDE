@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import command.utility.Constant;
 import java.util.Observer;
 import java.util.Set;
@@ -171,6 +172,12 @@ public class Cursor implements IDrawable, Observer, ICursor{
     public double getSize () {
         return mySize;
     }
+
+
+//    @Override
+//    public Function<Double, Double> getAngle2 (double degrees) {
+//        return null;
+//    }
 
     
 }
