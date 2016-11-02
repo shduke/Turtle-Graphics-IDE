@@ -181,10 +181,6 @@ public class Cursor implements IDrawable, Observer, ICursor{
     }
 
 
-//    @Override
-//    public Function<Double, Double> getAngle2 (double degrees) {
-//        return null;
-//    }
 
     
 }

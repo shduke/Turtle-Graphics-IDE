@@ -323,7 +323,7 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 
           ICursor cursor = new CursorManager();
           Node node1 = new CursorNode("right", cursor);
-          Node node2 = new ConstantNode("constant", 10);
+          Node node2 = new ConstantNode("constant", 30);
           node1.setNext(node2);
           Node node3 = new CursorNode("forward", cursor);
           node2.setNext(node3);

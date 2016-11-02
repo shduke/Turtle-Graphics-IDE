@@ -15,7 +15,7 @@ public class Left extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 1;
     
     public Left (ICursor cursor, AbstractCommand... arguments) {
-        super(new MovementBehavior(cursor.getAngle()::rotate, arguments[0], new Constant(1.0)));
+        super(new MovementBehavior(a -> cursor.applyToActive(b -> b.getAngle().rotate(a)), arguments[0], new Constant(1.0)));
 
 
     }
