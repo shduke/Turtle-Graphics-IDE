@@ -1,15 +1,15 @@
 package behavior.binary;
 
-import java.util.List;
 import java.util.function.BiFunction;
 import command.AbstractCommand;
+
 
 public class DoubleBinaryBehavior extends BinaryBehavior<Double, Double, Double> {
     private static final int INPUT1_INDEX = 0;
     private static final int INPUT2_INDEX = 1;
-    
-    
-    public DoubleBinaryBehavior(BiFunction<Double,Double,Double> operation, AbstractCommand... arguments) {
+
+    public DoubleBinaryBehavior (BiFunction<Double, Double, Double> operation,
+                                 AbstractCommand ... arguments) {
         super(operation, arguments);
     }
 

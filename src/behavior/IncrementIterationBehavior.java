@@ -6,16 +6,18 @@ import command.assignment.Set;
 import command.utility.Constant;
 import command.utility.IVariable;
 
+
 public class IncrementIterationBehavior extends IterationBehavior {
     private static final int VARIABLE_INDEX = 0;
     private static final int START_INDEX = 1;
     private static final int STOP_INDEX = 2;
     private static final int INCREMENT_INDEX = 3;
     private static final int BODY_INDEX = 4;
-    
+
     Map<String, IVariable> myVariableMap;
-    
-    public IncrementIterationBehavior (Map<String, IVariable> variableMap, AbstractCommand... arguments) {
+
+    public IncrementIterationBehavior (Map<String, IVariable> variableMap,
+                                       AbstractCommand ... arguments) {
         super(arguments);
         myVariableMap = variableMap;
         assignVariable(VARIABLE_INDEX);
@@ -38,7 +40,7 @@ public class IncrementIterationBehavior extends IterationBehavior {
 
     @Override
     protected void assignVariable (double index) {
-        nullifyExecutionResult(VARIABLE_INDEX);  
+        nullifyExecutionResult(VARIABLE_INDEX);
         (new Set(myVariableMap, getArgument(VARIABLE_INDEX), new Constant(index))).execute();
     }
 

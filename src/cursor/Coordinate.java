@@ -2,6 +2,7 @@ package cursor;
 
 import java.util.Observable;
 
+
 /**
  * Creates a coordinate class to utilize in the map of cells inside of the grid
  * 
@@ -18,31 +19,26 @@ public class Coordinate extends Observable implements ICoordinate {
         myX = x;
         myY = y;
     }
-    
+
     public Coordinate () {
         this(DEFAULT_X_COORDINATE, DEFAULT_Y_COORDINATE);
     }
 
-    
-    public double setCoordinate(double x, double y) {
+    public double setCoordinate (double x, double y) {
         setChanged();
-        notifyObservers(new double[]{myX, myY, x, y});
+        notifyObservers(new double[] { myX, myY, x, y });
         double distance = calculateDistance(x, y);
         myX = x;
         myY = y;
-        System.out.println(this);
         return distance;
     }
-    
+
     /**
      * Add x coordinate and myX and y coordinate and myY to produce new coordinate
      * 
      * @param coordinate
      * @return
      */
-//    public double add (Coordinate coordinate) {
-//        return setCoordinate(coordinate.getX(), coordinate.getY());
-//    }
 
     /**
      * Subtract x coordinate and myX and y coordinate and myY to produce new coordinate
@@ -72,15 +68,11 @@ public class Coordinate extends Observable implements ICoordinate {
      * @return
      */
     public double translate (double distance, double angle) {
-        return setCoordinate(myX + Math.cos(Math.toRadians(angle)) * distance, myY + Math.sin(Math.toRadians(angle)) * distance);
+        return setCoordinate(myX + Math.cos(Math.toRadians(angle)) * distance,
+                             myY + Math.sin(Math.toRadians(angle)) * distance);
     }
-    
-    
-//    public double calculateDistance(Coordinate coordinate) {
-//        return Math.sqrt(Math.pow(coordinate.getX() - myX, 2) + Math.pow(coordinate.getY() - myY, 2));
-//    }
-    
-    public double calculateDistance(double x, double y) {
+
+    public double calculateDistance (double x, double y) {
         return Math.sqrt(Math.pow(x - myX, 2) + Math.pow(y - myY, 2));
     }
 

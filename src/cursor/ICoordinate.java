@@ -1,6 +1,7 @@
 package cursor;
 
 public interface ICoordinate {
-    double getX();
-    double getY();
+    double getX ();
+
+    double getY ();
 }

@@ -15,7 +15,7 @@ public class CreatedItem implements IDrawable{
     private double mySize;
 
 
-    CreatedItem(double color, double size, Coordinate...coordinates) {
+    CreatedItem (double color, double size, Coordinate ... coordinates) {
         myCoordinates = new ArrayList<ICoordinate>(Arrays.asList(coordinates));
         myColor = color;
         mySize = size;

@@ -1,9 +1,9 @@
 package behavior.nullary;
 
-import java.util.List;
 import java.util.function.Supplier;
 
-public class DoubleQueryBehavior extends QueryBehavior<Double>{
+
+public class DoubleQueryBehavior extends QueryBehavior<Double> {
 
     public DoubleQueryBehavior (Supplier<Double> operation) {
         super(operation);

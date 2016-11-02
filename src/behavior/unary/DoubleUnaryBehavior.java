@@ -1,13 +1,13 @@
 package behavior.unary;
 
-import java.util.List;
 import java.util.function.Function;
 import command.AbstractCommand;
 
-public class DoubleUnaryBehavior extends UnaryBehavior<Double, Double>{
+
+public class DoubleUnaryBehavior extends UnaryBehavior<Double, Double> {
     private static final int INPUT1_INDEX = 0;
-    
-    public DoubleUnaryBehavior (Function<Double, Double> operation, AbstractCommand... arguments) {
+
+    public DoubleUnaryBehavior (Function<Double, Double> operation, AbstractCommand ... arguments) {
         super(operation, arguments);
     }
 
