@@ -5,13 +5,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cellsociety_team13.Cell;
-import cursor.Coordinate;
 import cursor.Drawable;
+import cursor.ICoordinate;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -25,6 +23,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class TurtleDisplay implements Display {
 	
+	// Pane Characteristics
 	private EventHandler<ActionEvent> myEvent;
 	private Group myGroup = new Group();
 	private Pane myBackgroundPane = new Pane();
@@ -36,10 +35,11 @@ public class TurtleDisplay implements Display {
 	// Turtle Characteristics
 	private double myTurtleWidth = AppResources.TURTLE_WIDTH.getDoubleResource();
 	private double myTurtleHeight = AppResources.TURTLE_HEIGHT.getDoubleResource();
+	private double myTurtleOrientationDefault = 90;
+	private double myInitTurtleID = 0;
 	private Color myTurtleFill = AppResources.TURTLE_FILL.getColorResource();
 	private Image myTurtleImage = null;
 	private double turtleX, turtleY;
-	private double myTurtleOrientation = 90;
 	
 	// Line Characteristics
 	private double myLineWidth = AppResources.LINE_WIDTH.getDoubleResource();
@@ -47,11 +47,11 @@ public class TurtleDisplay implements Display {
 	
 	// Lists for Nodes
 	private List<Rectangle> myTurtles = new ArrayList<Rectangle>();
+	private List<ImageView> myTurtleImageViews = new ArrayList<ImageView>();
 	private List<Line> myLines = new ArrayList<Line>();
 	
-	// New Stuff for Nodes
-	private Rectangle myTurtle;
-	private ImageView myTurtleImageView;
+	// Drawable List
+	List<Drawable> myLastDrawables;
 	
 	public TurtleDisplay(EventHandler<ActionEvent> event) {
 		initPane(myBackgroundPane);
@@ -61,9 +61,8 @@ public class TurtleDisplay implements Display {
         turtleX = 0;
         turtleY = 0;
         setTurtleImage("src/images/turtle.png");
-        myTurtle = drawTurtle(turtleX, turtleY);
-        myTurtleImageView = drawCursorImage(myTurtleImage, turtleX, turtleY);
-        myTurtle.setFill(Color.TRANSPARENT);
+        drawTurtle(turtleX, turtleY, myInitTurtleID, myTurtleOrientationDefault);
+        myTurtles.get(0).setFill(Color.TRANSPARENT);
 	}
 	
 	public void initPane(Pane p){
@@ -76,26 +75,22 @@ public class TurtleDisplay implements Display {
 	
 	public void redrawAll(List<Drawable> drawables){
 		for (Drawable drawable : drawables){
-			List<Coordinate> coordinates = drawable.getCreateItems();
-			double currentX = coordinates.get(0).getX();
-			double currentY = coordinates.get(0).getY();
-			for (Coordinate coord : coordinates.subList(1, coordinates.size())){
-				double nextX = coord.getX();
-				double nextY = coord.getY();
-				checkForLine(currentX, currentY, nextX, nextY);
-				currentX = nextX; 
-				currentY = nextY;
+			if (drawable.getLayer() == 0){
+				List<ICoordinate> coordinates = drawable.getCreateItems();
+				double currentX = coordinates.get(0).getX();
+				double currentY = coordinates.get(0).getY();
+				for (ICoordinate coord : coordinates.subList(1, coordinates.size())){
+					double nextX = coord.getX();
+					double nextY = coord.getY();
+					checkForLine(currentX, currentY, nextX, nextY);
+					currentX = nextX; 
+					currentY = nextY;
+				}
+			} else if (drawable.getLayer() == 1){
+				checkForTurtle(drawable);
 			}
 		}
-		Drawable turtleDrawable = drawables.get(drawables.size()-1);
-		List<Coordinate> turtleCoordinates = turtleDrawable.getCreateItems();
-		turtleCoordinates.get(turtleCoordinates.size()-1);
-		double turtleX = turtleCoordinates.get(turtleCoordinates.size()-1).getX();
-		double turtleY = turtleCoordinates.get(turtleCoordinates.size()-1).getY();
-		myTurtleOrientation = turtleDrawable.getOrientation();
-		System.out.println("FrontEnd Test: " + "x = " + turtleX + " y = " + turtleY + "Ori: " + myTurtleOrientation);
-		setRectangle(myTurtle, turtleX, turtleY);
-		setImageView(myTurtleImageView, turtleX, turtleY);
+		myLastDrawables = drawables;
 	}
 	
 	private void checkForLine(double x1, double y1, double x2, double y2){
@@ -103,11 +98,32 @@ public class TurtleDisplay implements Display {
 		for (Line testLine : myLines){
 			if (testLine.getStartX() == x1 && testLine.getStartY() == y1 && testLine.getEndX() == x2 && testLine.getEndY() == y2){
 				match = true;
+				break;
 			}
 		}
 		if (!match){
 			drawLine(x1, y1, x2, y2);
 		}
+	}
+	
+	private void checkForTurtle(Drawable turtle){
+		List<ICoordinate> turtleCoordinates = turtle.getCreateItems();
+		turtleCoordinates.get(turtleCoordinates.size()-1);
+		double turtleX = turtleCoordinates.get(turtleCoordinates.size()-1).getX();
+		double turtleY = turtleCoordinates.get(turtleCoordinates.size()-1).getY();
+		double turtleOrientation = turtle.getOrientation();
+		boolean match = false;
+		String drawableID = Double.toString(turtle.getId());
+		for (Rectangle testTurtle : myTurtles){
+			if (testTurtle.getId() == drawableID){
+				setTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
+				break;
+			}
+		}
+		if (!match){
+			drawTurtle(turtleX, turtleY, turtle.getId());
+		}
+		
 	}
 	
 	private void drawLine(double x1, double y1, double x2, double y2){
@@ -119,39 +135,38 @@ public class TurtleDisplay implements Display {
 		myLinePane.getChildren().add(newLine);
 	}
 	
-	private void setRectangle(Rectangle t, double x, double y){
-		x += myPaneWidth/2;
-		y += myPaneHeight/2;
-		double leftX = x - myTurtleWidth/2;
-		double topY = y - myTurtleHeight/2;
+	private void setTurtle(Rectangle t, double x, double y, double orientation){
+		double leftX =  x + myPaneWidth/2 - myTurtleWidth/2;
+		double topY = y + myPaneHeight/2 - myTurtleHeight/2;
 		t.setX(leftX);
 		t.setY(topY);
+		t.setRotate(orientation);
+		setImageView(myTurtleImageViews.get(myTurtles.indexOf(t)), leftX, topY, orientation);
 	}
 	
-	private void setImageView(ImageView iv, double x, double y){
-		x += myPaneWidth/2;
-		y += myPaneHeight/2;
-		double leftX = x - myTurtleWidth/2;
-		double topY = y - myTurtleHeight/2;
+	private void setImageView(ImageView iv, double leftX, double topY, double orientation){
 		iv.setX(leftX);
 		iv.setY(topY);
+		iv.setRotate(orientation);
 	}
 	
-	private Rectangle drawTurtle(double x, double y){
+	private Rectangle drawTurtle(double x, double y, double id, double orientation){
 		Rectangle r = new Rectangle(x, y, myTurtleWidth, myTurtleHeight);
 		r.setFill(Color.RED);
+		r.setId(Double.toString(id));
+		myTurtles.add(r);
 		myTurtlePane.getChildren().add(r);
-		setRectangle(r, x, y);
+		drawCursorImage(myTurtleImage);
+		setTurtle(r, x, y, orientation);
 		return r;
 	}
 	
-	private ImageView drawCursorImage(Image img, double x, double y){
+	private ImageView drawCursorImage(Image img){
 		ImageView imgView = new ImageView(img);
 		imgView.setFitWidth(myTurtleWidth);
 		imgView.setFitHeight(myTurtleHeight);
-		imgView.setRotate(myTurtleOrientation);
 		myTurtlePane.getChildren().add(imgView);
-		setImageView(imgView, x, y);
+		myTurtleImageViews.add(imgView);
 		return imgView;
 	}
 		

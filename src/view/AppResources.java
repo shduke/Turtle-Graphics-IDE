@@ -19,7 +19,7 @@ public enum AppResources {
     CANVAS_COLOUR(Color.LIGHTGREY),
     
     TURTLE_WIDTH(50),
-    TURTLE_HEIGHT(50),
+    TURTLE_HEIGHT(65),
     TURTLE_FILL(Color.DARKSEAGREEN),
     LINE_STROKE(Color.BLUE),
     LINE_WIDTH(10),
