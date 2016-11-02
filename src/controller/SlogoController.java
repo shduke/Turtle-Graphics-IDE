@@ -54,6 +54,7 @@ public class SlogoController {
 					double result = command.execute();
 					
 					String consolePrint = command.toString()+" " + result; 
+					System.out.println("im testing: "+consolePrint);
 					
 					//receive information from backend
 					myDisplay.updateInformation(myCursorManager, myGlobalVariableMap);

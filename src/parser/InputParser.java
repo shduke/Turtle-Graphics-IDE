@@ -57,6 +57,7 @@ public class InputParser {
     	 String[]split = input.split("\\s+");
     	 split = fixBrackets(split);
     	 split = fixCase(split);
+    	 System.out.println(getSymbol(split[0]));
     	 ExpressionTree construct = new ExpressionTree(); 
     	 for(int i=0;i<split.length;i++){
     		 if(getSymbol(split[i]).equals("COMMAND")){
@@ -117,6 +118,11 @@ public class InputParser {
     				 construct.add(new VariableNode("functioninstance",split[i],myGlobalVariableMap));
     			 }
     		
+    		 }
+    		 else if(getSymbol(split[i]).equals("OPERATIONS")){
+    			 if(myOperationSyntax.containsKey(split[i])){
+    				 construct.add(new OperationNode(split[i]));
+    			 }
     		 }
     		 else if(getSymbol(split[i]).equals("RIGHTBRACKET")){
     			 construct.add(new BracketNode("multiline"));
