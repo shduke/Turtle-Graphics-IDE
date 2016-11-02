@@ -68,9 +68,9 @@ public class Cursor implements IDrawable, Observer, ICursor{
     
     
 
-    private void createItem(Coordinate nextCoordinate) {
+    private void createItem(Coordinate previousCoordinate, Coordinate nextCoordinate) {
         if(myPen.getIsPenDown()){
-            myCreatedItems.add(new CreatedItem(myPen.getPenColor(), myPen.getPenSize(), myCoordinate, nextCoordinate));
+            myCreatedItems.add(new CreatedItem(myPen.getPenColor(), myPen.getPenSize(), previousCoordinate, nextCoordinate));
         }
     }
 
@@ -115,7 +115,8 @@ public class Cursor implements IDrawable, Observer, ICursor{
 
     @Override
     public void update (Observable o, Object arg) {
-        createItem((Coordinate)arg);
+        double[] coordinates = (double[])arg;
+        createItem(new Coordinate(coordinates[0], coordinates[1]), new Coordinate(coordinates[2], coordinates[3]));
         System.out.println("ID: " + myId + " items: " + myCreatedItems.size());
     }
 
