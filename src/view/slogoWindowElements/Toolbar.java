@@ -12,8 +12,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import view.SlogoWindowView;
 import view.slogoWindowElements.toolbarElements.BackgroundColorProperty;
+import view.slogoWindowElements.toolbarElements.ColorPalette;
 import view.slogoWindowElements.toolbarElements.HelpWindow;
 import view.slogoWindowElements.toolbarElements.IProperty;
+import view.slogoWindowElements.toolbarElements.ImagePalette;
 import view.slogoWindowElements.toolbarElements.PenColorProperty;
 import view.slogoWindowElements.toolbarElements.PenPropertiesProperty;
 
@@ -24,28 +26,27 @@ import view.slogoWindowElements.toolbarElements.PenPropertiesProperty;
  */
 public class Toolbar implements IToolbar {
 
-	private EventHandler<ActionEvent> myResetHandler;
 	private EventHandler<ActionEvent> myNewWindowHandler;
 	private EventHandler<ActionEvent> myHelpHandler;
 	private EventHandler<ActionEvent> myBackgroundHandler;
 	private EventHandler<ActionEvent> myCursorImageHandler;
-	private EventHandler<ActionEvent> myPenColorHandler;
 	private EventHandler<ActionEvent> myPenPropertiesHandler;
+	private EventHandler<ActionEvent> myColorPaletteHandler;
+	private EventHandler<ActionEvent> myImagePaletteHandler;
+	
 	private ComboBox<String> myBackgroundColorComboBox;
-	private ComboBox<String> myPenColorComboBox;
 	private VBox myPenPropertiesVBox;
+	private HBox myColorPaletteHBox;
+	private HBox myImagePaletteHBox;
 	private ResourceBundle myResources;
 	private String myLanguage;
 	private HBox myHBox;
 	
-	public Toolbar(String language, EventHandler<ActionEvent> resetHandler, EventHandler<ActionEvent> fileChooseHandler, 
-			ComboBox<String> backgroundColor, ComboBox<String> penColor, VBox penProperties) {
+	public Toolbar(String language, EventHandler<ActionEvent> fileChooseHandler, ComboBox<String> backgroundColor, VBox penProperties) {
 		myLanguage = language;
 		myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
-		myResetHandler = resetHandler;
 		myCursorImageHandler = fileChooseHandler;
 		myBackgroundColorComboBox = backgroundColor;
-		myPenColorComboBox = penColor;
 		myPenPropertiesVBox = penProperties;
 		addButtons();
 	}
@@ -58,16 +59,15 @@ public class Toolbar implements IToolbar {
 		myNewWindowHandler = new NewWindowEvent();
 		myHelpHandler = new HelpEvent();
 		myBackgroundHandler = new BackgroundEvent();
-		myPenColorHandler = new PenColorEvent();
 		myPenPropertiesHandler = new PenPropertiesEvent();
 		
 		myHBox = new HBox();
-		//myHBox.getChildren().add(makeButton("ResetButton", myResetHandler));
 		myHBox.getChildren().add(makeButton("NewWindowButton", myNewWindowHandler));
 		myHBox.getChildren().add(makeButton("BackgroundButton", myBackgroundHandler));
 		myHBox.getChildren().add(makeButton("CursorImageButton", myCursorImageHandler));
-		//myHBox.getChildren().add(makeButton("PenColorButton", myPenColorHandler));
 		myHBox.getChildren().add(makeButton("PenPropertiesButton", myPenPropertiesHandler));
+		myHBox.getChildren().add(makeButton("ColorPaletteButton", myPenPropertiesHandler));
+		myHBox.getChildren().add(makeButton("ImagePaletteButton", myPenPropertiesHandler));
 		myHBox.getChildren().add(makeButton("HelpButton", myHelpHandler));
 	}
 	
@@ -110,18 +110,26 @@ public class Toolbar implements IToolbar {
 		}
 	}
 	
-	private class PenColorEvent implements EventHandler<ActionEvent> {
-		@Override
-		public void handle(ActionEvent event) {
-			IProperty window = new PenColorProperty(myPenColorComboBox);
-			window.start();
-		}
-	}
-	
 	private class PenPropertiesEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
 			IProperty window = new PenPropertiesProperty(myPenPropertiesVBox);
+			window.start();
+		}
+	}
+	
+	private class ColorPaletteEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			IProperty window = new ColorPalette(myColorPaletteHBox);
+			window.start();
+		}
+	}
+	
+	private class ImagePaletteEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			IProperty window = new ImagePalette(myImagePaletteHBox);
 			window.start();
 		}
 	}
