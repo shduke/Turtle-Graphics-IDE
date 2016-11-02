@@ -53,12 +53,11 @@ public class InputField implements IInputField {
     		}
     	}
     	if (choices.size() > 0){
-    		System.out.println("set");
+    		setupEvents(choices);
     		ContextMenu contextMenu = new ContextMenu();
     		contextMenu.getItems().addAll(choices);
     		contextMenu.setPrefWidth(120);
-    	    contextMenu.setMinWidth(PopupControl.USE_PREF_SIZE);
-    	    contextMenu.setMaxWidth(PopupControl.USE_PREF_SIZE);
+    	    contextMenu.setMinWidth(PopupControl.USE_PREF_SIZE); contextMenu.setMaxWidth(PopupControl.USE_PREF_SIZE);
     		contextMenu.setMinHeight(myTextArea.getHeight()); contextMenu.setMaxHeight(myTextArea.getHeight());
     		myTextArea.setContextMenu(contextMenu);
     		contextMenu.show(myTextArea, myTextArea.getWidth() - contextMenu.getPrefWidth(), AppResources.APP_HEIGHT.getDoubleResource());
@@ -67,6 +66,16 @@ public class InputField implements IInputField {
     
     private void setCommands(){
     	myCommands.add("forward"); myCommands.add("fd");
+    }
+    
+    private void setupEvents(ArrayList<MenuItem> choices){
+    	for (MenuItem choice : choices){
+    			choice.setOnAction(e -> {
+    				String selection = choice.getText();
+	                myTextArea.setText(choice.getText());
+	                myTextArea.positionCaret(selection.length());
+    			});
+    	}
     }
 
     public HBox getInputField() {
