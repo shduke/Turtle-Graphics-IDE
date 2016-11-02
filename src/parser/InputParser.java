@@ -56,6 +56,7 @@ public class InputParser {
      public ExpressionTree parse(String input,ICursor cursor){
     	 String[]split = input.split("\\s+");
     	 split = fixBrackets(split);
+    	 split = fixCase(split);
     	 ExpressionTree construct = new ExpressionTree(); 
     	 for(int i=0;i<split.length;i++){
     		 if(getSymbol(split[i]).equals("COMMAND")){
@@ -71,8 +72,16 @@ public class InputParser {
     					 if(i+1<split.length){
     						 construct.add(new VariableNode("functionvariable",split[i+1],myGlobalVariableMap));
     						 myMethodNames.add(split[i+1]);
-    						 i++;
-    						 continue;
+    						if(i+2<split.length){
+    							construct.add(new BracketNode("multiline"));
+    							i=i+3;
+    							while(!split[i].equals("]")){
+    								construct.add(new VariableNode("variable",split[i],myGlobalVariableMap));
+    								i++;
+    							}
+    							i--;
+    							continue; 
+    						}
     					 }
     				 }
     				 if(split[i].equals("set")){
@@ -80,6 +89,26 @@ public class InputParser {
     						 construct.add(new VariableNode("variable",split[i+1],myGlobalVariableMap));
     						 i++;
     						 continue; 
+    					 }
+    				 }
+    				 if(split[i].equals("dotimes")){
+    					 if(i+1<split.length){
+    						 construct.add(new BracketNode("multiline"));
+    						 if(i+2<split.length){
+    							 construct.add(new VariableNode("variable",split[i+2],myGlobalVariableMap));
+    							 i+=2; 
+        						 continue;
+    						 } 
+    					 }
+    				 }
+    				 if(split[i].equals("for")){
+    					 if(i+1<split.length){
+    						 construct.add(new BracketNode("multiline"));
+    						 if(i+2<split.length){
+    							 construct.add(new VariableNode("variable",split[i+2],myGlobalVariableMap));
+    							 i+=2; 
+        						 continue;
+    						 }
     					 }
     				 }
     				 
@@ -117,6 +146,13 @@ public class InputParser {
          }
          
          return ERROR;
+     }
+     
+     private String[] fixCase(String[]initParse){
+    	 for(int i=0;i<initParse.length;i++){
+    		 initParse[i]=initParse[i].toLowerCase();
+    	 }
+    	 return initParse; 
      }
      
      private String[] fixBrackets(String[]initParse){

@@ -1,5 +1,8 @@
 package view.slogoWindowElements;
 
+import java.util.HashMap;
+
+import command.utility.IVariable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
@@ -50,16 +53,31 @@ public class VariablesAndCommands implements IVariablesAndCommands {
     	myOutputTextArea.clear();
     }
     
-    public void addVariable(String varName, String varValue) {
-    	myVariableTextArea.appendText(varName + " = " + varValue);
+    private void addVariable(String varName, double varValue) {
+    	//myVariableTextArea.appendText(varName + " = " + Double.toString(varValue) + "\n");
+    	myVariableTextArea.appendText(varName + "\n");
     }
     
-    public void addCommand(String commandName) {
-    	myVariableTextArea.appendText(commandName);
+    private void addCommand(String commandName) {
+    	myCommandTextArea.appendText(commandName + "\n");
     }
     
     public void addOutput(String output) {
     	myOutputTextArea.appendText(output+"\n");
     }
+
+	@Override
+	public void update(HashMap<String, IVariable> variables) {
+		clear();
+		for (String name : variables.keySet()) {
+			if (name.startsWith(":")){
+				addVariable(name, variables.get(name).getLastResult());
+			}
+			else {
+				addVariable(name, variables.get(name).getLastResult());
+			}
+		}
+		
+	}
 	
 }
