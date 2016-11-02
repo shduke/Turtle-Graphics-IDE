@@ -19,9 +19,15 @@ public interface Display {
 	public void setBackgroundColor(Color color);
 	
 	public void setPenColor(Color color);
+	
+	public void setPenWidth(double width);
 		
 	public Group getGroup();
 	
 	public void setTurtleImage(String path);
+	
+	public void resetDisplay();
+
+	public void setLineType(double doubleResource);
 	
 }

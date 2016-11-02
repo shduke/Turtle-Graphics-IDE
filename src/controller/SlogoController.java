@@ -1,19 +1,13 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import command.AbstractCommand;
 import command.utility.IVariable;
-import cursor.CreatedItem;
-import cursor.Cursor;
-import cursor.IDrawable;
 import cursor.CursorManager;
 import cursor.ICursor;
 import cursor.ICursorManagerDisplay;
 import javafx.collections.ListChangeListener;
-import javafx.scene.paint.Color;
 import parser.ExpressionTree;
 import parser.InputParser;
 import view.ErrorMessage;
