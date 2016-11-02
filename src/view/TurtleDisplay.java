@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -32,6 +33,7 @@ public class TurtleDisplay implements Display {
 	// Pane Characteristics
 	private EventHandler<ActionEvent> myEvent;
 	private Group myGroup = new Group();
+	private ScrollPane myScrollPane = new ScrollPane();
 	private Pane myBackgroundPane = new Pane();
 	private Pane myLinePane = new Pane();
 	private Pane myTurtlePane = new Pane();
@@ -95,6 +97,7 @@ public class TurtleDisplay implements Display {
 	    myAnimationTimeline.setCycleCount(Timeline.INDEFINITE);
 	    myAnimationTimeline.getKeyFrames().add(frame);
 		setLineType(AppResources.SOLID_LINE_TYPE.getDoubleResource());
+		myScrollPane.setContent(myGroup);
 	}
 	
 	public void initButton(Button b, String label, EventHandler<ActionEvent> eh, int pos, int gap){
@@ -108,12 +111,18 @@ public class TurtleDisplay implements Display {
 		b.setOnAction(eh);
 	}
 	
+	public void initScrollPane(ScrollPane sp){
+		sp.setId("Pane");
+		sp.setMinWidth(myPaneWidth); sp.setMinHeight(myPaneHeight);
+		sp.setPrefWidth(myPaneWidth); sp.setPrefHeight(myPaneHeight);
+		sp.setMaxWidth(myPaneWidth); sp.setMaxHeight(myPaneHeight);
+	}
+	
 	public void initPane(Pane p){
 		p.setId("Pane");
 		p.setMinWidth(myPaneWidth); p.setMinHeight(myPaneHeight);
 		p.setPrefWidth(myPaneWidth); p.setPrefHeight(myPaneHeight);
 		p.setMaxWidth(myPaneWidth); p.setMaxHeight(myPaneHeight);
-		System.out.println("pane resizie" + p.isResizable());
 		myGroup.getChildren().add(p);
 	}
 
@@ -432,6 +441,10 @@ public class TurtleDisplay implements Display {
 			   toggleAnimationButton.setText(AppResources.TOGGLE_ON_TITLE.getResource());
 		   }
 		}
+	}
+	
+	public ScrollPane getScrollPane(){
+		return myScrollPane;
 	}
 	
 }

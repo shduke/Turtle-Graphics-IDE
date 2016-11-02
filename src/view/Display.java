@@ -6,6 +6,7 @@ import java.util.List;
 import cursor.IDrawable;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
 
 /**
@@ -23,6 +24,8 @@ public interface Display {
 	public void setPenWidth(double width);
 		
 	public Group getGroup();
+	
+	public ScrollPane getScrollPane();
 	
 	public void setTurtleImage(String path);
 	

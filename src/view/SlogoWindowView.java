@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -118,7 +119,7 @@ public class SlogoWindowView implements ISlogoWindowView {
         root.setTop(makeToolbar());
         root.setRight(makeVCDisplay());
         root.setLeft(makeHistory());
-        root.setCenter(new Group(makeTurtleDisplay()));
+        root.setCenter(makeTurtleDisplay());
         root.setBottom(makeInputField());
         root.setId("root");
         return root;
@@ -196,9 +197,9 @@ public class SlogoWindowView implements ISlogoWindowView {
         return myHistory.getHistory();
     }
     
-    private Group makeTurtleDisplay() {
+    private ScrollPane makeTurtleDisplay() {
         myTurtleDisplay = new TurtleDisplay(null, myTurtleSelector);
-        return myTurtleDisplay.getGroup();
+        return myTurtleDisplay.getScrollPane();
     }
     
     private Node makeVCDisplay() {
