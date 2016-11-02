@@ -29,7 +29,7 @@ public abstract class AbstractCommand implements ICommand, IFirstCommand {
         return myCommandExecutionBehavior.getArguments();
     }
     
-    public List<ICommand> getInnerCommandArguments() {
+    public List<ICommand> getInnerCommands() {
         List<ICommand> myInnerCommands = new ArrayList<ICommand>();
         myInnerCommands.addAll(myCommandExecutionBehavior.getArguments());
         return myInnerCommands;
