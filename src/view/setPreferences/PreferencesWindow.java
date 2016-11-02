@@ -18,7 +18,9 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import view.AppResources;
-import view.SlogoWindowView;
+
+// TODO: Integrate with everything else
+// TODO: Make compatible with language
 
 public class PreferencesWindow {
 
@@ -119,30 +121,27 @@ public class PreferencesWindow {
     
     private HBox makeFileSelectionButtons(){
     	ImageChooserEvent imageChooseHandler = new ImageChooserEvent();
-    	Button imageSelectButton = new Button();
-    	String imageLabel = "Select Cursor Image";
-    	imageSelectButton.setText(imageLabel);
-    	imageSelectButton.setOnAction(imageChooseHandler);
-    	imageSelectButton.setMinWidth(elementWidths);
-    	imageSelectButton.setMaxWidth(elementWidths);
-    	imageSelectButton.setMinHeight(elementHeights);
-    	imageSelectButton.setMaxHeight(elementHeights);
+    	Button imageSelectButton = makeFileButton(imageChooseHandler, "Select Cursor Image");
     	
     	FileChooserEvent fileChooseHandler = new FileChooserEvent();
-    	Button fileSelectButton = new Button();
-    	String fileLabel = "Load File";
-    	fileSelectButton.setText(fileLabel);
-    	fileSelectButton.setOnAction(fileChooseHandler);
-    	fileSelectButton.setMinWidth(elementWidths);
-    	fileSelectButton.setMaxWidth(elementWidths);
-    	fileSelectButton.setMinHeight(elementHeights);
-    	fileSelectButton.setMaxHeight(elementHeights);
+    	Button fileSelectButton = makeFileButton(fileChooseHandler, "Load File");
     	
     	filesHBox = new HBox();
     	filesHBox.getChildren().add(imageSelectButton);
     	filesHBox.getChildren().add(fileSelectButton);
     	filesHBox.setAlignment(Pos.CENTER);
     	return filesHBox;
+    }
+    
+    private Button makeFileButton(EventHandler<ActionEvent> handler, String label){
+    	Button newButton = new Button();
+    	newButton.setText(label);
+    	newButton.setOnAction(handler);
+    	newButton.setMinWidth(elementWidths);
+    	newButton.setMaxWidth(elementWidths);
+    	newButton.setMinHeight(elementHeights);
+    	newButton.setMaxHeight(elementHeights);
+    	return newButton;
     }
     
     public void close() {

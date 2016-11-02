@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cellsociety_team13.Cell;
 import cursor.Coordinate;
 import cursor.Drawable;
 import javafx.event.ActionEvent;
@@ -56,6 +57,7 @@ public class TurtleDisplay implements Display {
 		initPane(myBackgroundPane);
 		initPane(myLinePane);
 		initPane(myTurtlePane);
+		myTurtlePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
         turtleX = 0;
         turtleY = 0;
         setTurtleImage("src/images/turtle.png");
@@ -190,6 +192,15 @@ public class TurtleDisplay implements Display {
 			myTurtleImage = img;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void handleMouseInput(double x, double y) {
+    	Rectangle mousePos = new Rectangle(x, y, 1, 1);
+		for (Rectangle turtle : myTurtles){
+			if (mousePos.getBoundsInParent().intersects(turtle.getBoundsInParent())){
+				turtle.setFill(Color.AQUA);
+			}
 		}
 	}
 
