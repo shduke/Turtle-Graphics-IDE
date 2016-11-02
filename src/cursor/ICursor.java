@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import command.utility.Constant;
 
 
@@ -14,7 +15,9 @@ public interface ICursor {
     double getOrientation ();
 
     Angle getAngle ();
-
+    
+    //Function<Double, Double> getAngleFunction(double degrees);
+    
     double clearCreatedItems ();
 
     List<IDrawable> getDrawableItems();

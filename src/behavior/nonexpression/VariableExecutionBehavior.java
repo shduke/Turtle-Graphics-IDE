@@ -23,8 +23,9 @@ public class VariableExecutionBehavior extends AbstractCommandBehavior{
 
     @Override
     public double executeCommand() {
-        double blah  = myVariableMap.get(myKey).execute();
-        return blah;
+        double lastResult  = myVariableMap.get(myKey).execute();
+        myVariableMap.get(myKey).setlastResult(lastResult);
+        return lastResult;
     }
 
 }
