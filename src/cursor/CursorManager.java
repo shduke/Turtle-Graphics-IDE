@@ -52,6 +52,25 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
     public Angle getAngle () {
         return null;
     }
+    
+    @Override
+    public double move (double distance) {
+        //return evaluateStream(ICursor::getIsActive, a -> a.move(distance));
+        return applyToActive(a -> a.move(distance));
+    }
+    
+    public Function<Double, Double> getAngle2(double degrees) {
+        return a -> evaluateStream(ICursor::getIsActive, b -> b.getAngle().rotate(degrees));
+    }
+    
+    
+    public <E> E applyToActive(Function<ICursor, E> mapping) {
+        return evaluateStream(ICursor::getIsActive, mapping);
+    }
+    
+    private <E> E evaluateStream(Predicate<ICursor> filter, Function<ICursor, E> mapping) {
+        return myCursors.values().stream().filter(filter).map(mapping).reduce((a, b) -> b).get();
+    }
 
     @Override
     public double clearCreatedItems () {
@@ -66,16 +85,6 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
         return drawableItems;
     }
     
-    private double evaluateStream(Predicate<ICursor> filter, Function<ICursor, Double> mapping) {
-        return myCursors.values().stream().filter(filter).map(mapping).reduce((a, b) -> b).get();
-    }
-    
-    @Override
-    public double move (double distance) {
-        return evaluateStream(ICursor::getIsActive, a -> a.move(distance));
-//        return myCursors.values().stream().filter(a -> a.getIsActive()).map(a -> a.move(distance))
-//                .reduce( (a, b) -> b).get();
-    }
 
     @Override
     public boolean getIsVisible () {

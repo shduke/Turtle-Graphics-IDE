@@ -14,6 +14,7 @@ import command.AbstractCommand;
 public class Variable extends AbstractCommand implements IVariable {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     private String myKey;
+    private double myLastResult;
     //private String myScope = "global";
     
     public Variable (Map<String, IVariable> variableMap, String key, AbstractCommand... parameterValues) {
@@ -54,6 +55,16 @@ public class Variable extends AbstractCommand implements IVariable {
     @Override
     public int getNumberOfParameters () {
         return MY_NUMBER_OF_COMMAND_PARAMETERS;
+    }
+
+    @Override
+    public Double getLastResult () {
+        return myLastResult;
+    }
+
+    @Override
+    public void setlastResult (double lastResult) {
+        myLastResult = lastResult;
     }
 
 
