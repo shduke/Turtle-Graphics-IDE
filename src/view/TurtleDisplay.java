@@ -5,18 +5,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
-import cursor.Drawable;
 import cursor.ICoordinate;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-=======
 import cursor.Coordinate;
-import cursor.ICoordinate;
 import cursor.IDrawable;
->>>>>>> 67fe34ed5d0771a7d4b0465cbb9db1b44eeb302e
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -62,7 +57,7 @@ public class TurtleDisplay implements Display {
 	private List<Line> myLines = new ArrayList<Line>();
 	
 	// Drawable List
-	private ArrayList<List<Drawable>> myAnimationQueue = new ArrayList<List<Drawable>>();
+	private ArrayList<List<IDrawable>> myAnimationQueue = new ArrayList<List<IDrawable>>();
 	private Timeline myAnimationTimeline;
 	private boolean animating = false;
 	private double msPerPixel = 1;
@@ -92,7 +87,7 @@ public class TurtleDisplay implements Display {
 		myGroup.getChildren().add(p);
 	}
 
-	public void addDrawables(List<Drawable> drawables){
+	public void addDrawables(List<IDrawable> drawables){
 		if (animating){
 			myAnimationQueue.add(drawables);
 		} else {
@@ -138,7 +133,7 @@ public class TurtleDisplay implements Display {
 	public void redrawAll(List<IDrawable> drawables){
 		for (IDrawable drawable : drawables){
 			if (drawable.getLayer() == 0){
-				List<ICoordinate> coordinates = drawable.getCreateItems();
+				List<ICoordinate> coordinates = drawable.getDrawableCoordinates();
 				double currentX = coordinates.get(0).getX();
 				double currentY = coordinates.get(0).getY();
 				for (ICoordinate coord : coordinates.subList(1, coordinates.size())){
@@ -167,8 +162,8 @@ public class TurtleDisplay implements Display {
 		}
 	}
 	
-	private void checkForTurtle(Drawable turtle){
-		List<ICoordinate> turtleCoordinates = turtle.getCreateItems();
+	private void checkForTurtle(IDrawable turtle){
+		List<ICoordinate> turtleCoordinates = turtle.getDrawableCoordinates();
 		turtleCoordinates.get(turtleCoordinates.size()-1);
 		double turtleX = turtleCoordinates.get(turtleCoordinates.size()-1).getX();
 		double turtleY = turtleCoordinates.get(turtleCoordinates.size()-1).getY();
@@ -285,14 +280,6 @@ public class TurtleDisplay implements Display {
 				turtle.setFill(Color.AQUA);
 			}
 		}
-	}
-
-	@Override
-	public void redrawAll(List<IDrawable> drawables) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
+	}	
 	
 }
