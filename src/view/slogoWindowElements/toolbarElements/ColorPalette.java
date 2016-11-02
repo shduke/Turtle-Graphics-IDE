@@ -3,9 +3,11 @@
  */
 package view.slogoWindowElements.toolbarElements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,30 +23,17 @@ public class ColorPalette extends Palette {
 	
 	private List<String> myColorPaletteList;
 
-	public ColorPalette(HBox palette) {
-		super(palette);
-		setRoot(makeColorPalette());
+	public ColorPalette(List<String> colorList) {
+		super();
+		setRoot(makePalette(makeColorList(colorList)));
 	}
 	
-	private HBox makeColorPalette() {
-		HBox hb = new HBox();
-		VBox vb = new VBox();
-		Rectangle square = new Rectangle(100, 100, Paint.valueOf("BLACK"));
-		vb.getChildren().add(square);
-		Label label = new Label("1");
-		label.setPrefWidth(100);
-		label.setAlignment(Pos.TOP_CENTER);
-		vb.getChildren().add(label);
-		hb.getChildren().add(vb);
-		
-		VBox vb1 = new VBox();
-		square = new Rectangle(100, 100, Paint.valueOf("BLUE"));
-		vb1.getChildren().add(square);
-		Label label1 = new Label("2");
-		label1.setPrefWidth(100);
-		label1.setAlignment(Pos.TOP_CENTER);
-		vb1.getChildren().add(label1);
-		hb.getChildren().add(vb1);
-		return hb;
+	private List<Node> makeColorList(List<String> colorList) {
+		List<Node> list = new ArrayList<Node>();
+		for (int i=0; i<5; i++) {
+			Rectangle square = new Rectangle(100, 100, Paint.valueOf(colorList.get(i)));
+			list.add(square);
+		}
+		return list;
 	}
 }
