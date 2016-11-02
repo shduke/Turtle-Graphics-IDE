@@ -26,7 +26,7 @@ public class Coordinate extends Observable implements ICoordinate {
     
     public double setCoordinate(double x, double y) {
         setChanged();
-        notifyObservers(new Coordinate(x,y));
+        notifyObservers(new double[]{myX, myY, x, y});
         double distance = calculateDistance(x, y);
         myX = x;
         myY = y;

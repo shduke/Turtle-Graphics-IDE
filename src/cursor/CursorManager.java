@@ -59,10 +59,9 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
         return applyToActive(a -> a.move(distance));
     }
     
-    public Function<Double, Double> getAngle2(double degrees) {
-        return a -> evaluateStream(ICursor::getIsActive, b -> b.getAngle().rotate(degrees));
+    public <E, R> Function<E, R> applyCommand(Function<ICursor,R> mapping) {
+        return a -> applyToActive(mapping);
     }
-    
     
     public <E> E applyToActive(Function<ICursor, E> mapping) {
         return evaluateStream(ICursor::getIsActive, mapping);
