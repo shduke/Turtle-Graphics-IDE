@@ -171,7 +171,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay, Observer {
     }
     
     public Constant[] getActiveCursorConstants() {
-        return copyMap().entrySet().stream().toArray(Constant[]::new);
+        return copyMap().keySet().stream().map(Constant::new).toArray(Constant[]::new);
     }
     
 //    private void reinstateMap(Map<Double, Boolean> copyMap) {
