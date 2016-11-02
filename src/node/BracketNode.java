@@ -2,6 +2,7 @@ package node;
 
 import command.AbstractCommand;
 import command.MultiLineCommandFactory;
+import exception.SyntaxException;
 
 public class BracketNode extends Node {
         
@@ -14,9 +15,14 @@ public class BracketNode extends Node {
         }
 
     @Override
-    public AbstractCommand createCommand(INode node) {
-        MultiLineCommandFactory cmf = new MultiLineCommandFactory();
-        return cmf.createCommand(node);
+    public AbstractCommand createCommand(INode node) throws SyntaxException {
+       try{
+	    	MultiLineCommandFactory cmf = new MultiLineCommandFactory();
+	        return cmf.createCommand(node);
+       }
+       catch(SyntaxException e){
+    	   throw e; 
+       }
     }
         
 }
