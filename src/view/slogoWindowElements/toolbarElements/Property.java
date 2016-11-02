@@ -15,16 +15,14 @@ import javafx.stage.Stage;
  *
  */
 public abstract class Property implements IProperty {
-
-	public static final Dimension DEFAULT_SIZE = new Dimension(200, 200);
 	
 	private Scene myScene;
 	private Stage myStage;
 	private BorderPane myRoot;
 	
-	public Property() {
+	public Property(double width, double height) {
 		myRoot = new BorderPane();
-		myScene = new Scene(myRoot, DEFAULT_SIZE.getWidth(), DEFAULT_SIZE.getHeight());
+		myScene = new Scene(myRoot, width, height);
 		myStage = new Stage();
 	}
 	

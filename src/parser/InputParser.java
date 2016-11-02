@@ -1,34 +1,41 @@
 package parser;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
+
+import command.utility.IVariable;
 import cursor.ICursor;
 import node.BracketNode;
 import node.ConstantNode;
 import node.CursorNode;
 import node.Node;
 import node.OperationNode;
+import node.ParameterNode;
 import node.VariableNode;
 import view.AppResources;
 
 public class InputParser {
 	 private List<Entry<String, Pattern>> mySymbols;
 	 private List<String> myMethodNames; 
-	 private ResourceBundle myCursorSyntax, myOperationSyntax, myTranslator;
+	 private ResourceBundle myCursorSyntax, myOperationSyntax, myParameterSyntax, myTranslator;
 	 private String myLanguage; 
+	 private HashMap<String,IVariable>myGlobalVariableMap; 
 	 
-     public InputParser (String language) {
+     public InputParser (String language, HashMap<String,IVariable>globalMap) {
     	 myLanguage = language.toLowerCase(); 
          mySymbols = new ArrayList<>();
          myMethodNames = new ArrayList<>(); 
-         addPatterns(AppResources.PATTERNS_STRING.getResource());//hardcoded probably need to change
-         myCursorSyntax = ResourceBundle.getBundle("cursor_"+language);//hardcoded probably need to change
-         myOperationSyntax = ResourceBundle.getBundle("operations_"+language);//hardcoded probably need to change
+         myGlobalVariableMap = globalMap; 
+         addPatterns(AppResources.PATTERNS_STRING.getResource());
+         myCursorSyntax = ResourceBundle.getBundle("cursor_"+language);
+         myOperationSyntax = ResourceBundle.getBundle("operations_"+language);
+         myParameterSyntax = ResourceBundle.getBundle("parameter_"+language);
          System.out.println(myLanguage);
          myTranslator = ResourceBundle.getBundle(myLanguage);
      }
@@ -58,6 +65,9 @@ public class InputParser {
     			 else if(myOperationSyntax.containsKey(split[i])){
     				 construct.add(new OperationNode(split[i]));
     			 }
+    			 else if(myParameterSyntax.containsKey(split[i])){
+    				 construct.add(new ParameterNode((split[i]),myGlobalVariableMap));
+    			 }
     			 else if(!myMethodNames.contains(split[i])){
     				 construct.add(new VariableNode("variable",split[i],null));
     				 myMethodNames.add(split[i]);
@@ -66,7 +76,10 @@ public class InputParser {
     				 construct.add(new OperationNode(split[i]));
     			 }
     		 }
-    		 else if(getSymbol(split[i]).equals("RIGHTBRACKET")||getSymbol(split[i]).equals("LEFTBRACKET")){
+    		 else if(getSymbol(split[i]).equals("RIGHTBRACKET")){
+    			 construct.add(new BracketNode("multiline"));
+    		 }
+    		 else if(getSymbol(split[i]).equals("LEFTBRACKET")){
     			 construct.add(new BracketNode(split[i]));
     		 }
     		 else if(getSymbol(split[i]).equals("CONSTANT")){

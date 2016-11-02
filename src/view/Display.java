@@ -13,8 +13,8 @@ import javafx.scene.paint.Color;
  *
  */
 public interface Display {
-	
-	public void redrawAll(List<IDrawable> drawables);
+		
+	public void addDrawables(List<IDrawable> drawables);
 	
 	public void setBackgroundColor(Color color);
 	
