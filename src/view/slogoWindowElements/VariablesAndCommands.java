@@ -59,7 +59,7 @@ public class VariablesAndCommands implements IVariablesAndCommands {
     }
     
     public void addOutput(String output) {
-    	myOutputTextArea.appendText(output);
+    	myOutputTextArea.appendText(output+"\n");
     }
 	
 }

@@ -10,7 +10,7 @@ public class BracketNode extends Node {
         }
         
         public String toString(){
-                return "OperationNode" +"{"+this.getType()+"}";
+                return "BracketNode" +"{"+this.getType()+"}";
         }
 
     @Override

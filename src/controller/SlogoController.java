@@ -1,9 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import command.AbstractCommand;
+import command.utility.IVariable;
 import cursor.CreatedItem;
 import cursor.Cursor;
 import cursor.CursorManager;
@@ -23,13 +25,14 @@ public class SlogoController {
 	private InputParser myParser; 
 	private String myLastCommand; 
 	private ExpressionTree myExpressionTree;  
-	private List<Drawable> myDrawables;
+	private HashMap<String, IVariable> myGlobalVariableMap; 
 	
 	public SlogoController(ISlogoWindowView view){
 		myDisplay = view; 
 		myLastCommand = "";
 		myCursor= new CursorManager();
-		myParser = new InputParser(myDisplay.getLanguage());
+		myGlobalVariableMap = new HashMap<>(); 
+		myParser = new InputParser(myDisplay.getLanguage(),myGlobalVariableMap);
 		bindUserInput(); 
 	}
 	
