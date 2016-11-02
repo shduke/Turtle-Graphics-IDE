@@ -2,6 +2,7 @@ package node;
 
 import java.util.stream.Stream;
 import command.AbstractCommand;
+import exception.SyntaxException;
 
 public abstract class Node {
 	
@@ -29,6 +30,6 @@ public abstract class Node {
 		return "Node" +"{"+this.getType()+"}";
 	}
 	
-	public abstract AbstractCommand createCommand(INode node);
+	public abstract AbstractCommand createCommand(INode node) throws SyntaxException;
 	
 }

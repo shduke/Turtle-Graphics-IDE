@@ -5,6 +5,7 @@ import command.AbstractCommand;
 import command.ParameterCommandFactory;
 import command.utility.IVariable;
 import command.utility.Variable;
+import exception.SyntaxException;
 
 
 public class ParameterNode extends Node {
@@ -25,9 +26,14 @@ public class ParameterNode extends Node {
     }
 
     @Override
-    public AbstractCommand createCommand (INode node) {
-        ParameterCommandFactory cmf = new ParameterCommandFactory(myVariableMap);
-        return cmf.createCommand(node);
+    public AbstractCommand createCommand (INode node)  throws SyntaxException {
+    	try{
+	        ParameterCommandFactory cmf = new ParameterCommandFactory(myVariableMap);
+	        return cmf.createCommand(node);
+    	}
+    	catch(SyntaxException e){
+    		throw e; 
+    	}
     }
 
 }

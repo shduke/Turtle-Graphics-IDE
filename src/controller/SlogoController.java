@@ -61,14 +61,16 @@ public class SlogoController {
 					myDisplay.updateInformation(myCursorManager, myGlobalVariableMap);
 					myDisplay.getVariablesAndCommands().addOutput(consolePrint);
 					
+					/*
 					Color bgColor = myDisplay.getToolbar().getColor(myCursorManager.getBackGround());
 					myDisplay.getTurtleDisplay().setBackgroundColor(bgColor);
 					
 					Color penColor = myDisplay.getToolbar().getColor(myCursorManager.getPen().getPenColor());
 					myDisplay.getTurtleDisplay().setPenColor(penColor);
+					*/
 				}
 				catch (Exception e){
-					showErrorMessage(e.getMessage());
+					showErrorMessage("Syntax Error!");
 				}
 				
 			};

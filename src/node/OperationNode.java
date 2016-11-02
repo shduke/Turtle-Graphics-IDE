@@ -2,6 +2,7 @@ package node;
 
 import command.AbstractCommand;
 import command.OperationCommandFactory;
+import exception.SyntaxException;
 
 public class OperationNode extends Node {
         
@@ -14,9 +15,14 @@ public class OperationNode extends Node {
         }
 
     @Override
-    public AbstractCommand createCommand(INode node) {
-        OperationCommandFactory cmf = new OperationCommandFactory();
-        return cmf.createCommand(node);
+    public AbstractCommand createCommand(INode node) throws SyntaxException {
+        try{
+	    	OperationCommandFactory cmf = new OperationCommandFactory();
+	        return cmf.createCommand(node);
+        }
+        catch(SyntaxException e){
+        	throw e; 
+        }
     }
         
 }

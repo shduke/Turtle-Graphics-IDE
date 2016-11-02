@@ -2,6 +2,7 @@ package node;
 
 import command.AbstractCommand;
 import command.ConstantCommandFactory;
+import exception.SyntaxException;
 
 public class ConstantNode extends Node {
 	double myValue;
@@ -16,8 +17,13 @@ public class ConstantNode extends Node {
 	}
 
         @Override
-        public AbstractCommand createCommand(INode node) {
-            ConstantCommandFactory cmf = new ConstantCommandFactory(myValue);
-            return cmf.createCommand(node);
+        public AbstractCommand createCommand(INode node) throws SyntaxException {
+            try{
+	        	ConstantCommandFactory cmf = new ConstantCommandFactory(myValue);
+	            return cmf.createCommand(node);
+            }
+            catch(SyntaxException e){
+            	throw e; 
+            }
         }
 }
