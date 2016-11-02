@@ -19,7 +19,7 @@ public interface ICursor {
 
     void createItem (Coordinate nextCoordinate);
 
-    List<ICoordinate> getCreateItems ();
+    List<IDrawable> getDrawableItems();
 
     double move (double distance);
 

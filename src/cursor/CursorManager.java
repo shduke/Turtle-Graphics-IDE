@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -14,13 +15,16 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import command.AbstractCommand;
 import command.utility.Constant;
 
 
-public class CursorManager implements ICursor, Observer {
+public class CursorManager implements ICursor, ICursorManagerDisplay, Observer {
     // Set<ICursor> myCursors;
     Map<Double, ICursor> myCursors;
     Stack<Map<Double, Boolean>> myActiveCursorStack;
+    Pen myPen;
+    double myBackground;
     int myNextCursorId;
 
     public CursorManager () {
@@ -28,6 +32,7 @@ public class CursorManager implements ICursor, Observer {
         myCursors = new HashMap<Double, ICursor>();
         myActiveCursorStack = new Stack<Map<Double,Boolean>>();
         myNextCursorId = 0;
+        myPen = new Pen();
         createTurtle(1);
     }
     
@@ -62,9 +67,10 @@ public class CursorManager implements ICursor, Observer {
     }
 
     @Override
-    public List<ICoordinate> getCreateItems () {
-        // TODO Auto-generated method stub
-        return null;
+    public List<IDrawable> getDrawableItems () {
+        List<IDrawable> drawableItems = new ArrayList<IDrawable>();
+        myCursors.values().stream().map(p -> drawableItems.addAll(p.getDrawableItems()));
+        return drawableItems;
     }
     
     private double evaluateStream(Predicate<ICursor> filter, Function<ICursor, Double> mapping) {
@@ -159,10 +165,13 @@ public class CursorManager implements ICursor, Observer {
 //                    ));
 //    }
     
+    private Map<Double, Boolean> copyMap() {
+        return myCursors.entrySet().stream().filter(a -> a.getValue().getIsActive()).collect(Collectors.toMap(Entry::getKey, p -> true));
+        
+    }
+    
     public Constant[] getActiveCursorConstants() {
-        return myCursors.entrySet().stream().filter(a -> a.getValue().getIsActive())
-        .map(a -> new Constant(a.getKey()))
-             .toArray(size -> new Constant[size]);
+        return copyMap().entrySet().stream().toArray(Constant[]::new);
     }
     
 //    private void reinstateMap(Map<Double, Boolean> copyMap) {
@@ -187,10 +196,27 @@ public class CursorManager implements ICursor, Observer {
                 .reduce( (a, b) -> b).get();
     }
     
+//    private List<Double> getCursorsWithCondition(AbstractCommand command) {
+//        Map<Double>
+//        myCursors.entrySet().stream().filter(predicate)
+//    }
+    
     @Override
     public double activateCursors (List<Double> cursors) {
         deactivateCursors();
         return createCursors(cursors);
     }
+
+
+    @Override
+    public double getBackGround () {
+        return myBackground;
+    }
+
+    @Override
+    public void setBackground (double background) {
+        myBackground = background;
+    }
+
 
 }
