@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import command.AbstractCommand;
+import command.ICommand;
 import command.utility.IVariable;
 import command.utility.Variable;
 import exception.SyntaxException;
@@ -45,7 +46,7 @@ public class ExpressionTree {
 		temp.myNext = n; 
 	}
 
-	public AbstractCommand createCommand() throws SyntaxException {
+	public ICommand createCommand() throws SyntaxException {
 		INode iteratedNode = new NodeIterator(myRoot);
 		return myRoot.createCommand(iteratedNode);
 	}

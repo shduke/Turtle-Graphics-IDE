@@ -3,6 +3,7 @@ package controller;
 import java.util.HashMap;
 
 import command.AbstractCommand;
+import command.ICommand;
 import command.utility.IVariable;
 import cursor.CursorManager;
 import cursor.ICursor;
@@ -45,7 +46,7 @@ public class SlogoController {
 					myLastCommand = myDisplay.getHistory().getRecentCommand();
 					myExpressionTree = myParser.parse(myLastCommand,myCursor);
 					System.out.println(myExpressionTree);
-					AbstractCommand command = myExpressionTree.createCommand();
+					ICommand command = myExpressionTree.createCommand();
 					double result = command.execute();
 					
 					String consolePrint = command.toString()+" " + result; 
