@@ -173,15 +173,8 @@ public class TurtleDisplay implements Display {
 	public void redrawAll(List<IDrawable> drawables){
 		System.out.println("------- Redraw All Called -------");
 		for (IDrawable drawable : drawables){
-			System.out.println("newDrawable");
 			if (drawable.getLayer() == lineLayerNum){
 				List<ICoordinate> coordinates = drawable.getDrawableCoordinates();
-				try {
-					System.out.println("Coord Pair 0 - x: " + coordinates.get(0).getX() + " y: " + coordinates.get(0).getY());
-					System.out.println("Coord Pair 1 - x: " + coordinates.get(1).getX() + " y: " + coordinates.get(1).getY());
-				} catch (NullPointerException npe){
-					
-				}
 				double currentX = coordinates.get(0).getX();
 				double currentY = coordinates.get(0).getY();
 				for (ICoordinate coord : coordinates.subList(1, coordinates.size())){
@@ -199,8 +192,14 @@ public class TurtleDisplay implements Display {
 	
 	private void checkForLine(double x1, double y1, double x2, double y2){
 		boolean match = false;
+		double newX1 = x1 + myPaneWidth/2; double newY1 = -y1 + myPaneHeight/2;
+		double newX2 = x2 + myPaneWidth/2; double newY2 = -y2 + myPaneHeight/2;
 		for (Line testLine : myLines){
-			if (testLine.getStartX() == x1 && testLine.getStartY() == y1 && testLine.getEndX() == x2 && testLine.getEndY() == y2){
+			double tX1 = testLine.getStartX(); double tY1 = testLine.getStartY();
+			double tX2 = testLine.getStartX(); double tY2 = testLine.getEndY();
+			double absx1x1 = Math.abs(tX1-newX1); double absx2x2 = Math.abs(tX2-newX2);
+			double absy1y1 = Math.abs(tY1-newY1); double absy2y2 = Math.abs(tY2-newY2);
+			if ((absx1x1 < 1 && absx2x2 < 1 && absy1y1 < 1 && absy2y2 < 1)){
 				match = true;
 				break;
 			}
@@ -244,6 +243,8 @@ public class TurtleDisplay implements Display {
 		newLine.setStroke(myLineStroke);
 		if (myDashArray.size() > 0){
 			newLine.getStrokeDashArray().addAll(myDashArray);
+			System.out.println(myDashArray);
+			System.out.println("Is this love is this love is this love");
 		}
 		myLines.add(newLine);
 		myLinePane.getChildren().add(newLine);
@@ -323,10 +324,10 @@ public class TurtleDisplay implements Display {
 	
 	public void setLineType(double lineType){
 		myDashArray = new ArrayList<Double>();
-		if (lineType == AppResources.DOTTED_LINE_TYPE.getDoubleResource()){
-			myDashArray.add(20d); myDashArray.add(20d);
-		} else if (lineType == AppResources.DASHED_LINE_TYPE.getDoubleResource()){
-			myDashArray.add(3d); myDashArray.add(3d);
+		if (lineType == AppResources.DASHED_LINE_TYPE.getDoubleResource()){
+			myDashArray.add(3*myLineWidth); myDashArray.add(3*myLineWidth);
+		} else if (lineType == AppResources.DOTTED_LINE_TYPE.getDoubleResource()){
+			myDashArray.add(myLineWidth); myDashArray.add(2*myLineWidth);
 		}
 	}
 	
