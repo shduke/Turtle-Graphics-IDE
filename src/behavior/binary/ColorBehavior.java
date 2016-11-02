@@ -30,7 +30,7 @@ public class ColorBehavior extends BinaryBehavior<Double, String, Double> {
     }
     
     private String toColorString(Double r, Double g, Double b) {
-        return r.toString() + g.toString() + b.toString();
+        return ":"+ r.toString() + ":" + g.toString() + ":" + b.toString();
     }
 
 }
