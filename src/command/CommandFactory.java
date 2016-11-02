@@ -22,6 +22,7 @@ import cursor.Coordinate;
 import cursor.Cursor;
 import cursor.CursorManager;
 import cursor.ICursor;
+import exception.SyntaxException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import node.BracketNode;
@@ -126,7 +127,7 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
         //addValues(myArguments, myCommandArguments);
     }
 
-    public AbstractCommand createCommand (INode node) {
+    public AbstractCommand createCommand (INode node) throws SyntaxException {
         currentNode = node.current();
         nodeIterator = node;
         try {
@@ -144,77 +145,36 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
         //PROBABLY NEED TO CHANGE TO FRONT END???
         catch (ClassNotFoundException e) { //TODO-@ErrorHandlerPerson throw these errors (or a new error class) with a more descriptive message to the controller and have that open an alert view
             // TODO Auto-generated catch block
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Error!");
-        	alert.setHeaderText("Fatal Error!");
-        	alert.setContentText("ClassNotFoundException!");
-        	alert.showAndWait();
-            e.printStackTrace();
+        	throw new SyntaxException(e);
         }
         catch (NoSuchMethodException e) {
             // TODO Auto-generated catch block
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Error!");
-        	alert.setHeaderText("Fatal Error!");
-        	alert.setContentText("NoSuchMethodException!");
-        	alert.showAndWait();
-            e.printStackTrace();
+        	throw new SyntaxException(e);
         }
         catch (SecurityException e) {
             // TODO Auto-generated catch block
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Error!");
-        	alert.setHeaderText("Fatal Error!");
-        	alert.setContentText("SecurityException!");
-        	alert.showAndWait();
-            e.printStackTrace();
+        	throw new SyntaxException(e);
         }
         catch (NoSuchFieldException e) {
             // TODO Auto-generated catch block
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Error!");
-        	alert.setHeaderText("Fatal Error!");
-        	alert.setContentText("NoSuchFieldException!");
-        	alert.showAndWait();
-            e.printStackTrace();
+        	throw new SyntaxException(e);
         }
         catch (IllegalArgumentException e) {
             // TODO Auto-generated catch block
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Error!");
-        	alert.setHeaderText("Fatal Error!");
-        	alert.setContentText("IllegalArgumentException!");
-        	alert.showAndWait();
-            e.printStackTrace();
+        	throw new SyntaxException(e);
         }
         catch (IllegalAccessException e) {
             // TODO Auto-generated catch block
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Error!");
-        	alert.setHeaderText("Fatal Error!");
-        	alert.setContentText("IllegalAccessException!");
-        	alert.showAndWait();
-            e.printStackTrace();
+        	throw new SyntaxException(e);
         }
         catch (InstantiationException e) {
             // TODO Auto-generated catch block
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Error!");
-        	alert.setHeaderText("Fatal Error!");
-        	alert.setContentText("InstantiationException!");
-        	alert.showAndWait();
-            e.printStackTrace();
+        	throw new SyntaxException(e);
         }
         catch (InvocationTargetException e) {
             // TODO Auto-generated catch block
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Error!");
-        	alert.setHeaderText("Fatal Error!");
-        	alert.setContentText("InvocationTargetException!");
-        	alert.showAndWait();
-            e.printStackTrace();
+        	throw new SyntaxException(e);
         }
-        return null;
     }
  
 //    private Node getNextCommandNode (Node commandNode) {
@@ -252,7 +212,7 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
 //        return getNumberOfParameters();
 //    }
     
-    protected void getClassCommandArgument (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException { //Need to be able to stream Node. @O getLimit()
+    protected void getClassCommandArgument (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException, SyntaxException { //Need to be able to stream Node. @O getLimit()
         int index = 0;
         //nodeIterator.next();
         while(getLoopCondition(nodeIterator.current(), commandClass, index)) {
@@ -261,7 +221,12 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
                 //nodeIterator.next();
                 break;
             }
-            myCommandArguments.add(nodeIterator.createCommand());
+            try {
+				myCommandArguments.add(nodeIterator.createCommand());
+			} catch (SyntaxException e) {
+				// TODO Auto-generated catch block
+				throw e;
+			}
             index++;
         }
 
@@ -292,7 +257,7 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
         addValues(myArguments, value);
     }
     
-    private Object[] getClassArguments (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException {
+    private Object[] getClassArguments (Node node, Class commandClass) throws NoSuchFieldException, IllegalAccessException, SyntaxException {
         //currentNode = node; //TODO: get rid of classwide reference
         getClassCommandArgument(node, commandClass);
         myArguments.add(myCommandArguments.toArray(new AbstractCommand[myCommandArguments.size()]));
@@ -303,7 +268,7 @@ public abstract class CommandFactory { //TODO: refactor out list? maybe
     public static void testFunc(String ... tests) {
         System.out.println(tests.toString());
     }
-    public static void main (String[] args) {
+    public static void main (String[] args) throws SyntaxException {
           String[] test = {"Hi, ", "Sean"};
           String blah = " blah!";
           testFunc(blah);

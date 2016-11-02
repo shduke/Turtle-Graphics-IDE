@@ -70,7 +70,7 @@ public class SlogoController {
 					*/
 				}
 				catch (Exception e){
-					showErrorMessage(e.getMessage());
+					showErrorMessage("Syntax Error!");
 				}
 				
 			};
