@@ -21,17 +21,18 @@ import view.SlogoWindowView;
 public class InputField implements IInputField {
     
     private TextArea myTextArea;
-    HBox myHBox = new HBox();
+    private HBox myHBox = new HBox();
     private EventHandler<ActionEvent> myEnterHandler;
     private ResourceBundle myResources;
     private IHistory myHistory;
+    private ArrayList<String> myCommands = new ArrayList<String>();
     
     public InputField(String language, IHistory history) {
         myResources = ResourceBundle.getBundle(SlogoWindowView.DEFAULT_RESOURCE_PACKAGE + language);
         myEnterHandler = new EnterEvent();
         myTextArea = makeInputField((int) (SlogoWindowView.myAppWidth * 0.075), myEnterHandler);
         myHistory = history;
-        
+        setCommands();
         myTextArea.setOnKeyReleased(ev -> {
         	createSuggestion(myTextArea.getText());
         });
@@ -41,32 +42,39 @@ public class InputField implements IInputField {
     	if (myTextArea.getContextMenu() != null){
     		myTextArea.getContextMenu().hide();
     	}
-    	ArrayList<String> options = new ArrayList<String>();
-    	options.add("alphabet");
-    	options.add("asd");
-    	options.add("afea");
-    	options.add("vsdf");
-    	options.add("qwe");
     	ArrayList<MenuItem> choices = new ArrayList<MenuItem>();
-    	for (String option : options){
+    	for (String option : myCommands){
     		if (option.startsWith(text)){
     			MenuItem mi = new MenuItem(option);
     			choices.add(mi);
     		}
-    		if (choices.size() > 3){
+    		if (choices.size() >= 3){
     			break;
     		}
     	}
     	if (choices.size() > 0){
-    		System.out.println("set");
+    		setupEvents(choices);
     		ContextMenu contextMenu = new ContextMenu();
     		contextMenu.getItems().addAll(choices);
     		contextMenu.setPrefWidth(120);
-    	    contextMenu.setMinWidth(PopupControl.USE_PREF_SIZE);
-    	    contextMenu.setMaxWidth(PopupControl.USE_PREF_SIZE);
+    	    contextMenu.setMinWidth(PopupControl.USE_PREF_SIZE); contextMenu.setMaxWidth(PopupControl.USE_PREF_SIZE);
     		contextMenu.setMinHeight(myTextArea.getHeight()); contextMenu.setMaxHeight(myTextArea.getHeight());
     		myTextArea.setContextMenu(contextMenu);
     		contextMenu.show(myTextArea, myTextArea.getWidth() - contextMenu.getPrefWidth(), AppResources.APP_HEIGHT.getDoubleResource());
+    	}
+    }
+    
+    private void setCommands(){
+    	myCommands.add("forward"); myCommands.add("fd");
+    }
+    
+    private void setupEvents(ArrayList<MenuItem> choices){
+    	for (MenuItem choice : choices){
+    			choice.setOnAction(e -> {
+    				String selection = choice.getText();
+	                myTextArea.setText(choice.getText());
+	                myTextArea.positionCaret(selection.length());
+    			});
     	}
     }
 
