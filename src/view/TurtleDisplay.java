@@ -113,6 +113,7 @@ public class TurtleDisplay implements Display {
 		p.setMinWidth(myPaneWidth); p.setMinHeight(myPaneHeight);
 		p.setPrefWidth(myPaneWidth); p.setPrefHeight(myPaneHeight);
 		p.setMaxWidth(myPaneWidth); p.setMaxHeight(myPaneHeight);
+		System.out.println("pane resizie" + p.isResizable());
 		myGroup.getChildren().add(p);
 	}
 
@@ -136,7 +137,6 @@ public class TurtleDisplay implements Display {
 			}
 		}
 		myTimelines.removeAll(removeTimelines);
-		
 	}
 	
 	private void animateTurtle(Rectangle t, double destinationX, double destinationY, double orientation){
