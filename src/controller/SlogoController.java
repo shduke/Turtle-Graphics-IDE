@@ -58,6 +58,7 @@ public class SlogoController {
 					//receive information from backend
 					myDisplay.updateInformation(myCursorManager);
 					myDisplay.getVariablesAndCommands().addOutput(consolePrint);
+					myDisplay.getVariablesAndCommands().update(myGlobalVariableMap);
 					
 					//myDisplay.getVariablesAndCommands().updateTextArea();
 				}
