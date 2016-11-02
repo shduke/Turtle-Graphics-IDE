@@ -3,6 +3,9 @@
  */
 package view;
 
+import java.util.HashMap;
+
+import command.utility.IVariable;
 import cursor.ICursorManagerDisplay;
 import javafx.collections.ListChangeListener;
 import view.slogoWindowElements.IHistory;
@@ -24,5 +27,5 @@ public interface ISlogoWindowView {
 	
 	public void setHistoryBinding(ListChangeListener bind);
 
-	public void updateInformation(ICursorManagerDisplay myCursorManager);
+	public void updateInformation(ICursorManagerDisplay myCursorManager, HashMap<String, IVariable> variables);
 }
