@@ -9,19 +9,23 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import view.ITurtleSelector;
 
 /**
  * @author Noel Moon
  * @author John Martin
  */
-public class History implements IHistory {
+public class History implements IHistory, ITurtleSelector {
     
     private TextArea myTextArea;
     private ListChangeListener myEventHandler;
     private ObservableList<String> myObservableList;
-    private String myTurtlePosition;
-    private String myTurtleDirection;
-    private String myPenStatus;
+    private Label myTurtlePosition;
+    private Label myTurtleDirection;
+    private Label myVisibleStatus;
+    private HBox myPositionBox;
+    private HBox myDirectionBox;
+    private HBox myVisibleBox;
     
     public History () {
         myTextArea = new TextArea();
@@ -59,20 +63,39 @@ public class History implements IHistory {
     	VBox vb = new VBox();
     	myTextArea.setPrefHeight(500);
     	vb.getChildren().add(myTextArea);
-    	vb.getChildren().add(makeStatus("Turtle Position"));
-    	vb.getChildren().add(makeStatus("Turtle Direction"));
-    	vb.getChildren().add(makeStatus("Pen Status"));
+    	vb.getChildren().add(makePositionBox());
+    	vb.getChildren().add(makeDirectionBox());
+    	vb.getChildren().add(makeVisibleBox());
     	return vb;
     }
     
-    private HBox makeStatus(String statusName) {
-    	HBox hb = new HBox();
+    private HBox makeStatus(String statusName, HBox hb, Label lb) {
     	Label statusLabel = new Label(statusName);
-    	statusLabel.setPrefWidth(250);
+    	statusLabel.setPrefWidth(140);
     	hb.getChildren().add(statusLabel);
-    	hb.getChildren().add(new Label("0"));
-    	
+    	hb.getChildren().add(lb);
     	return hb;
+    }
+    
+    private HBox makePositionBox(){
+    	myPositionBox = new HBox();
+    	myTurtlePosition = new Label("(0, 0)");
+    	makeStatus("Pos: ", myPositionBox, myTurtlePosition);
+    	return myPositionBox;
+    }
+    
+    private HBox makeDirectionBox(){
+    	myDirectionBox = new HBox();
+        myTurtleDirection = new Label("0");
+    	makeStatus("Ori: ", myDirectionBox, myTurtleDirection);
+    	return myDirectionBox;
+    }
+    
+    private HBox makeVisibleBox(){
+    	myVisibleBox = new HBox();
+    	myVisibleStatus = new Label("false");
+    	makeStatus("Vis: ", myVisibleBox, myVisibleStatus);
+    	return myVisibleBox;
     }
     
     public void addHistory(String input) {
@@ -80,17 +103,24 @@ public class History implements IHistory {
         myObservableList.add(input);
     }
     
-    public void setTurtlePosition(int x, int y) {
+    public void setTurtlePosition(double x, double y) {
     	String result = ("(" + x + ", " + y + ")");
-    	myTurtlePosition = result;
+    	myTurtlePosition.setText(result);;
     }
     
-    public void setTurtleDirection(int direction) {
-    	String result = Integer.toString(direction);
-    	myTurtlePosition = result;
+    public void setTurtleDirection(double direction) {
+    	String result = Double.toString(direction);
+    	myTurtleDirection.setText(result);;
     }
     
-    public void setPenStatus(String status) {
-    	myTurtlePosition = status;
+    public void setVisibleStatus(String status) {
+    	myVisibleStatus.setText(status);
     }
+
+	@Override
+	public void selectTurtle(double x, double y, double orientation, boolean isVisible) {
+		setTurtlePosition(x, y);
+		setTurtleDirection(orientation);
+		setVisibleStatus(Boolean.toString(isVisible));		
+	}
 }

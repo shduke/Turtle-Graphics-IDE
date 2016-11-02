@@ -42,6 +42,9 @@ public class TurtleDisplay implements Display {
 	private double lineLayerNum = AppResources.LINE_LAYER_NUM.getDoubleResource();
 	private double turtleLayerNum = AppResources.TURTLE_LAYER_NUM.getDoubleResource();
 	
+	// Turtle Selector Interface
+	private ITurtleSelector myTurtleSelector;
+	
 	// Turtle Characteristics
 	private double myTurtleWidth = AppResources.TURTLE_WIDTH.getDoubleResource();
 	private double myTurtleHeight = AppResources.TURTLE_HEIGHT.getDoubleResource();
@@ -60,6 +63,7 @@ public class TurtleDisplay implements Display {
 	private List<Rectangle> myTurtles = new ArrayList<Rectangle>();
 	private List<ImageView> myTurtleImageViews = new ArrayList<ImageView>();
 	private List<Line> myLines = new ArrayList<Line>();
+	private List<IDrawable> myLastDrawables = new ArrayList<IDrawable>();
 	
 	// Drawable List
 	private ArrayList<List<IDrawable>> myAnimationQueue = new ArrayList<List<IDrawable>>();
@@ -71,7 +75,8 @@ public class TurtleDisplay implements Display {
 	private Button runAnimationButton = new Button();
 	private List<Timeline> myTimelines = new ArrayList<Timeline>();
 	
-	public TurtleDisplay(EventHandler<ActionEvent> event) {
+	public TurtleDisplay(EventHandler<ActionEvent> event, ITurtleSelector selector) {
+		myTurtleSelector = selector;
 		initPane(myBackgroundPane);
 		initPane(myLinePane);
 		initPane(myTurtlePane);
@@ -172,6 +177,7 @@ public class TurtleDisplay implements Display {
 	
 	public void redrawAll(List<IDrawable> drawables){
 		System.out.println("------- Redraw All Called -------");
+		myLastDrawables = drawables;
 		for (IDrawable drawable : drawables){
 			if (drawable.getLayer() == lineLayerNum){
 				List<ICoordinate> coordinates = drawable.getDrawableCoordinates();
@@ -304,8 +310,12 @@ public class TurtleDisplay implements Display {
 	}
 	
 	public void resetDisplay(){
-		myLines.clear();
+		for (Line l : myLines){
+			l.setStroke(Color.TRANSPARENT);
+		}
 		myLinePane.getChildren().clear();
+		myLinePane = new Pane();
+		myLines.clear();
 		for (Rectangle turtle : myTurtles){
 			setTurtle(turtle, initTurtleX, initTurtleY, myTurtleOrientationDefault);
 		}
@@ -354,7 +364,9 @@ public class TurtleDisplay implements Display {
     	Rectangle mousePos = new Rectangle(x, y, 1, 1);
 		for (Rectangle turtle : myTurtles){
 			if (mousePos.getBoundsInParent().intersects(turtle.getBoundsInParent())){
-				turtle.setFill(Color.AQUA);
+				double xA = turtle.getX() + myTurtleWidth/2 - myPaneWidth/2;
+				double yA = myPaneHeight/2 - myTurtleHeight/2 - turtle.getY();
+				myTurtleSelector.selectTurtle(xA, yA, 90-turtle.getRotate(), turtle.getOpacity() > 0);
 			}
 		}
 	}	

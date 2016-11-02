@@ -43,6 +43,7 @@ public class SlogoWindowView implements ISlogoWindowView {
     private Scene myScene;
     private IToolbar myToolbar;
     private IHistory myHistory;
+    private ITurtleSelector myTurtleSelector;
     private IInputField myInputField;
     private IVariablesAndCommands myVC;
     private Display myTurtleDisplay;
@@ -116,8 +117,8 @@ public class SlogoWindowView implements ISlogoWindowView {
 		BorderPane root = new BorderPane();
         root.setTop(makeToolbar());
         root.setRight(makeVCDisplay());
-        root.setCenter(new Group(makeTurtleDisplay()));
         root.setLeft(makeHistory());
+        root.setCenter(new Group(makeTurtleDisplay()));
         root.setBottom(makeInputField());
         root.setId("root");
         return root;
@@ -153,7 +154,7 @@ public class SlogoWindowView implements ISlogoWindowView {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             	if (newValue.equals("NORMAL")) myTurtleDisplay.setPenWidth(AppResources.NORMAL_LINE_WIDTH.getDoubleResource());
             	if (newValue.equals("THIN")) myTurtleDisplay.setPenWidth(AppResources.THIN_LINE_WIDTH.getDoubleResource());
-            	else myTurtleDisplay.setPenWidth(AppResources.THICK_LINE_WIDTH.getDoubleResource());
+            	if (newValue.equals("THICK")) myTurtleDisplay.setPenWidth(AppResources.THICK_LINE_WIDTH.getDoubleResource());
             }
         });
 	}
@@ -166,7 +167,7 @@ public class SlogoWindowView implements ISlogoWindowView {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             	if (newValue.equals("SOLID")) myTurtleDisplay.setLineType(AppResources.SOLID_LINE_TYPE.getDoubleResource());
             	if (newValue.equals("DASHED")) myTurtleDisplay.setLineType(AppResources.DASHED_LINE_TYPE.getDoubleResource());
-            	else myTurtleDisplay.setLineType(AppResources.DOTTED_LINE_TYPE.getDoubleResource());
+            	if (newValue.equals("DOTTED")) myTurtleDisplay.setLineType(AppResources.DOTTED_LINE_TYPE.getDoubleResource());
             }
         });
 	}
@@ -191,11 +192,12 @@ public class SlogoWindowView implements ISlogoWindowView {
     
     private Node makeHistory() {
         myHistory = new History();
+        myTurtleSelector = (ITurtleSelector) myHistory;
         return myHistory.getHistory();
     }
     
     private Group makeTurtleDisplay() {
-        myTurtleDisplay = new TurtleDisplay(null);
+        myTurtleDisplay = new TurtleDisplay(null, myTurtleSelector);
         return myTurtleDisplay.getGroup();
     }
     
