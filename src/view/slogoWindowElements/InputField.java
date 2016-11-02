@@ -27,7 +27,8 @@ public class InputField implements IInputField {
         myHistory = history;
         
         KeyEvent myKeyEvent = new KeyEvent();
-        //myTextArea.setOnKeyTyped(myKeyEvent);
+//        myTextArea.setOnKeyTyp
+//        myTextArea.setOnKeyTyped(myKeyEvent);
     }
 
     public HBox getInputField() {

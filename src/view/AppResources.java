@@ -25,6 +25,9 @@ public enum AppResources {
     THIN_LINE_WIDTH(3),
     NORMAL_LINE_WIDTH(6),
     THICK_LINE_WIDTH(10),
+    SOLID_LINE_TYPE(0),
+    DOTTED_LINE_TYPE(1),
+    DASHED_LINE_TYPE(2),
     
     TOGGLE_ON_TITLE("Toggle (ON)"),
     TOGGLE_OFF_TITLE("Toggle (OFF)"),

@@ -318,6 +318,12 @@ public class TurtleDisplay implements Display {
 		myLineWidth = width;
 	}
 	
+	public void setLineType(){
+		// Solid
+		// Dashed
+		// Dotted
+	}
+	
 	public void setPenDash(){
 		
 	}
