@@ -10,7 +10,7 @@ import behavior.ICommandExecutionBehavior;
 import command.utility.Variable;
 
 //TODO: watch out for multiple parameter order of execution. Maybe use a stack
-public abstract class AbstractCommand {
+public abstract class AbstractCommand implements ICommand{
     private ICommandExecutionBehavior myCommandExecutionBehavior;
 
     protected AbstractCommand (ICommandExecutionBehavior commandExecutionBehavior) {

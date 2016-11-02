@@ -27,7 +27,7 @@ public class Cursor implements IDrawable, Observer, ICursor{
     private double mySize;
     //private String dog
     
-    public Cursor(double id) {
+    public Cursor(double id, Pen pen) {
         myCreatedItems = new ArrayList<IDrawable>();
         myId = id;
         myCreatedItems.add(this); //TODO - better way to add this?
@@ -35,7 +35,7 @@ public class Cursor implements IDrawable, Observer, ICursor{
         myCoordinate = new Coordinate();
         myIsVisible = true;
         myLayer = DEFAULT_LAYER;
-        myPen = new Pen();
+        myPen = pen;
         myCoordinate.addObserver(this);
         setIsActive(DEFAULT_IS_VISIBLE);
         mySize = DEFAULT_SIZE;
@@ -63,6 +63,7 @@ public class Cursor implements IDrawable, Observer, ICursor{
     @Override
     public double clearCreatedItems() {
         myCreatedItems.clear();
+        myCreatedItems.add(this);
         return 0;
     }
     
@@ -180,8 +181,6 @@ public class Cursor implements IDrawable, Observer, ICursor{
         // TODO Auto-generated method stub
         return null;
     }
-
-
 
     
 }

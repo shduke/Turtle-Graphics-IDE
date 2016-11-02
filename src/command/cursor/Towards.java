@@ -15,7 +15,7 @@ public class Towards extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     
     public Towards (ICursor cursor, AbstractCommand... arguments) {
-        super(new DoubleBinaryBehavior(cursor.getAngle()::setAngle, arguments[0], arguments[1], new Constant(1.0)));
+        super(new DoubleBinaryBehavior((a, b) -> cursor.applyToActive(c -> c.getAngle().setAngle(a, b)), arguments[0], arguments[1], new Constant(1.0)));
 
 
     }
