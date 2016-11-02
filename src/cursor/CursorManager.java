@@ -59,9 +59,9 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
         return applyToActive(a -> a.move(distance));
     }
     
-    public <E, R> Function<E, R> applyCommand(Function<ICursor,R> mapping) {
-        return a -> applyToActive(mapping);
-    }
+//    public <E, R> Function<E, R> applyCommand(Function<ICursor,R> mapping) {
+//        return a -> applyToActive(mapping);
+//    }
     
     public <E> E applyToActive(Function<ICursor, E> mapping) {
         return evaluateStream(ICursor::getIsActive, mapping);
@@ -73,8 +73,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
 
     @Override
     public double clearCreatedItems () {
-        // TODO Auto-generated method stub
-        return 0;
+        return applyToActive(ICursor::clearCreatedItems);
     }
 
     @Override
