@@ -3,6 +3,7 @@
  */
 package view;
 
+import cursor.ICursorManagerDisplay;
 import javafx.collections.ListChangeListener;
 import view.slogoWindowElements.IHistory;
 import view.slogoWindowElements.IVariablesAndCommands;
@@ -22,4 +23,6 @@ public interface ISlogoWindowView {
 	public String getLanguage();
 	
 	public void setHistoryBinding(ListChangeListener bind);
+
+	public void updateInformation(ICursorManagerDisplay myCursorManager);
 }

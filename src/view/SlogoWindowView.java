@@ -1,5 +1,6 @@
 package view;
 
+import cursor.ICursorManagerDisplay;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -201,5 +202,15 @@ public class SlogoWindowView implements ISlogoWindowView {
         myInputField = new InputField(myLanguage, myHistory);
         return myInputField.getInputField();
     }
+
+    
+    
+    //NOEL OR JOHN DO THIS, CALL THE APPROPRIATE METHODS FROM THIS. 
+	@Override
+	public void updateInformation(ICursorManagerDisplay myCursorManager) {
+		// TODO Auto-generated method stub
+		myTurtleDisplay.redrawAll(myCursorManager.getDrawableItems());
+		
+	}
     
 }
