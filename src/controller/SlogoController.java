@@ -61,7 +61,7 @@ public class SlogoController {
 					myDisplay.getVariablesAndCommands().addOutput(consolePrint);
 				}
 				catch (Exception e){
-					showErrorMessage(e.getMessage());
+					showErrorMessage("Syntax Error!");
 				}
 				
 			};

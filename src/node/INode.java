@@ -1,6 +1,7 @@
 package node;
 
 import command.AbstractCommand;
+import exception.SyntaxException;
 
 public interface INode {
 
@@ -8,5 +9,5 @@ public interface INode {
     
     Node next();
     
-    AbstractCommand createCommand();
+    AbstractCommand createCommand() throws SyntaxException;
 }

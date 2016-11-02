@@ -1,6 +1,7 @@
 package node;
 
 import command.AbstractCommand;
+import exception.SyntaxException;
 
 //TODO: Mask in an interface
 public class NodeIterator implements INode{
@@ -20,8 +21,13 @@ public class NodeIterator implements INode{
     }
 
     @Override
-    public AbstractCommand createCommand () {
-        return myCurrentNode.createCommand(this);
+    public AbstractCommand createCommand () throws SyntaxException {
+       try{
+    	return myCurrentNode.createCommand(this);
+       }
+       catch(SyntaxException e){
+    	   throw e; 
+       }
     }
     
 }

@@ -3,6 +3,7 @@ package node;
 import command.AbstractCommand;
 import command.CursorCommandFactory;
 import cursor.ICursor;
+import exception.SyntaxException;
 
 public class CursorNode extends Node {
 
@@ -22,9 +23,14 @@ public class CursorNode extends Node {
 	}
 
     @Override
-    public AbstractCommand createCommand(INode node) {
-        CursorCommandFactory cmf = new CursorCommandFactory(myCursor);
-        return cmf.createCommand(node);
+    public AbstractCommand createCommand(INode node) throws SyntaxException {
+        try{
+        	CursorCommandFactory cmf = new CursorCommandFactory(myCursor);
+        	return cmf.createCommand(node);
+        }
+        catch(SyntaxException e){
+        	throw e;
+        }
     }
 	
 }

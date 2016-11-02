@@ -85,7 +85,7 @@ public class InputParser {
     						}
     					 }
     				 }
-    				 if(split[i].equals("set")){
+    				 if(split[i].equals("set")||split[i].equals("make")){
     					 if(i+1<split.length){
     						 construct.add(new VariableNode("variable",split[i+1],myGlobalVariableMap));
     						 i++;
