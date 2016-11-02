@@ -5,23 +5,34 @@ import java.util.HashMap;
 import java.util.List;
 
 import command.AbstractCommand;
+import command.ICommand;
 import command.utility.IVariable;
 import command.utility.Variable;
+import command.IFirstCommand;
 import exception.SyntaxException;
 import node.INode;
 import node.Node;
 import node.NodeIterator;
 
-
 public class ExpressionTree {
 
-	private Node myRoot; 
- //need to change to variable command
-	//add map to only things that need it -> variable, operation HashMap<String, VariableCommand> myMap
-	
-	
-	public ExpressionTree(){
-		myRoot = null; 
+	private Node myRoot;
+
+	public ExpressionTree() {
+		myRoot = null;
+	}
+
+	public String get(int index){
+		Node temp = myRoot; 
+		int count = 0;
+		while(myRoot!=null){
+			if(count == index){
+				return temp.getType();
+			}
+			temp=temp.myNext;
+			count++;
+		}
+		return null; 
 	}
 	
 	public void add(Node n){
@@ -35,22 +46,21 @@ public class ExpressionTree {
 		}
 		temp.myNext = n; 
 	}
-	
-	public AbstractCommand createCommand() throws SyntaxException{
+
+	public IFirstCommand createCommand() throws SyntaxException {
 		INode iteratedNode = new NodeIterator(myRoot);
 		return myRoot.createCommand(iteratedNode);
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		Node temp = myRoot;
 		String printing = "";
-		while(temp!=null){
-			printing +=temp.toString()+"\n";
-			temp=temp.myNext;
+		while (temp != null) {
+			printing += temp.toString() + "\n";
+			temp = temp.myNext;
 		}
-		return printing; 
+		return printing;
 	}
-	
-	
+
 }

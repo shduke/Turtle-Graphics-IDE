@@ -23,7 +23,7 @@ import view.AppResources;
 public class InputParser {
 	 private List<Entry<String, Pattern>> mySymbols;
 	 private List<String> myMethodNames; 
-	 private ResourceBundle myCursorSyntax, myOperationSyntax, myParameterSyntax, myTranslator;
+	 private ResourceBundle myCursorSyntax, myOperationSyntax, myParameterSyntax;
 	 private String myLanguage; 
 	 private HashMap<String,IVariable>myGlobalVariableMap; 
 	 
@@ -37,7 +37,6 @@ public class InputParser {
          myOperationSyntax = ResourceBundle.getBundle("operations_"+language);
          myParameterSyntax = ResourceBundle.getBundle("parameter_"+language);
          System.out.println(myLanguage);
-         myTranslator = ResourceBundle.getBundle(myLanguage);
      }
  
      // adds the given resource file to this language's recognized types
@@ -59,6 +58,7 @@ public class InputParser {
     	 split = fixCase(split);
     	 System.out.println(getSymbol(split[0]));
     	 ExpressionTree construct = new ExpressionTree(); 
+    	 construct.add(new BracketNode("multiline"));
     	 for(int i=0;i<split.length;i++){
     		 if(getSymbol(split[i]).equals("COMMAND")){
     			 if(myCursorSyntax.containsKey(split[i])){
@@ -138,7 +138,7 @@ public class InputParser {
     		 }
     		
     	 }
-    	 
+    	 construct.add(new BracketNode("]"));
     	 return construct; 
      }
  

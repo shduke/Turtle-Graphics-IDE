@@ -1,8 +1,11 @@
 package controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import command.AbstractCommand;
+import command.ICommand;
+import command.IFirstCommand;
 import command.utility.IVariable;
 import cursor.CursorManager;
 import cursor.ICursor;
@@ -45,23 +48,13 @@ public class SlogoController {
 					myLastCommand = myDisplay.getHistory().getRecentCommand();
 					myExpressionTree = myParser.parse(myLastCommand,myCursor);
 					System.out.println(myExpressionTree);
-					AbstractCommand command = myExpressionTree.createCommand();
-					double result = command.execute();
+					IFirstCommand command = myExpressionTree.createCommand();
 					
-					String consolePrint = command.toString()+" " + result; 
-					System.out.println("im testing: "+consolePrint);
+					String consolePrint = executeAndformOutput(command.getInnerCommands());
 					
 					//receive information from backend
 					myDisplay.updateInformation(myCursorManager, myGlobalVariableMap);
 					myDisplay.getVariablesAndCommands().addOutput(consolePrint);
-					
-					/*
-					Color bgColor = myDisplay.getToolbar().getColor(myCursorManager.getBackGround());
-					myDisplay.getTurtleDisplay().setBackgroundColor(bgColor);
-					
-					Color penColor = myDisplay.getToolbar().getColor(myCursorManager.getPen().getPenColor());
-					myDisplay.getTurtleDisplay().setPenColor(penColor);
-					*/
 				}
 				catch (Exception e){
 					showErrorMessage("Syntax Error!");
@@ -70,6 +63,17 @@ public class SlogoController {
 			};
 		};
 		myDisplay.setHistoryBinding(bind);
+	}
+	
+	private String executeAndformOutput(List<ICommand>toExecute){
+		String consoleOutput = "";
+		for(int i=0;i<toExecute.size();i++){
+			if(toExecute.get(i).toString().equals("COMMAND.CURSOR.CLEARSCREEN")){
+				myDisplay.getTurtleDisplay().resetDisplay();
+			}
+			consoleOutput+=toExecute.get(i).toString()+" "+toExecute.get(i).execute()+"\n";
+		}
+		return consoleOutput; 
 	}
 	
 	private void showErrorMessage(String message) {

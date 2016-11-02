@@ -54,6 +54,7 @@ public class TurtleDisplay implements Display {
 	// Line Characteristics
 	private double myLineWidth = AppResources.NORMAL_LINE_WIDTH.getDoubleResource();
 	private Color myLineStroke = AppResources.LINE_STROKE.getColorResource();
+	private List<Double> myDashArray = new ArrayList<Double>();
 	
 	// Lists for Nodes
 	private List<Rectangle> myTurtles = new ArrayList<Rectangle>();
@@ -88,6 +89,7 @@ public class TurtleDisplay implements Display {
 	    myAnimationTimeline = new Timeline();
 	    myAnimationTimeline.setCycleCount(Timeline.INDEFINITE);
 	    myAnimationTimeline.getKeyFrames().add(frame);
+		setLineType(AppResources.SOLID_LINE_TYPE.getDoubleResource());
 	}
 	
 	public void initButton(Button b, String label, EventHandler<ActionEvent> eh, int pos, int gap){
@@ -157,12 +159,9 @@ public class TurtleDisplay implements Display {
 		double time = msPerPixel*Math.sqrt(Math.pow((x1-x2), 2)+Math.pow((y1-y2), 2));
 		Timeline timeline = new Timeline();
 	    myTimelines.add(timeline);
-		x1 += myPaneWidth/2; y1 = -y1 + myPaneHeight/2;
+	    drawLine(x1, y1, x1, y1);
 		x2 += myPaneWidth/2; y2 = -y2 + myPaneHeight/2;
-		Line newLine = new Line(x1, y1, x1, y1);
-		newLine.setStrokeWidth(myLineWidth);
-		newLine.setStroke(myLineStroke);
-		myLinePane.getChildren().add(newLine);
+		Line newLine = myLines.get(myLines.size()-1);
 		KeyValue kvLineX = new KeyValue(newLine.endXProperty(), x2);
 		KeyValue kvLineY = new KeyValue(newLine.endYProperty(), y2);
 		KeyFrame kfLineX = new KeyFrame(Duration.millis(time), kvLineX);
@@ -174,15 +173,8 @@ public class TurtleDisplay implements Display {
 	public void redrawAll(List<IDrawable> drawables){
 		System.out.println("------- Redraw All Called -------");
 		for (IDrawable drawable : drawables){
-			System.out.println("newDrawable");
 			if (drawable.getLayer() == lineLayerNum){
 				List<ICoordinate> coordinates = drawable.getDrawableCoordinates();
-				try {
-					System.out.println("Coord Pair 0 - x: " + coordinates.get(0).getX() + " y: " + coordinates.get(0).getY());
-					System.out.println("Coord Pair 1 - x: " + coordinates.get(1).getX() + " y: " + coordinates.get(1).getY());
-				} catch (NullPointerException npe){
-					
-				}
 				double currentX = coordinates.get(0).getX();
 				double currentY = coordinates.get(0).getY();
 				for (ICoordinate coord : coordinates.subList(1, coordinates.size())){
@@ -200,8 +192,14 @@ public class TurtleDisplay implements Display {
 	
 	private void checkForLine(double x1, double y1, double x2, double y2){
 		boolean match = false;
+		double newX1 = x1 + myPaneWidth/2; double newY1 = -y1 + myPaneHeight/2;
+		double newX2 = x2 + myPaneWidth/2; double newY2 = -y2 + myPaneHeight/2;
 		for (Line testLine : myLines){
-			if (testLine.getStartX() == x1 && testLine.getStartY() == y1 && testLine.getEndX() == x2 && testLine.getEndY() == y2){
+			double tX1 = testLine.getStartX(); double tY1 = testLine.getStartY();
+			double tX2 = testLine.getStartX(); double tY2 = testLine.getEndY();
+			double absx1x1 = Math.abs(tX1-newX1); double absx2x2 = Math.abs(tX2-newX2);
+			double absy1y1 = Math.abs(tY1-newY1); double absy2y2 = Math.abs(tY2-newY2);
+			if ((absx1x1 < 1 && absx2x2 < 1 && absy1y1 < 1 && absy2y2 < 1)){
 				match = true;
 				break;
 			}
@@ -223,7 +221,10 @@ public class TurtleDisplay implements Display {
 		double turtleID = turtle.getId();
 		String turtleIDString = Double.toString(turtleID);
 		for (Rectangle testTurtle : myTurtles){
-			if (testTurtle.getId().equals(turtleIDString) && animatingToggle){
+			if (testTurtle.getId().equals(turtleIDString) && !turtle.getIsVisible()){
+				hideTurtle(testTurtle);
+			}
+			else if (testTurtle.getId().equals(turtleIDString) && animatingToggle){
 				animateTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
 				match = true;
 			} else if (testTurtle.getId().equals(turtleIDString) && !animatingToggle){
@@ -237,12 +238,24 @@ public class TurtleDisplay implements Display {
 		
 	}
 	
+	private void hideTurtle(Rectangle t){
+		int index = myTurtles.indexOf(t);
+		ImageView iv = myTurtleImageViews.get(index);
+		iv.setOpacity(0);
+	}
+	
 	private void drawLine(double x1, double y1, double x2, double y2){
 		x1 += myPaneWidth/2; y1 = -y1 + myPaneHeight/2;
 		x2 += myPaneWidth/2; y2 = -y2 + myPaneHeight/2;
 		Line newLine = new Line(x1, y1, x2, y2);
 		newLine.setStrokeWidth(myLineWidth);
 		newLine.setStroke(myLineStroke);
+		if (myDashArray.size() > 0){
+			newLine.getStrokeDashArray().addAll(myDashArray);
+			System.out.println(myDashArray);
+			System.out.println("Is this love is this love is this love");
+		}
+		myLines.add(newLine);
 		myLinePane.getChildren().add(newLine);
 	}
 	
@@ -292,10 +305,10 @@ public class TurtleDisplay implements Display {
 	
 	public void resetDisplay(){
 		myLines.clear();
-		myTurtles.clear();
 		myLinePane.getChildren().clear();
-		myTurtlePane.getChildren().clear();
-		drawTurtle(initTurtleX, initTurtleY, myInitTurtleID, myTurtleOrientationDefault);
+		for (Rectangle turtle : myTurtles){
+			setTurtle(turtle, initTurtleX, initTurtleY, myTurtleOrientationDefault);
+		}
 	}
 	
 	public Group getGroup(){
@@ -318,14 +331,13 @@ public class TurtleDisplay implements Display {
 		myLineWidth = width;
 	}
 	
-	public void setLineType(){
-		// Solid
-		// Dashed
-		// Dotted
-	}
-	
-	public void setPenDash(){
-		
+	public void setLineType(double lineType){
+		myDashArray = new ArrayList<Double>();
+		if (lineType == AppResources.DASHED_LINE_TYPE.getDoubleResource()){
+			myDashArray.add(3*myLineWidth); myDashArray.add(3*myLineWidth);
+		} else if (lineType == AppResources.DOTTED_LINE_TYPE.getDoubleResource()){
+			myDashArray.add(myLineWidth); myDashArray.add(2*myLineWidth);
+		}
 	}
 	
 	public void setTurtleImage(String path){
