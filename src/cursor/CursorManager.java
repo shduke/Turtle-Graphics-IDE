@@ -38,7 +38,6 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
     
     @Override
     public Coordinate getCoordinate () {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -59,9 +58,9 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
         return applyToActive(a -> a.move(distance));
     }
     
-    public <E, R> Function<E, R> applyCommand(Function<ICursor,R> mapping) {
-        return a -> applyToActive(mapping);
-    }
+//    public <E, R> Function<E, R> applyCommand(Function<ICursor,R> mapping) {
+//        return a -> applyToActive(mapping);
+//    }
     
     public <E> E applyToActive(Function<ICursor, E> mapping) {
         return evaluateStream(ICursor::getIsActive, mapping);
@@ -73,8 +72,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
 
     @Override
     public double clearCreatedItems () {
-        // TODO Auto-generated method stub
-        return 0;
+        return applyToActive(a -> a.clearCreatedItems());
     }
 
     @Override
@@ -93,8 +91,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
 
     @Override
     public boolean setIsVisible (Boolean isVisible) {
-        //return evaluateStream(a -> true, a -> a.setIsVisible(true)) == 1 ? true : false;
-        return false;
+        return applyToActive(a -> a.setIsVisible(isVisible));
     }
 
     @Override
@@ -109,7 +106,8 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
 
     @Override
     public double setIsActive (boolean isActive) {// TODO: is this a bad design to have this do
-        return evaluateStream(a -> true, a -> a.setIsActive(true));
+        //return evaluateStream(a -> true, a -> a.setIsActive(true));
+        return applyToActive(a -> a.setIsActive(true));
     }
 
     
@@ -124,7 +122,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
     }
 
     private double createTurtle (double id) {
-        myCursors.put(id, new Cursor(id));
+        myCursors.put(id, new Cursor(id, myPen));
         myNextCursorId++;
         return id;
     }

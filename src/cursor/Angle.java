@@ -23,6 +23,7 @@ public class Angle {
     }
     
     public double setAngle(double angle) {
+        System.out.print("newA " + angle);
         double difference = reduceAngle(angle) - myAngle;
         myAngle  = reduceAngle(angle);
         return difference * getAngleSign(angle);
