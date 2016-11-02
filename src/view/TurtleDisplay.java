@@ -140,9 +140,9 @@ public class TurtleDisplay implements Display {
 		double yTime = msPerPixel*Math.abs(t.getY()-topY);
 		Timeline timeline = new Timeline();
 	    myTimelines.add(timeline);
-		t.setRotate(orientation-90);
+		t.setRotate(90-orientation);
 		ImageView turtleImage = myTurtleImageViews.get(myTurtles.indexOf(t));
-		turtleImage.setRotate(orientation-90);
+		turtleImage.setRotate(90-orientation);
 		KeyValue kvTurtleX = new KeyValue(t.xProperty(), leftX);
 		KeyValue kvTurtleY = new KeyValue(t.yProperty(), topY);
 		KeyValue kvIVX = new KeyValue(turtleImage.xProperty(), leftX);
@@ -254,14 +254,14 @@ public class TurtleDisplay implements Display {
 		double topY = -y + myPaneHeight/2 - myTurtleHeight/2;
 		t.setX(leftX);
 		t.setY(topY);
-		t.setRotate(orientation-90);
+		t.setRotate(90-orientation);
 		setImageView(myTurtleImageViews.get(myTurtles.indexOf(t)), leftX, topY, orientation);
 	}
 	
 	private void setImageView(ImageView iv, double leftX, double topY, double orientation){
 		iv.setX(leftX);
 		iv.setY(topY);
-		iv.setRotate(orientation-90);
+		iv.setRotate(90-orientation);
 	}
 	
 	private Rectangle drawTurtle(double x, double y, double id, double orientation){
