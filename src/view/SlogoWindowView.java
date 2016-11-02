@@ -153,7 +153,7 @@ public class SlogoWindowView implements ISlogoWindowView {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             	if (newValue.equals("NORMAL")) myTurtleDisplay.setPenWidth(AppResources.NORMAL_LINE_WIDTH.getDoubleResource());
             	if (newValue.equals("THIN")) myTurtleDisplay.setPenWidth(AppResources.THIN_LINE_WIDTH.getDoubleResource());
-            	else myTurtleDisplay.setPenWidth(AppResources.THICK_LINE_WIDTH.getDoubleResource());
+            	if (newValue.equals("THICK")) myTurtleDisplay.setPenWidth(AppResources.THICK_LINE_WIDTH.getDoubleResource());
             }
         });
 	}
@@ -166,7 +166,7 @@ public class SlogoWindowView implements ISlogoWindowView {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             	if (newValue.equals("SOLID")) myTurtleDisplay.setLineType(AppResources.SOLID_LINE_TYPE.getDoubleResource());
             	if (newValue.equals("DASHED")) myTurtleDisplay.setLineType(AppResources.DASHED_LINE_TYPE.getDoubleResource());
-            	else myTurtleDisplay.setLineType(AppResources.DOTTED_LINE_TYPE.getDoubleResource());
+            	if (newValue.equals("DOTTED")) myTurtleDisplay.setLineType(AppResources.DOTTED_LINE_TYPE.getDoubleResource());
             }
         });
 	}
