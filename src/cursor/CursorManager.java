@@ -19,7 +19,7 @@ import command.AbstractCommand;
 import command.utility.Constant;
 
 
-public class CursorManager implements ICursor, ICursorManagerDisplay, Observer {
+public class CursorManager implements ICursor, ICursorManagerDisplay {
     // Set<ICursor> myCursors;
     Map<Double, ICursor> myCursors;
     Stack<Map<Double, Boolean>> myActiveCursorStack;
@@ -50,7 +50,6 @@ public class CursorManager implements ICursor, ICursorManagerDisplay, Observer {
 
     @Override
     public Angle getAngle () {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -61,15 +60,9 @@ public class CursorManager implements ICursor, ICursorManagerDisplay, Observer {
     }
 
     @Override
-    public void createItem (Coordinate nextCoordinate) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public List<IDrawable> getDrawableItems () {
         List<IDrawable> drawableItems = new ArrayList<IDrawable>();
-        myCursors.values().stream().map(p -> drawableItems.addAll(p.getDrawableItems()));
+        myCursors.values().stream().forEach(p -> drawableItems.addAll(p.getDrawableItems()));
         return drawableItems;
     }
     
