@@ -2,45 +2,65 @@ package cursor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class CreatedItem implements Drawable{
-    List<Coordinate> myCoordinates;
-    private Double myLayer;
-    private Double myOrientation;
+public class CreatedItem implements IDrawable{
+    private static final double DEFAULT_ORIENTATION = 90;
+    private static final double DEFAULT_LAYER = 10;
+    private static final double DEFAULT_ID = 0;
+    private static final boolean DEFAULT_IS_VISIBLE = true;
+    private List<ICoordinate> myCoordinates;
+    private double myColor;
+    private double mySize;
 
 
-    CreatedItem(Coordinate...coordinates) {
-        myCoordinates = new ArrayList<Coordinate>(Arrays.asList(coordinates));
-        myLayer = 10.0;
-    }
-    
-    public List<Coordinate> getCoordinates () {
-        return myCoordinates;
+    CreatedItem(double color, double size, Coordinate...coordinates) {
+        myCoordinates = new ArrayList<ICoordinate>(Arrays.asList(coordinates));
+        myColor = color;
+        mySize = size;
     }
 
-    public void setCoordinates (List<Coordinate> myCoordinates) {
-        this.myCoordinates = myCoordinates;
-    }
 
     @Override
-    public List<ICoordinate> getCreateItems () {
-        List<ICoordinate> copyCoordinates = new ArrayList<ICoordinate>();
-        return copyCoordinates;
+    public List<ICoordinate> getDrawableCoordinates () {
+        return Collections.unmodifiableList(myCoordinates);
     }
 
-    @Override
-    public double getLayer () {
-        return myLayer;
-    }
 
     @Override
     public double getOrientation () {
-        return myLayer;
+        return DEFAULT_ORIENTATION;
     }
+
+
+    @Override
+    public double getLayer () {
+        return DEFAULT_LAYER;
+    }
+
 
     @Override
     public boolean getIsVisible () {
-        return true;
+        return DEFAULT_IS_VISIBLE;
     }
+
+
+    @Override
+    public double getId () {
+        return DEFAULT_ID;
+    }
+
+
+    @Override
+    public double getColor () {
+        return myColor;
+    }
+
+
+    @Override
+    public double getSize () {
+        return mySize;
+    }
+    
 }

@@ -2,7 +2,8 @@ package view;
 
 import java.util.List;
 
-import cursor.Drawable;
+
+import cursor.IDrawable;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -13,7 +14,7 @@ import javafx.scene.paint.Color;
  */
 public interface Display {
 	
-	public void redrawAll(List<Drawable> drawables);
+	public void redrawAll(List<IDrawable> drawables);
 	
 	public void setBackgroundColor(Color color);
 	

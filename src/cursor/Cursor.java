@@ -1,6 +1,8 @@
 package cursor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.function.Consumer;
@@ -8,8 +10,11 @@ import command.utility.Constant;
 import java.util.Observer;
 import java.util.Set;
 
-public class Cursor implements Drawable, Observer, ICursor{
-    private List<Drawable> myCreatedItems; //maybe create a drawableObject?
+public class Cursor implements IDrawable, Observer, ICursor{
+    private static final double DEFAULT_LAYER = 20;
+    private static final boolean DEFAULT_IS_VISIBLE = true;
+    private static final double DEFAULT_SIZE = 10;
+    private List<IDrawable> myCreatedItems; //maybe create a drawableObject?
     private double myId;
     private Coordinate myCoordinate;
     private Angle myOrientation;
@@ -17,19 +22,22 @@ public class Cursor implements Drawable, Observer, ICursor{
     private Double myLayer;
     private Pen myPen;
     private boolean myIsActive;
+    private double myShape;
+    private double mySize;
     //private String dog
     
     public Cursor(double id) {
-        myCreatedItems = new ArrayList<Drawable>();
+        myCreatedItems = new ArrayList<IDrawable>();
         myId = id;
         myCreatedItems.add(this); //TODO - better way to add this?
-        myOrientation = new Angle(90);
-        myCoordinate = new Coordinate(0,0);
+        myOrientation = new Angle();
+        myCoordinate = new Coordinate();
         myIsVisible = true;
-        myLayer = 10.0;
+        myLayer = DEFAULT_LAYER;
         myPen = new Pen();
         myCoordinate.addObserver(this);
-        setIsActive(true);
+        setIsActive(DEFAULT_IS_VISIBLE);
+        mySize = DEFAULT_SIZE;
     }
 
 
@@ -62,16 +70,14 @@ public class Cursor implements Drawable, Observer, ICursor{
     @Override
     public void createItem(Coordinate nextCoordinate) {
         if(myPen.getIsPenDown()){
-            myCreatedItems.add(new CreatedItem(myCoordinate, nextCoordinate));
+            myCreatedItems.add(new CreatedItem(myPen.getPenColor(), myPen.getPenSize(), myCoordinate, nextCoordinate));
         }
     }
 
 
     @Override
-    public List<ICoordinate> getCreateItems () {
-        List<ICoordinate> drawCoordinates = new ArrayList<ICoordinate>();
-        drawCoordinates.add(myCoordinate);
-        return drawCoordinates;
+    public List<IDrawable> getDrawableItems () {
+        return Collections.unmodifiableList(myCreatedItems);
     }
 
 
@@ -90,7 +96,7 @@ public class Cursor implements Drawable, Observer, ICursor{
     @Override
     public boolean setIsVisible (Boolean isVisible) {
         myIsVisible = isVisible;
-        System.out.print(myIsVisible);
+        //System.out.print(myIsVisible);
         return isVisible;
     }
     
@@ -147,6 +153,24 @@ public class Cursor implements Drawable, Observer, ICursor{
     @Override
     public Constant[] getActiveCursorConstants () {
         return null;
+    }
+
+
+    @Override
+    public List<ICoordinate> getDrawableCoordinates () {
+        return Collections.unmodifiableList(Arrays.asList(myCoordinate));
+    }
+
+
+    @Override
+    public double getColor () {
+        return myShape;
+    }
+
+
+    @Override
+    public double getSize () {
+        return mySize;
     }
 
     
