@@ -34,7 +34,7 @@ public enum AppResources {
     ANIMATION_SPEED(250),
     ANIMATION_MIN_RATE(0.25),
     ANIMATION_MAX_RATE(2.5),
-    MILLI_PER_PX(1),
+    MILLI_PER_PX(5),
     
     LINE_LAYER_NUM(10),
     TURTLE_LAYER_NUM(20),
