@@ -23,6 +23,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
     // Set<ICursor> myCursors;
     Map<Double, ICursor> myCursors;
     Stack<Map<Double, Boolean>> myActiveCursorStack;
+    List<Double> myColorPalette;
     Pen myPen;
     double myBackground;
     int myNextCursorId;
@@ -31,6 +32,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
         // myCursors = new HashSet<ICursor>();
         myCursors = new HashMap<Double, ICursor>();
         myActiveCursorStack = new Stack<Map<Double,Boolean>>();
+        myColorPalette = new ArrayList<Double>();
         myNextCursorId = 0;
         myPen = new Pen();
         createTurtle(1);
@@ -63,7 +65,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
 //    }
     
     public <E> E applyToActive(Function<ICursor, E> mapping) {
-        return applyToActive(mapping);
+        return evaluateStream(ICursor::getIsActive, mapping);
     }
     
     private <E> E evaluateStream(Predicate<ICursor> filter, Function<ICursor, E> mapping) {
@@ -210,6 +212,11 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
     @Override
     public double getShape () {
         return applyToActive(a -> a.getShape());
+    }
+
+    @Override
+    public double setPalette (double index, double color) {
+        return index; 
     }
 
 

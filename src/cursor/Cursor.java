@@ -200,6 +200,12 @@ public class Cursor implements IDrawable, Observer, ICursor{
     public double getShape () {
         return myShape;
     }
+
+
+    @Override
+    public double setPalette (double index, double color) {
+        return 0;
+    }
     
 
     
