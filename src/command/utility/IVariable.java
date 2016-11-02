@@ -11,4 +11,8 @@ public interface IVariable {
     void updateParameterValues (int index, AbstractCommand abstractCommand);
     
     int getNumberOfParameters();
+    
+    double getLastResult();
+    
+    void setlastResult(double lastResult);
 }
