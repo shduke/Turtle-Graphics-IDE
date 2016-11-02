@@ -1,6 +1,7 @@
 package cursor;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ICursorManagerDisplay {
     
@@ -10,4 +11,5 @@ public interface ICursorManagerDisplay {
     
     double getBackGround();
     
+    Map<Double, String> getPalette();
 }
