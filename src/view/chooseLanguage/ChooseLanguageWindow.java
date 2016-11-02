@@ -72,8 +72,6 @@ public class ChooseLanguageWindow implements IChooseLanguageWindow {
                 slogoStage.setScene(display.getScene());
                 slogoStage.show();
                 SlogoController slogo = new SlogoController(display);
-                
-                
             }
         });
 		return myComboBox;
