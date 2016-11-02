@@ -41,6 +41,6 @@ public interface ICursor {
     double activateCursors(List<Double> turtles);
     
     Constant[] getActiveCursorConstants();
-    
+        
     <E> E applyToActive(Function<ICursor, E> mapping);
 }

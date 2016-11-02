@@ -53,9 +53,9 @@ public class VariablesAndCommands implements IVariablesAndCommands {
     	myOutputTextArea.clear();
     }
     
-    private void addVariable(String varName, double varValue) {
-    	//myVariableTextArea.appendText(varName + " = " + Double.toString(varValue) + "\n");
-    	myVariableTextArea.appendText(varName + "\n");
+    private void addVariable(String varName, String varValue) {
+    	myVariableTextArea.appendText(varName + " = " + varValue + "\n");
+    	//myVariableTextArea.appendText(varName + "\n");
     }
     
     private void addCommand(String commandName) {
@@ -71,10 +71,15 @@ public class VariablesAndCommands implements IVariablesAndCommands {
 		clear();
 		for (String name : variables.keySet()) {
 			if (name.startsWith(":")){
-				addVariable(name, variables.get(name).getLastResult());
+				if (variables.get(name).getLastResult() == 0.0){
+					addVariable(name, "Processing...");
+				} else {
+					addVariable(name, String.valueOf((variables.get(name).getLastResult())));
+				}
+				
 			}
 			else {
-				addVariable(name, variables.get(name).getLastResult());
+				addCommand(name);
 			}
 		}
 		

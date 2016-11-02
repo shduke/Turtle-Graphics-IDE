@@ -16,7 +16,7 @@ public class Right extends AbstractCommand {
 
     public Right (ICursor cursor, AbstractCommand... arguments) {
         //super(new MovementBehavior(cursor.getAngle()::rotate, arguments[0], new Constant(-1.0)));
-        super(new MovementBehavior(cursor.applyToActive(mapping), arguments[0], new Constant(-1.0)));
+        super(new MovementBehavior(a -> cursor.applyToActive(b -> b.getAngle().rotate(a)), arguments[0], new Constant(-1.0)));
 
 
     }
