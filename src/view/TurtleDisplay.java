@@ -5,8 +5,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cellsociety_team13.AppResources;
 import cursor.Drawable;
 import cursor.ICoordinate;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -16,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 /**
  * @author John Martin
@@ -42,7 +47,7 @@ public class TurtleDisplay implements Display {
 	private double turtleX, turtleY;
 	
 	// Line Characteristics
-	private double myLineWidth = AppResources.LINE_WIDTH.getDoubleResource();
+	private double myLineWidth = AppResources.NORMAL_LINE_WIDTH.getDoubleResource();
 	private Color myLineStroke = AppResources.LINE_STROKE.getColorResource();
 	
 	// Lists for Nodes
@@ -51,7 +56,12 @@ public class TurtleDisplay implements Display {
 	private List<Line> myLines = new ArrayList<Line>();
 	
 	// Drawable List
-	List<Drawable> myLastDrawables;
+	private List<Drawable> myCurrentDrawables;
+	private ArrayList<List<Drawable>> myAnimationQueue = new ArrayList<List<Drawable>>();
+	private Timeline myAnimationTimeline;
+	private boolean animationComplete = true;
+	private boolean animating = false;
+	private int pixelStepSize = 1;
 	
 	public TurtleDisplay(EventHandler<ActionEvent> event) {
 		initPane(myBackgroundPane);
@@ -63,6 +73,11 @@ public class TurtleDisplay implements Display {
         setTurtleImage("src/images/turtle.png");
         drawTurtle(turtleX, turtleY, myInitTurtleID, myTurtleOrientationDefault);
         myTurtles.get(0).setFill(Color.TRANSPARENT);
+        KeyFrame frame = new KeyFrame(Duration.millis(AppResources.ANIMATION_SPEED.getDoubleResource()),
+                e -> step());
+	    myAnimationTimeline = new Timeline();
+	    myAnimationTimeline.setCycleCount(Timeline.INDEFINITE);
+	    myAnimationTimeline.getKeyFrames().add(frame);
 	}
 	
 	public void initPane(Pane p){
@@ -71,6 +86,43 @@ public class TurtleDisplay implements Display {
 		p.setPrefWidth(myPaneWidth); p.setPrefHeight(myPaneHeight);
 		p.setMaxWidth(myPaneWidth); p.setMaxHeight(myPaneHeight);
 		myGroup.getChildren().add(p);
+	}
+	
+	
+	private void step(){
+		if (!animationComplete){
+			stepNum++;
+		}
+		if (animating && myAnimationQueue.size() > 0 && animationComplete){
+			myCurrentDrawables = myAnimationQueue.get(0);
+			myAnimationQueue.remove(0);
+		} else if (animating && myAnimationQueue.size() > 0){
+			redrawAll(myAnimationQueue.get(0));
+		}
+		else if (animating && !animationComplete){
+			redrawAll(myAnimationQueue.get(0));
+		} else {
+			
+		}
+	}
+	
+	private void toggleRunning() {
+        if (myAnimationTimeline.getStatus().equals(Animation.Status.RUNNING)) {
+        	myAnimationTimeline.pause();
+        	toggleAnimationButton.setText(AppResources.RUN_TITLE.getResource());
+        } else {
+        	myAnimationTimeline.play();
+            toggleAnimationButton.setText(AppResources.PAUSE_TITLE.getResource());
+        }
+    }
+	
+	private void animateTurtle(Rectangle t, double destinationX, double destinationY){
+		KeyValue kv = new KeyValue(t.xProperty(), 300);
+		KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
+		double leftX = destinationX + myPaneWidth/2 - myTurtleWidth/2;
+		double topY = destinationY + myPaneHeight/2 - myTurtleHeight/2;
+		t.setX(leftX);
+		t.setY(topY);
 	}
 	
 	public void redrawAll(List<Drawable> drawables){
@@ -90,7 +142,6 @@ public class TurtleDisplay implements Display {
 				checkForTurtle(drawable);
 			}
 		}
-		myLastDrawables = drawables;
 	}
 	
 	private void checkForLine(double x1, double y1, double x2, double y2){
@@ -113,15 +164,21 @@ public class TurtleDisplay implements Display {
 		double turtleY = turtleCoordinates.get(turtleCoordinates.size()-1).getY();
 		double turtleOrientation = turtle.getOrientation();
 		boolean match = false;
-		String drawableID = Double.toString(turtle.getId());
+		double turtleID = turtle.getId();
+		String turtleIDString = Double.toString(turtleID);
 		for (Rectangle testTurtle : myTurtles){
-			if (testTurtle.getId() == drawableID){
-				setTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
+			if (testTurtle.getId() == turtleIDString){
+				if (animating = false){
+					setTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
+				} else {
+					animateTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
+				}
+				
 				break;
 			}
 		}
 		if (!match){
-			drawTurtle(turtleX, turtleY, turtle.getId());
+			drawTurtle(turtleX, turtleY, turtleID, turtleOrientation);
 		}
 		
 	}
