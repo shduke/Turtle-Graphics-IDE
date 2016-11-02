@@ -43,4 +43,11 @@ public interface ICursor {
     Constant[] getActiveCursorConstants();
         
     <E> E applyToActive(Function<ICursor, E> mapping);
+    
+    double setBackground(double background);
+    
+    double setShape(double shape);
+    
+    double getShape();
+    
 }

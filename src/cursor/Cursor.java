@@ -182,5 +182,25 @@ public class Cursor implements IDrawable, Observer, ICursor{
         return null;
     }
 
+
+    @Override
+    public double setBackground (double background) {
+        return 0;
+    }
+
+
+    @Override
+    public double setShape (double shape) {
+        myShape = shape;
+        return shape;
+    }
+
+
+    @Override
+    public double getShape () {
+        return myShape;
+    }
+    
+
     
 }

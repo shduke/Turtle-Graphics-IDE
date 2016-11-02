@@ -10,5 +10,4 @@ public interface ICursorManagerDisplay {
     
     double getBackGround();
     
-    void setBackground(double background);
 }
