@@ -12,7 +12,7 @@ public interface IVariable {
     
     int getNumberOfParameters();
     
-    double getLastResult();
+    Double getLastResult();
     
     void setlastResult(double lastResult);
 }

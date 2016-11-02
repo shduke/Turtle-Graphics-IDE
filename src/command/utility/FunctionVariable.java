@@ -14,7 +14,7 @@ public class FunctionVariable extends AbstractCommand implements IVariable {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     private List<IVariable> myParameters;
     private String myKey;
-    private double myLastResult;
+    private Double myLastResult;
     //private String myScope = "global";
     
     public FunctionVariable (Map<String, IVariable> variableMap, String key, AbstractCommand... parameterValues) {
@@ -69,7 +69,7 @@ public class FunctionVariable extends AbstractCommand implements IVariable {
     }
     
     @Override
-    public double getLastResult () {
+    public Double getLastResult () {
         return myLastResult;
     }
 
