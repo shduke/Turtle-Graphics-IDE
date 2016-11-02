@@ -203,6 +203,7 @@ public class SlogoWindowView implements ISlogoWindowView {
         return myInputField.getInputField();
     }
 
+
 	@Override
 	public void updateInformation(ICursorManagerDisplay myCursorManager) {
 		// TODO Auto-generated method stub

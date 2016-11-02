@@ -67,14 +67,27 @@ public class InputParser {
     			 }
     			 else if(myParameterSyntax.containsKey(split[i])){
     				 construct.add(new ParameterNode((split[i]),myGlobalVariableMap));
-    			 }
-    			 else if(!myMethodNames.contains(split[i])){
-    				 construct.add(new VariableNode("variable",split[i],null));
-    				 myMethodNames.add(split[i]);
+    				 if(split[i].equals("to")){
+    					 if(i+1<split.length){
+    						 construct.add(new VariableNode("functionvariable",split[i+1],myGlobalVariableMap));
+    						 myMethodNames.add(split[i+1]);
+    						 i++;
+    						 continue;
+    					 }
+    				 }
+    				 if(split[i].equals("set")){
+    					 if(i+1<split.length){
+    						 construct.add(new VariableNode("variable",split[i+1],myGlobalVariableMap));
+    						 i++;
+    						 continue; 
+    					 }
+    				 }
+    				 
     			 }
     			 else if(myMethodNames.contains(split[i])){
-    				 construct.add(new OperationNode(split[i]));
+    				 construct.add(new VariableNode("functioninstance",split[i],myGlobalVariableMap));
     			 }
+    		
     		 }
     		 else if(getSymbol(split[i]).equals("RIGHTBRACKET")){
     			 construct.add(new BracketNode("multiline"));
@@ -86,8 +99,9 @@ public class InputParser {
     			 construct.add(new ConstantNode("constant",Double.parseDouble(split[i])));
     		 }
     		 else if(getSymbol(split[i]).equals("VARIABLE")){
-    			 construct.add(new VariableNode("variable",split[i],null));   			
+    			 construct.add(new VariableNode("instance",split[i],myGlobalVariableMap));
     		 }
+    		
     	 }
     	 
     	 return construct; 

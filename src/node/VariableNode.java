@@ -23,7 +23,7 @@ public class VariableNode extends Node {
     }
 
     public String toString () {
-        return "VariableNode" + "{" + this.getType() + "}";
+        return "VariableNode" + "{" + this.getType()+", "+myKey+" " + "}";
     }
 
     @Override
