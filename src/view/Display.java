@@ -24,4 +24,6 @@ public interface Display {
 	
 	public void setTurtleImage(String path);
 	
+	public void resetDisplay();
+	
 }

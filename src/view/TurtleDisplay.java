@@ -49,7 +49,7 @@ public class TurtleDisplay implements Display {
 	private double myInitTurtleID = AppResources.INIT_TURTLE_ID.getDoubleResource();
 	private Color myTurtleFill = AppResources.TURTLE_FILL.getColorResource();
 	private Image myTurtleImage = null;
-	private double turtleX, turtleY;
+	private double initTurtleX, initTurtleY;
 	
 	// Line Characteristics
 	private double myLineWidth = AppResources.NORMAL_LINE_WIDTH.getDoubleResource();
@@ -79,11 +79,10 @@ public class TurtleDisplay implements Display {
 		initButton(toggleAnimationButton, AppResources.TOGGLE_ON_TITLE.getResource(), new AnimationToggleEvent(), 2, 15);
 		myForegroundPane.getChildren().addAll(runAnimationButton, toggleAnimationButton);
 		myForegroundPane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
-        turtleX = 0;
-        turtleY = 0;
+		initTurtleX = 0;
+		initTurtleY = 0;
         setTurtleImage("src/images/turtle.png");
-        drawTurtle(turtleX, turtleY, myInitTurtleID, myTurtleOrientationDefault);
-        myTurtles.get(0).setFill(Color.TRANSPARENT);
+        drawTurtle(initTurtleX, initTurtleY, myInitTurtleID, myTurtleOrientationDefault);
         KeyFrame frame = new KeyFrame(Duration.millis(AppResources.ANIMATION_SPEED.getDoubleResource()),
                 e -> step());
 	    myAnimationTimeline = new Timeline();
@@ -136,8 +135,7 @@ public class TurtleDisplay implements Display {
 	private void animateTurtle(Rectangle t, double destinationX, double destinationY, double orientation){
 		double leftX = destinationX + myPaneWidth/2 - myTurtleWidth/2;
 		double topY = -destinationY + myPaneHeight/2 - myTurtleHeight/2;
-		double xTime = msPerPixel*Math.abs(t.getX()-leftX);
-		double yTime = msPerPixel*Math.abs(t.getY()-topY);
+		double time = msPerPixel*Math.sqrt(Math.pow((t.getX()-leftX), 2)+Math.pow((t.getY()-topY), 2));
 		Timeline timeline = new Timeline();
 	    myTimelines.add(timeline);
 		t.setRotate(90-orientation);
@@ -147,31 +145,30 @@ public class TurtleDisplay implements Display {
 		KeyValue kvTurtleY = new KeyValue(t.yProperty(), topY);
 		KeyValue kvIVX = new KeyValue(turtleImage.xProperty(), leftX);
 		KeyValue kvIVY = new KeyValue(turtleImage.yProperty(), topY);
-		KeyFrame kfTurtleX = new KeyFrame(Duration.millis(xTime), kvTurtleX);
-		KeyFrame kfTurtleY = new KeyFrame(Duration.millis(yTime), kvTurtleY);
-		KeyFrame kfIVX = new KeyFrame(Duration.millis(xTime), kvIVX);
-		KeyFrame kfIVY = new KeyFrame(Duration.millis(yTime), kvIVY);
+		KeyFrame kfTurtleX = new KeyFrame(Duration.millis(time), kvTurtleX);
+		KeyFrame kfTurtleY = new KeyFrame(Duration.millis(time), kvTurtleY);
+		KeyFrame kfIVX = new KeyFrame(Duration.millis(time), kvIVX);
+		KeyFrame kfIVY = new KeyFrame(Duration.millis(time), kvIVY);
 		timeline.getKeyFrames().addAll(kfTurtleX, kfTurtleY, kfIVX, kfIVY);
 	    timeline.play();
 	}
 	
 	private void animateLine(double x1, double y1, double x2, double y2){
-		double xTime = msPerPixel*Math.abs(x1-x2);
-		double yTime = msPerPixel*Math.abs(y1-y2);
+		double time = msPerPixel*Math.sqrt(Math.pow((x1-x2), 2)+Math.pow((y1-y2), 2));
 		Timeline timeline = new Timeline();
 	    myTimelines.add(timeline);
 		x1 += myPaneWidth/2; y1 = -y1 + myPaneHeight/2;
 		x2 += myPaneWidth/2; y2 = -y2 + myPaneHeight/2;
-		Line newLine = new Line(x1, y1, x2, y2);
+		Line newLine = new Line(x1, y1, x1, y1);
 		newLine.setStrokeWidth(myLineWidth);
 		newLine.setStroke(myLineStroke);
 		myLinePane.getChildren().add(newLine);
-//		KeyValue kvLineX = new KeyValue(newLine.endXProperty(), x2);
-//		KeyValue kvLineY = new KeyValue(newLine.endYProperty(), y2);
-//		KeyFrame kfLineX = new KeyFrame(Duration.millis(xTime), kvLineX);
-//		KeyFrame kfLineY = new KeyFrame(Duration.millis(yTime), kvLineY);
-//		timeline.getKeyFrames().addAll(kfLineX, kfLineY);
-//	    timeline.play();
+		KeyValue kvLineX = new KeyValue(newLine.endXProperty(), x2);
+		KeyValue kvLineY = new KeyValue(newLine.endYProperty(), y2);
+		KeyFrame kfLineX = new KeyFrame(Duration.millis(time), kvLineX);
+		KeyFrame kfLineY = new KeyFrame(Duration.millis(time), kvLineY);
+		timeline.getKeyFrames().addAll(kfLineX, kfLineY);
+	    timeline.play();
 	}
 	
 	public void redrawAll(List<IDrawable> drawables){
@@ -267,6 +264,7 @@ public class TurtleDisplay implements Display {
 	private Rectangle drawTurtle(double x, double y, double id, double orientation){
 		Rectangle r = new Rectangle(x, y, myTurtleWidth, myTurtleHeight);
 		r.setId(Double.toString(id));
+		r.setFill(Color.TRANSPARENT);
 		myTurtles.add(r);
 		myTurtlePane.getChildren().add(r);
 		drawCursorImage(myTurtleImage);
@@ -292,9 +290,12 @@ public class TurtleDisplay implements Display {
 		drawLine(0, pHeight, pWidth, pHeight);
 	}
 	
-	private void clearAllPanes(){
+	public void resetDisplay(){
+		myLines.clear();
+		myTurtles.clear();
 		myLinePane.getChildren().clear();
 		myTurtlePane.getChildren().clear();
+		drawTurtle(initTurtleX, initTurtleY, myInitTurtleID, myTurtleOrientationDefault);
 	}
 	
 	public Group getGroup(){
