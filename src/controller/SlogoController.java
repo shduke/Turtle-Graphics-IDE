@@ -10,6 +10,8 @@ import cursor.Drawable;
 import javafx.collections.ListChangeListener;
 import parser.ExpressionTree;
 import parser.InputParser;
+import view.ErrorMessage;
+import view.IErrorMessage;
 import view.ISlogoWindowView;
 
 public class SlogoController {
@@ -59,6 +61,11 @@ public class SlogoController {
 			};
 		};
 		myDisplay.setHistoryBinding(bind);
+	}
+	
+	private void showErrorMessage(String message) {
+		IErrorMessage em = new ErrorMessage(message);
+		em.showError();
 	}
 	
 	private List<Drawable> convertToDrawable(List<CreatedItem> items){
