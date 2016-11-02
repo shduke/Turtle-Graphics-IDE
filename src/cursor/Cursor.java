@@ -203,8 +203,8 @@ public class Cursor implements IDrawable, Observer, ICursor{
 
 
     @Override
-    public double setPalette (double index, double color) {
-        return 0;
+    public Double setPalette (Double index, String color) {
+        return 0.0;
     }
     
 
