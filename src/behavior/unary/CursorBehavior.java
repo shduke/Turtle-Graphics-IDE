@@ -1,13 +1,13 @@
 package behavior.unary;
 
-import java.util.List;
 import java.util.function.Function;
 import command.AbstractCommand;
 
-public class CursorBehavior extends UnaryBehavior<Boolean, Boolean>{
+
+public class CursorBehavior extends UnaryBehavior<Boolean, Boolean> {
     private static final int IS_TRUE_INDEX = 0;
-    
-    public CursorBehavior (Function<Boolean, Boolean> operation, AbstractCommand... arguments) {
+
+    public CursorBehavior (Function<Boolean, Boolean> operation, AbstractCommand ... arguments) {
         super(operation, arguments);
     }
 
@@ -20,7 +20,5 @@ public class CursorBehavior extends UnaryBehavior<Boolean, Boolean>{
     protected double evaluateToDouble (Boolean result) {
         return result ? 1 : 0;
     }
-    
-    
-    
+
 }

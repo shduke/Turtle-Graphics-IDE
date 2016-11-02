@@ -1,9 +1,6 @@
 package cursor;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import command.utility.Constant;
 
@@ -15,12 +12,10 @@ public interface ICursor {
     double getOrientation ();
 
     Angle getAngle ();
-    
-    //Function<Double, Double> getAngleFunction(double degrees);
-    
+
     double clearCreatedItems ();
 
-    List<IDrawable> getDrawableItems();
+    List<IDrawable> getDrawableItems ();
 
     double move (double distance);
 
@@ -34,22 +29,22 @@ public interface ICursor {
 
     double setIsActive (boolean isActive);
 
-    double getId();
-    
-    double getNumberOfTurtles();
-    
-    double activateCursors(List<Double> turtles);
-    
-    Constant[] getActiveCursorConstants();
-        
-    <E> E applyToActive(Function<ICursor, E> mapping);
-    
-    double setBackground(double background);
-    
-    double setShape(double shape);
-    
-    double getShape();
-    
-    Double setPalette(Double index, String color);
-    
+    double getId ();
+
+    double getNumberOfTurtles ();
+
+    double activateCursors (List<Double> turtles);
+
+    Constant[] getActiveCursorConstants ();
+
+    <E> E applyToActive (Function<ICursor, E> mapping);
+
+    double setBackground (double background);
+
+    double setShape (double shape);
+
+    double getShape ();
+
+    Double setPalette (Double index, String color);
+
 }

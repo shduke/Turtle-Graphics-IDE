@@ -1,12 +1,8 @@
 package behavior.unary;
 
-import java.util.List;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import behavior.binary.BinaryBehavior;
 import command.AbstractCommand;
 import command.utility.IVariable;
-import command.utility.Variable;
 
 public class VariableAssignmentBehavior extends UnaryBehavior<String, IVariable> {
     private static final int EXPRESSION_KEY_INDEX = 0;    
@@ -18,7 +14,6 @@ public class VariableAssignmentBehavior extends UnaryBehavior<String, IVariable>
 
     @Override
     protected <R> String getInput1 () {
-        AbstractCommand blah = getArgument(EXPRESSION_KEY_INDEX);
         return getArgument(EXPRESSION_KEY_INDEX).toString();
     }
 
