@@ -58,7 +58,7 @@ public class Variable extends AbstractCommand implements IVariable {
     }
 
     @Override
-    public double getLastResult () {
+    public Double getLastResult () {
         return myLastResult;
     }
 

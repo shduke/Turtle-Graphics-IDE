@@ -174,6 +174,13 @@ public class Cursor implements IDrawable, Observer, ICursor{
     }
 
 
+    @Override
+    public <E> E applyToActive (Function<ICursor, E> mapping) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
 //    @Override
 //    public Function<Double, Double> getAngle2 (double degrees) {
 //        return null;
