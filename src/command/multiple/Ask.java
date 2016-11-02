@@ -1,6 +1,7 @@
 package command.multiple;
 
 import java.util.List;
+import behavior.nonexpression.AskBehavior;
 import behavior.nullary.DoubleQueryBehavior;
 import behavior.unary.MovementBehavior;
 import behavior.unary.MultiCursorUnaryBehavior;
@@ -15,7 +16,7 @@ public class Ask extends AbstractCommand {
     private static final int COMMANDS_INDEX = 1;
     
     public Ask (ICursor cursor, AbstractCommand... arguments) {
-        super(new MultiCursorUnaryBehavior(cursor::activateCursors, new Tell(cursor, arguments[CURSORS_INDEX]), new MultiLine(arguments[COMMANDS_INDEX]), new Tell(cursor, cursor.getActiveCursorConstants())));
+        super(new AskBehavior(new Tell(cursor, arguments[CURSORS_INDEX]), arguments[COMMANDS_INDEX], new Tell(cursor, new MultiLine(cursor.getActiveCursorConstants()))));
     }
     
 }

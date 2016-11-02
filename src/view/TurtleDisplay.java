@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import cursor.Coordinate;
-import cursor.Drawable;
+import cursor.IDrawable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -67,10 +67,10 @@ public class TurtleDisplay implements Display {
         
 	}
 	
-	public void redrawAll(List<Drawable> drawables){
+	public void redrawAll(List<IDrawable> drawables){
 		clearCanvas();
 		strokeCanvas();
-		for (Drawable drawable : drawables){
+		for (IDrawable drawable : drawables){
 			List<Coordinate> coordinates = drawable.getCreateItems();
 			double currentX = coordinates.get(0).getX();
 			double currentY = coordinates.get(0).getY();
@@ -82,7 +82,7 @@ public class TurtleDisplay implements Display {
 				currentY = nextY;
 			}
 		}
-		Drawable turtleDrawable = drawables.get(drawables.size()-1);
+		IDrawable turtleDrawable = drawables.get(drawables.size()-1);
 		List<Coordinate> turtleCoordinates = turtleDrawable.getCreateItems();
 		turtleCoordinates.get(turtleCoordinates.size()-1);
 		double turtleX = turtleCoordinates.get(turtleCoordinates.size()-1).getX();
