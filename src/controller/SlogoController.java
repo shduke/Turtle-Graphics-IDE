@@ -55,7 +55,7 @@ public class SlogoController {
 					//myDisplay.getVariablesAndCommands().updateTextArea();
 				}
 				catch (Exception e){
-					
+					showErrorMessage(e.getMessage());
 				}
 				
 			};
