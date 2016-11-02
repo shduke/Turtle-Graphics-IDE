@@ -38,11 +38,14 @@ public class TurtleDisplay implements Display {
 	private double myPaneWidth = AppResources.CANVAS_WIDTH.getDoubleResource();
 	private double myPaneHeight = AppResources.CANVAS_HEIGHT.getDoubleResource();
 	
+	private double lineLayerNum = AppResources.LINE_LAYER_NUM.getDoubleResource();
+	private double turtleLayerNum = AppResources.TURTLE_LAYER_NUM.getDoubleResource();
+	
 	// Turtle Characteristics
 	private double myTurtleWidth = AppResources.TURTLE_WIDTH.getDoubleResource();
 	private double myTurtleHeight = AppResources.TURTLE_HEIGHT.getDoubleResource();
 	private double myTurtleOrientationDefault = 90;
-	private double myInitTurtleID = 0;
+	private double myInitTurtleID = AppResources.INIT_TURTLE_ID.getDoubleResource();
 	private Color myTurtleFill = AppResources.TURTLE_FILL.getColorResource();
 	private Image myTurtleImage = null;
 	private double turtleX, turtleY;
@@ -131,8 +134,10 @@ public class TurtleDisplay implements Display {
 	}
 	
 	public void redrawAll(List<IDrawable> drawables){
+		System.out.println("Redraw All");
+		System.out.println(drawables.size());
 		for (IDrawable drawable : drawables){
-			if (drawable.getLayer() == 0){
+			if (drawable.getLayer() == lineLayerNum){
 				List<ICoordinate> coordinates = drawable.getDrawableCoordinates();
 				double currentX = coordinates.get(0).getX();
 				double currentY = coordinates.get(0).getY();
@@ -143,9 +148,13 @@ public class TurtleDisplay implements Display {
 					currentX = nextX; 
 					currentY = nextY;
 				}
-			} else if (drawable.getLayer() == 1){
+				System.out.println("Found a line");
+			} else if (drawable.getLayer() == turtleLayerNum){
 				checkForTurtle(drawable);
+				System.out.println("Found a turtle");
 			}
+			System.out.println(drawable.getLayer());
+			System.out.println(drawable.getId());
 		}
 	}
 	
@@ -176,9 +185,11 @@ public class TurtleDisplay implements Display {
 				animateTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
 			} else if (testTurtle.getId() == turtleIDString && !animating){
 				setTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
+				System.out.println("Match");
 			}
 		}
 		if (!match){
+			System.out.println("No Match");
 			drawTurtle(turtleX, turtleY, turtleID, turtleOrientation);
 		}
 		
