@@ -314,6 +314,14 @@ public class TurtleDisplay implements Display {
 		myLineStroke = color;
 	}
 	
+	public void setPenWidth(double width){
+		myLineWidth = width;
+	}
+	
+	public void setPenDash(){
+		
+	}
+	
 	public void setTurtleImage(String path){
 		try {
 			Image img = new Image(new FileInputStream(path));

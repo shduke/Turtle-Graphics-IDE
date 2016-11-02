@@ -19,6 +19,8 @@ public interface Display {
 	public void setBackgroundColor(Color color);
 	
 	public void setPenColor(Color color);
+	
+	public void setPenWidth(double width);
 		
 	public Group getGroup();
 	
