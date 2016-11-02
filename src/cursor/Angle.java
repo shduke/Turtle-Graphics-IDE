@@ -1,11 +1,16 @@
 package cursor;
 
 public class Angle {
+    private static final double DEFAULT_ORIENTATION = 90;
     private static final double ANGLE_SIGN_OFFSET = 0.5;
     double myAngle;
     
     Angle(double degrees) {
         setAngle(degrees);
+    }
+    
+    Angle() {
+        this(DEFAULT_ORIENTATION);
     }
     
     public double rotate(double degrees) {

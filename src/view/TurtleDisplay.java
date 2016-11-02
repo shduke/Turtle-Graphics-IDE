@@ -5,12 +5,18 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD
 import cursor.Drawable;
 import cursor.ICoordinate;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+=======
+import cursor.Coordinate;
+import cursor.ICoordinate;
+import cursor.IDrawable;
+>>>>>>> 67fe34ed5d0771a7d4b0465cbb9db1b44eeb302e
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -85,7 +91,7 @@ public class TurtleDisplay implements Display {
 		p.setMaxWidth(myPaneWidth); p.setMaxHeight(myPaneHeight);
 		myGroup.getChildren().add(p);
 	}
-	
+
 	public void addDrawables(List<Drawable> drawables){
 		if (animating){
 			myAnimationQueue.add(drawables);
@@ -129,8 +135,8 @@ public class TurtleDisplay implements Display {
 		myAnimationTimeline.getKeyFrames().addAll(kfTurtleX, kfTurtleY, kfIVX, kfIVY);
 	}
 	
-	public void redrawAll(List<Drawable> drawables){
-		for (Drawable drawable : drawables){
+	public void redrawAll(List<IDrawable> drawables){
+		for (IDrawable drawable : drawables){
 			if (drawable.getLayer() == 0){
 				List<ICoordinate> coordinates = drawable.getCreateItems();
 				double currentX = coordinates.get(0).getX();
@@ -279,6 +285,12 @@ public class TurtleDisplay implements Display {
 				turtle.setFill(Color.AQUA);
 			}
 		}
+	}
+
+	@Override
+	public void redrawAll(List<IDrawable> drawables) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

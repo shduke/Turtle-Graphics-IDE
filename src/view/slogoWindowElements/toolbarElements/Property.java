@@ -15,16 +15,15 @@ import javafx.stage.Stage;
  *
  */
 public abstract class Property implements IProperty {
-
-	public static final Dimension DEFAULT_SIZE = new Dimension(200, 100);
 	
 	private Scene myScene;
 	private Stage myStage;
 	private BorderPane myRoot;
 	
-	public Property() {
+	public Property(double width, double height) {
 		myRoot = new BorderPane();
-		myScene = new Scene(myRoot, DEFAULT_SIZE.getWidth(), DEFAULT_SIZE.getHeight());
+		myScene = new Scene(myRoot, width, height);
+		myStage = new Stage();
 	}
 	
 	public void setRoot(Node node) {
@@ -32,14 +31,16 @@ public abstract class Property implements IProperty {
 	}
 	
 	public void start() {
-		myStage = new Stage();
-		//myStage.setTitle("Choose Pen Color");
 		myStage.setScene(getScene());
 		myStage.show();
 	}
 	
 	public void close() {
 		myStage.close();
+	}
+	
+	public void setTitle(String title) {
+		myStage.setTitle(title);
 	}
 	
 	public Scene getScene() {

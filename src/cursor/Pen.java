@@ -1,14 +1,19 @@
 package cursor;
 
-public class Pen {
+public class Pen implements IPen{
+    private static final double DEFAULT_SIZE = 10;
+    private static final double DEFAULT_COLOR = 0;
+    private static final boolean DEFAULT_IS_PEN_DOWN = true;
+
+    
     boolean myIsPenDown;
-    double myThickness;
-    String myColor;
+    double myPenSize;
+    double myColor;
     
     Pen () {
-        myIsPenDown = true;
-        myThickness = 10;
-        myColor = "Black";
+        myIsPenDown = DEFAULT_IS_PEN_DOWN;
+        myPenSize = DEFAULT_SIZE;
+        myColor = DEFAULT_COLOR;
     }
 
     public boolean getIsPenDown () {
@@ -23,6 +28,26 @@ public class Pen {
         myIsPenDown = isPenDown;
         System.out.println(myIsPenDown);
         return isPenDown;
+    }
+
+    @Override
+    public double getPenSize () {
+        return myPenSize;
+    }
+
+    @Override
+    public double getPenColor () {
+        return myColor;
+    }
+
+    @Override
+    public void setPenSize (double penSize) {
+        myPenSize = penSize;
+    }
+
+    @Override
+    public void setPenColor (double color) {
+        myColor = color;
     }
     
     

@@ -56,14 +56,14 @@ public class InputParser {
     				 construct.add(new CursorNode(split[i],cursor));
     			 }
     			 else if(myOperationSyntax.containsKey(split[i])){
-    				 construct.add(new OperationNode(split[i],construct.getMap()));
+    				 construct.add(new OperationNode(split[i]));
     			 }
     			 else if(!myMethodNames.contains(split[i])){
     				 construct.add(new VariableNode("variable",split[i],null));
     				 myMethodNames.add(split[i]);
     			 }
     			 else if(myMethodNames.contains(split[i])){
-    				 construct.add(new OperationNode(split[i],construct.getMap()));
+    				 construct.add(new OperationNode(split[i]));
     			 }
     		 }
     		 else if(getSymbol(split[i]).equals("RIGHTBRACKET")||getSymbol(split[i]).equals("LEFTBRACKET")){

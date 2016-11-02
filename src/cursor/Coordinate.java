@@ -9,12 +9,18 @@ import java.util.Observable;
  *
  */
 public class Coordinate extends Observable implements ICoordinate {
+    private static final double DEFAULT_X_COORDINATE = 0;
+    private static final double DEFAULT_Y_COORDINATE = 0;
     private double myX;
     private double myY;
 
     public Coordinate (double x, double y) {
         myX = x;
         myY = y;
+    }
+    
+    public Coordinate () {
+        this(DEFAULT_X_COORDINATE, DEFAULT_Y_COORDINATE);
     }
 
     
