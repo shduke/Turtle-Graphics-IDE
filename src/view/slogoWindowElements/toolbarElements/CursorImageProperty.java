@@ -1,5 +1,6 @@
 package view.slogoWindowElements.toolbarElements;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -15,6 +16,7 @@ import javafx.stage.FileChooser;
  */
 public class CursorImageProperty extends Property {
 	
+	public static final Dimension DEFAULT_SIZE = new Dimension(200, 100);
 	public static final String IMAGE_DIRECTORY = "./src/images";
 	public static final String TITLE = "Choose Image File";
 	
@@ -22,7 +24,7 @@ public class CursorImageProperty extends Property {
 	private File myFile;
 
 	public CursorImageProperty() {
-		super();
+		super(DEFAULT_SIZE.getWidth(), DEFAULT_SIZE.getHeight());
 		myFileChooser = new FileChooser();
 		myFileChooser.setTitle(TITLE);
 		myFileChooser.setInitialDirectory(getInitialDirectory());
