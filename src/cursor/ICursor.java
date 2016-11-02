@@ -17,8 +17,6 @@ public interface ICursor {
 
     double clearCreatedItems ();
 
-    void createItem (Coordinate nextCoordinate);
-
     List<IDrawable> getDrawableItems();
 
     double move (double distance);

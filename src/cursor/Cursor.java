@@ -67,8 +67,7 @@ public class Cursor implements IDrawable, Observer, ICursor{
     
     
 
-    @Override
-    public void createItem(Coordinate nextCoordinate) {
+    private void createItem(Coordinate nextCoordinate) {
         if(myPen.getIsPenDown()){
             myCreatedItems.add(new CreatedItem(myPen.getPenColor(), myPen.getPenSize(), myCoordinate, nextCoordinate));
         }
