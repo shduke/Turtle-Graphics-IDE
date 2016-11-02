@@ -177,14 +177,12 @@ public class TurtleDisplay implements Display {
 	public void redrawAll(List<IDrawable> drawables){
 		System.out.println("------- Redraw All Called -------");
 		for (IDrawable drawable : drawables){
+			System.out.println("newDrawable");
 			if (drawable.getLayer() == lineLayerNum){
 				List<ICoordinate> coordinates = drawable.getDrawableCoordinates();
 				try {
 					System.out.println("Coord Pair 0 - x: " + coordinates.get(0).getX() + " y: " + coordinates.get(0).getY());
 					System.out.println("Coord Pair 1 - x: " + coordinates.get(1).getX() + " y: " + coordinates.get(1).getY());
-					System.out.println("Coord Pair 2 - x: " + coordinates.get(2).getX() + " y: " + coordinates.get(2).getY());
-					System.out.println("Coord Pair 3 - x: " + coordinates.get(3).getX() + " y: " + coordinates.get(3).getY());
-					System.out.println("Coord Pair 4 - x: " + coordinates.get(4).getX() + " y: " + coordinates.get(4).getY());
 				} catch (NullPointerException npe){
 					
 				}
