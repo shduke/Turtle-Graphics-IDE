@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import view.SlogoWindowView;
 import view.slogoWindowElements.toolbarElements.BackgroundColorProperty;
@@ -40,8 +41,8 @@ public class Toolbar implements IToolbar {
 	
 	private ComboBox<String> myBackgroundColorComboBox;
 	private VBox myPenPropertiesVBox;
-	private HBox myColorPaletteHBox;
-	private HBox myImagePaletteHBox;
+	private List<String> myColorPaletteList;
+	private List<String> myImagePaletteList;
 	private ResourceBundle myResources;
 	private String myLanguage;
 	private HBox myHBox;
@@ -54,6 +55,8 @@ public class Toolbar implements IToolbar {
 		myPenPropertiesVBox = penProperties;
 		myColorPaletteHandler = new ColorPaletteEvent();
 		myImagePaletteHandler = new ImagePaletteEvent();
+		myColorPaletteList = new ArrayList<String>();
+		myColorPaletteList.addAll(Arrays.asList("BLACK", "WHITE", "BLUE", "RED", "YELLOW"));
 		addButtons();
 	}
     
@@ -127,9 +130,7 @@ public class Toolbar implements IToolbar {
 	private class ColorPaletteEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			List<String> list = new ArrayList<String>();
-			list.addAll(Arrays.asList("BLACK", "WHITE", "BLUE", "RED", "YELLOW"));
-			IProperty window = new ColorPalette(list);
+			IProperty window = new ColorPalette(myColorPaletteList);
 			window.start();
 		}
 	}
@@ -143,6 +144,18 @@ public class Toolbar implements IToolbar {
 			IProperty window = new ImagePalette(list);
 			window.start();
 		}
+	}
+	
+	public Color getColor(double i) {
+		return Color.valueOf(myColorPaletteList.get((int) i));
+	}
+	
+	public void setColor(double index, Color color) {
+		myColorPaletteList.set((int) index, color.toString());
+	}
+	
+	public void setImagePalette(List<String> list) {
+		myImagePaletteList = list;
 	}
 
 }

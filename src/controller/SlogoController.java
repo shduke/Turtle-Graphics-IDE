@@ -13,6 +13,7 @@ import cursor.CursorManager;
 import cursor.ICursor;
 import cursor.ICursorManagerDisplay;
 import javafx.collections.ListChangeListener;
+import javafx.scene.paint.Color;
 import parser.ExpressionTree;
 import parser.InputParser;
 import view.ErrorMessage;
@@ -37,7 +38,7 @@ public class SlogoController {
 		myCursorManager= new CursorManager();
 		myCursor = (ICursor) myCursorManager; 
 		myGlobalVariableMap = new HashMap<>(); 
-		myParser = new InputParser(myDisplay.getLanguage(),myGlobalVariableMap);
+		myParser = new InputParser(myDisplay.getLanguage(), myGlobalVariableMap);
 		bindUserInput(); 
 	}
 	
@@ -58,6 +59,12 @@ public class SlogoController {
 					//receive information from backend
 					myDisplay.updateInformation(myCursorManager, myGlobalVariableMap);
 					myDisplay.getVariablesAndCommands().addOutput(consolePrint);
+					
+					Color bgColor = myDisplay.getToolbar().getColor(myCursorManager.getBackGround());
+					myDisplay.getTurtleDisplay().setBackgroundColor(bgColor);
+					
+					Color penColor = myDisplay.getToolbar().getColor(myCursorManager.getPen().getPenColor());
+					myDisplay.getTurtleDisplay().setPenColor(penColor);
 				}
 				catch (Exception e){
 					showErrorMessage(e.getMessage());

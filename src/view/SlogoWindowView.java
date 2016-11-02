@@ -41,11 +41,11 @@ public class SlogoWindowView implements ISlogoWindowView {
     
     private String myLanguage;
     private Scene myScene;
+    private IToolbar myToolbar;
     private IHistory myHistory;
     private IInputField myInputField;
     private IVariablesAndCommands myVC;
     private Display myTurtleDisplay;
-    private EventHandler<ActionEvent> myResetHandler;
     private EventHandler<ActionEvent> myFileChooserHandler;
     private ComboBox<String> myBackgroundColorComboBox;
     private ComboBox<String> myPenColorComboBox;
@@ -55,13 +55,22 @@ public class SlogoWindowView implements ISlogoWindowView {
     
     public SlogoWindowView(String language){
     	myFileChooserHandler = new FileChooserEvent();
-    	myResetHandler = new ResetEvent();
         myLanguage = language;
         makeBackgroundColorComboBox();
         makePenPropertiesVBox();
         myScene = new Scene(makeRoot(), myAppWidth, myAppHeight);
         myScene.getStylesheets().add(getClass().getResource(AppResources.APP_CSS.getResource()).toExternalForm());
     }
+    
+	@Override
+	public void updateInformation(ICursorManagerDisplay myCursorManager, HashMap<String, IVariable> variables) {
+		myTurtleDisplay.addDrawables(myCursorManager.getDrawableItems());
+		myVC.update(variables);
+	}
+	
+	public IToolbar getToolbar() {
+		return myToolbar;
+	}
     
     public IHistory getHistory(){
     	return myHistory;
@@ -94,22 +103,12 @@ public class SlogoWindowView implements ISlogoWindowView {
     public void setHistoryBinding(ListChangeListener bind){
     	myHistory.setBinding(bind); 
     }
-    
-	private class ResetEvent implements EventHandler<ActionEvent> {
-		@Override
-		public void handle(ActionEvent event) {
-			myHistory.clear();
-			myVC.clear();
-			myInputField.clear();
-		}
-	}
 	
 	private class FileChooserEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
 			CursorImageProperty image = new CursorImageProperty();
 			myTurtleDisplay.setTurtleImage(image.getFileDirectory());
-			myTurtleDisplay.setTurtleImage("src/images/KTurtle_Turtle.png");
 		}
 	}
 	
@@ -182,8 +181,8 @@ public class SlogoWindowView implements ISlogoWindowView {
 	}
     
     private Node makeToolbar () {
-    	IToolbar toolbar = new Toolbar(myLanguage, myFileChooserHandler, myBackgroundColorComboBox, myPenPropertiesVBox);
-		return toolbar.getToolbar();
+    	myToolbar = new Toolbar(myLanguage, myFileChooserHandler, myBackgroundColorComboBox, myPenPropertiesVBox);
+		return myToolbar.getToolbar();
     }
     
     private Node makeHistory() {
@@ -205,12 +204,5 @@ public class SlogoWindowView implements ISlogoWindowView {
         myInputField = new InputField(myLanguage, myHistory);
         return myInputField.getInputField();
     }
-
-
-	@Override
-	public void updateInformation(ICursorManagerDisplay myCursorManager, HashMap<String, IVariable> variables) {
-		myTurtleDisplay.addDrawables(myCursorManager.getDrawableItems());
-		myVC.update(variables);
-	}
     
 }
