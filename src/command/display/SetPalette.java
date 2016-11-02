@@ -3,6 +3,7 @@ package command.display;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import behavior.binary.ColorBehavior;
 import behavior.unary.DoubleUnaryBehavior;
 import behavior.unary.MovementBehavior;
 import command.AbstractCommand;
@@ -15,7 +16,7 @@ public class SetPalette extends AbstractCommand {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 4;
     
     public SetPalette (ICursor cursor, AbstractCommand... arguments) {
-        super(new DoubleUnaryBehavior(cursor::setBackground, arguments[0], new Constant(-1.0)));
+        super(new ColorBehavior(cursor::setPalette, arguments));
 
     }
     

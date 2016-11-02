@@ -17,4 +17,5 @@ public interface IDrawable { //TODO - maybe refactor to
     double getColor();
     
     double getSize();
+    
 }

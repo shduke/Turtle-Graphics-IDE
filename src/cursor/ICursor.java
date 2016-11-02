@@ -50,6 +50,6 @@ public interface ICursor {
     
     double getShape();
     
-    double setPalette(double index, double color);
+    Double setPalette(Double index, String color);
     
 }
