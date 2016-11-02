@@ -6,7 +6,9 @@ import java.util.List;
 import command.AbstractCommand;
 import cursor.CreatedItem;
 import cursor.Cursor;
+import cursor.CursorManager;
 import cursor.Drawable;
+import cursor.ICursor;
 import javafx.collections.ListChangeListener;
 import parser.ExpressionTree;
 import parser.InputParser;
@@ -17,17 +19,16 @@ import view.ISlogoWindowView;
 public class SlogoController {
 	
 	private ISlogoWindowView myDisplay; 
+	private ICursor myCursor;
 	private InputParser myParser; 
 	private String myLastCommand; 
-	private ExpressionTree myExpressionTree; 
-	private List<Cursor> myCursors; 
+	private ExpressionTree myExpressionTree;  
 	private List<Drawable> myDrawables;
 	
 	public SlogoController(ISlogoWindowView view){
 		myDisplay = view; 
 		myLastCommand = "";
-		myCursors=new ArrayList<>();
-		myCursors.add(new Cursor());
+		myCursor= new CursorManager();
 		myParser = new InputParser(myDisplay.getLanguage());
 		bindUserInput(); 
 	}
@@ -39,19 +40,21 @@ public class SlogoController {
 				// TODO Link fully to backend and command tree
 				try{
 					myLastCommand = myDisplay.getHistory().getRecentCommand();
-					String lastCommandSymbol = myParser.getSymbol(myLastCommand);
-					myExpressionTree = myParser.parse(myLastCommand,myCursors.get(0));
+					myExpressionTree = myParser.parse(myLastCommand,myCursor);
 					System.out.println(myExpressionTree);
 					AbstractCommand command = myExpressionTree.createCommand();
 					double result = command.execute();
 					
+					String consolePrint = command.toString()+" " + result; 
+					
+					
 					//receive information from backend
-					List<Drawable>createdItems = myCursors.get(0).myCreatedItems; 
+//					List<Drawable>createdItems = myCursors.get(0).myCreatedItems; 
 					
 					//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
 					
-					myDisplay.getTurtleDisplay().redrawAll(createdItems);
-					myDisplay.getVariablesAndCommands().addOutput(""+result);
+//					myDisplay.getTurtleDisplay().redrawAll(createdItems);
+					myDisplay.getVariablesAndCommands().addOutput(consolePrint);
 					//myDisplay.getVariablesAndCommands().updateTextArea();
 				}
 				catch (Exception e){
