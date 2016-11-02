@@ -221,7 +221,10 @@ public class TurtleDisplay implements Display {
 		double turtleID = turtle.getId();
 		String turtleIDString = Double.toString(turtleID);
 		for (Rectangle testTurtle : myTurtles){
-			if (testTurtle.getId().equals(turtleIDString) && animatingToggle){
+			if (testTurtle.getId().equals(turtleIDString) && !turtle.getIsVisible()){
+				hideTurtle(testTurtle);
+			}
+			else if (testTurtle.getId().equals(turtleIDString) && animatingToggle){
 				animateTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
 				match = true;
 			} else if (testTurtle.getId().equals(turtleIDString) && !animatingToggle){
@@ -233,6 +236,12 @@ public class TurtleDisplay implements Display {
 			drawTurtle(turtleX, turtleY, turtleID, turtleOrientation);
 		}
 		
+	}
+	
+	private void hideTurtle(Rectangle t){
+		int index = myTurtles.indexOf(t);
+		ImageView iv = myTurtleImageViews.get(index);
+		iv.setOpacity(0);
 	}
 	
 	private void drawLine(double x1, double y1, double x2, double y2){
@@ -296,10 +305,10 @@ public class TurtleDisplay implements Display {
 	
 	public void resetDisplay(){
 		myLines.clear();
-		myTurtles.clear();
 		myLinePane.getChildren().clear();
-		myTurtlePane.getChildren().clear();
-		drawTurtle(initTurtleX, initTurtleY, myInitTurtleID, myTurtleOrientationDefault);
+		for (Rectangle turtle : myTurtles){
+			setTurtle(turtle, initTurtleX, initTurtleY, myTurtleOrientationDefault);
+		}
 	}
 	
 	public Group getGroup(){

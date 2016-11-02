@@ -1,12 +1,17 @@
 package view.slogoWindowElements;
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.PopupControl;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import view.AppResources;
 import view.SlogoWindowView;
 
 /**
@@ -16,6 +21,7 @@ import view.SlogoWindowView;
 public class InputField implements IInputField {
     
     private TextArea myTextArea;
+    HBox myHBox = new HBox();
     private EventHandler<ActionEvent> myEnterHandler;
     private ResourceBundle myResources;
     private IHistory myHistory;
@@ -26,22 +32,48 @@ public class InputField implements IInputField {
         myTextArea = makeInputField((int) (SlogoWindowView.myAppWidth * 0.075), myEnterHandler);
         myHistory = history;
         
-//        myTextArea.setOnKeyPressed(ev -> {
-//        	createSuggestion(myTextArea.getText());
-//        }); 
-
-//        myTextArea.setOnKeyTyped(myKeyEvent);
+        myTextArea.setOnKeyReleased(ev -> {
+        	createSuggestion(myTextArea.getText());
+        });
     }
     
     private void createSuggestion(String text){
-    	
+    	if (myTextArea.getContextMenu() != null){
+    		myTextArea.getContextMenu().hide();
+    	}
+    	ArrayList<String> options = new ArrayList<String>();
+    	options.add("alphabet");
+    	options.add("asd");
+    	options.add("afea");
+    	options.add("vsdf");
+    	options.add("qwe");
+    	ArrayList<MenuItem> choices = new ArrayList<MenuItem>();
+    	for (String option : options){
+    		if (option.startsWith(text)){
+    			MenuItem mi = new MenuItem(option);
+    			choices.add(mi);
+    		}
+    		if (choices.size() > 3){
+    			break;
+    		}
+    	}
+    	if (choices.size() > 0){
+    		System.out.println("set");
+    		ContextMenu contextMenu = new ContextMenu();
+    		contextMenu.getItems().addAll(choices);
+    		contextMenu.setPrefWidth(120);
+    	    contextMenu.setMinWidth(PopupControl.USE_PREF_SIZE);
+    	    contextMenu.setMaxWidth(PopupControl.USE_PREF_SIZE);
+    		contextMenu.setMinHeight(myTextArea.getHeight()); contextMenu.setMaxHeight(myTextArea.getHeight());
+    		myTextArea.setContextMenu(contextMenu);
+    		contextMenu.show(myTextArea, myTextArea.getWidth() - contextMenu.getPrefWidth(), AppResources.APP_HEIGHT.getDoubleResource());
+    	}
     }
 
     public HBox getInputField() {
-        HBox result = new HBox();
-        result.getChildren().add(myTextArea);
-        result.getChildren().add(makeButton("EnterCommand", myEnterHandler));
-        return result;
+        myHBox.getChildren().add(myTextArea);
+        myHBox.getChildren().add(makeButton("EnterCommand", myEnterHandler));
+        return myHBox;
     }
     
     public void clear() {
