@@ -17,10 +17,10 @@ import view.ISlogoWindowView;
 public class SlogoController {
 	
 	private ISlogoWindowView myDisplay; 
+	private ICursor myCursor;
 	private InputParser myParser; 
 	private String myLastCommand; 
-	private ExpressionTree myExpressionTree; 
-	private ICursor myCursor; 
+	private ExpressionTree myExpressionTree;  
 	private List<Drawable> myDrawables;
 	
 	public SlogoController(ISlogoWindowView view){
@@ -38,20 +38,21 @@ public class SlogoController {
 				// TODO Link fully to backend and command tree
 				try{
 					myLastCommand = myDisplay.getHistory().getRecentCommand();
-					String lastCommandSymbol = myParser.getSymbol(myLastCommand);
 					myExpressionTree = myParser.parse(myLastCommand,myCursor);
 					System.out.println(myExpressionTree);
 					AbstractCommand command = myExpressionTree.createCommand();
 					double result = command.execute();
 					
+					String consolePrint = command.toString()+" " + result; 
+					
 					
 					//receive information from backend
-					List<Drawable>createdItems = myCursors.get(0).myCreatedItems; 
+//					List<Drawable>createdItems = myCursors.get(0).myCreatedItems; 
 					
 					//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
 					
-					myDisplay.getTurtleDisplay().redrawAll(createdItems);
-					myDisplay.getVariablesAndCommands().addOutput(""+result);
+//					myDisplay.getTurtleDisplay().redrawAll(createdItems);
+					myDisplay.getVariablesAndCommands().addOutput(consolePrint);
 					//myDisplay.getVariablesAndCommands().updateTextArea();
 				}
 				catch (Exception e){
