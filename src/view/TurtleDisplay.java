@@ -105,6 +105,7 @@ public class TurtleDisplay implements Display {
 		}
 	}
 	
+	// TODO: Fix this and move it to appropriate place (toolbar)
 	private void toggleRunning() {
         if (myAnimationTimeline.getStatus().equals(Animation.Status.RUNNING)) {
         	myAnimationTimeline.pause();
