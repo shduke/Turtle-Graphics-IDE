@@ -205,7 +205,7 @@ public class SlogoWindowView implements ISlogoWindowView {
 
     
     
-    //NOEL OR JOHN DO THIS, CALL THE APPROPRIATE METHODS FROM THIS. 
+    //NOEL OR JOHN DO THIS, CALL THE APPROPRIATE METHODS FROM THIS.
 	@Override
 	public void updateInformation(ICursorManagerDisplay myCursorManager) {
 		// TODO Auto-generated method stub
