@@ -5,11 +5,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cellsociety_team13.AppResources;
 import cursor.Drawable;
 import cursor.ICoordinate;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -56,12 +56,10 @@ public class TurtleDisplay implements Display {
 	private List<Line> myLines = new ArrayList<Line>();
 	
 	// Drawable List
-	private List<Drawable> myCurrentDrawables;
 	private ArrayList<List<Drawable>> myAnimationQueue = new ArrayList<List<Drawable>>();
 	private Timeline myAnimationTimeline;
-	private boolean animationComplete = true;
 	private boolean animating = false;
-	private int pixelStepSize = 1;
+	private double msPerPixel = 1;
 	
 	public TurtleDisplay(EventHandler<ActionEvent> event) {
 		initPane(myBackgroundPane);
@@ -88,21 +86,18 @@ public class TurtleDisplay implements Display {
 		myGroup.getChildren().add(p);
 	}
 	
+	public void addDrawables(List<Drawable> drawables){
+		if (animating){
+			myAnimationQueue.add(drawables);
+		} else {
+			redrawAll(drawables);
+		}
+	}
 	
 	private void step(){
-		if (!animationComplete){
-			stepNum++;
-		}
-		if (animating && myAnimationQueue.size() > 0 && animationComplete){
-			myCurrentDrawables = myAnimationQueue.get(0);
+		if (myAnimationTimeline.getKeyFrames().size() == 1){
+			redrawAll(myAnimationQueue.get(0));
 			myAnimationQueue.remove(0);
-		} else if (animating && myAnimationQueue.size() > 0){
-			redrawAll(myAnimationQueue.get(0));
-		}
-		else if (animating && !animationComplete){
-			redrawAll(myAnimationQueue.get(0));
-		} else {
-			
 		}
 	}
 	
@@ -116,13 +111,22 @@ public class TurtleDisplay implements Display {
         }
     }
 	
-	private void animateTurtle(Rectangle t, double destinationX, double destinationY){
-		KeyValue kv = new KeyValue(t.xProperty(), 300);
-		KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
+	private void animateTurtle(Rectangle t, double destinationX, double destinationY, double orientation){
+		t.setRotate(orientation);
+		ImageView turtleImage = myTurtleImageViews.get(myTurtles.indexOf(t));
 		double leftX = destinationX + myPaneWidth/2 - myTurtleWidth/2;
 		double topY = destinationY + myPaneHeight/2 - myTurtleHeight/2;
-		t.setX(leftX);
-		t.setY(topY);
+		KeyValue kvTurtleX = new KeyValue(t.xProperty(), leftX);
+		KeyValue kvTurtleY = new KeyValue(t.yProperty(), topY);
+		KeyValue kvIVX = new KeyValue(turtleImage.xProperty(), leftX);
+		KeyValue kvIVY = new KeyValue(turtleImage.yProperty(), topY);
+		double xTime = msPerPixel*Math.abs(t.getX()-leftX);
+		double yTime = msPerPixel*Math.abs(t.getY()-topY);
+		KeyFrame kfTurtleX = new KeyFrame(Duration.millis(xTime), kvTurtleX);
+		KeyFrame kfTurtleY = new KeyFrame(Duration.millis(yTime), kvTurtleY);
+		KeyFrame kfIVX = new KeyFrame(Duration.millis(xTime), kvIVX);
+		KeyFrame kfIVY = new KeyFrame(Duration.millis(yTime), kvIVY);
+		myAnimationTimeline.getKeyFrames().addAll(kfTurtleX, kfTurtleY, kfIVX, kfIVY);
 	}
 	
 	public void redrawAll(List<Drawable> drawables){
@@ -167,14 +171,10 @@ public class TurtleDisplay implements Display {
 		double turtleID = turtle.getId();
 		String turtleIDString = Double.toString(turtleID);
 		for (Rectangle testTurtle : myTurtles){
-			if (testTurtle.getId() == turtleIDString){
-				if (animating = false){
-					setTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
-				} else {
-					animateTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
-				}
-				
-				break;
+			if (testTurtle.getId() == turtleIDString && animating){
+				animateTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
+			} else if (testTurtle.getId() == turtleIDString && !animating){
+				setTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
 			}
 		}
 		if (!match){
@@ -192,6 +192,7 @@ public class TurtleDisplay implements Display {
 		myLinePane.getChildren().add(newLine);
 	}
 	
+	
 	private void setTurtle(Rectangle t, double x, double y, double orientation){
 		double leftX =  x + myPaneWidth/2 - myTurtleWidth/2;
 		double topY = y + myPaneHeight/2 - myTurtleHeight/2;
@@ -200,6 +201,7 @@ public class TurtleDisplay implements Display {
 		t.setRotate(orientation);
 		setImageView(myTurtleImageViews.get(myTurtles.indexOf(t)), leftX, topY, orientation);
 	}
+	
 	
 	private void setImageView(ImageView iv, double leftX, double topY, double orientation){
 		iv.setX(leftX);
@@ -245,6 +247,7 @@ public class TurtleDisplay implements Display {
 		return myGroup;
 	}
 	
+	
 	public void setBackgroundColor(Color color){
 		String hex = String.format( "#%02X%02X%02X",
 		            (int)( color.getRed() * 255 ),
@@ -253,9 +256,11 @@ public class TurtleDisplay implements Display {
 		myBackgroundPane.setStyle("-fx-background-color: " + hex);
 	}
 	
+	
 	public void setPenColor(Color color){
 		myLineStroke = color;
 	}
+	
 	
 	public void setTurtleImage(String path){
 		try {
@@ -276,5 +281,6 @@ public class TurtleDisplay implements Display {
 		}
 	}
 
+	
 	
 }
