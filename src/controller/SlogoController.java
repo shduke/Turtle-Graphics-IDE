@@ -11,6 +11,7 @@ import cursor.Cursor;
 import cursor.IDrawable;
 import cursor.CursorManager;
 import cursor.ICursor;
+import cursor.ICursorManagerDisplay;
 import javafx.collections.ListChangeListener;
 import parser.ExpressionTree;
 import parser.InputParser;
@@ -21,7 +22,8 @@ import view.ISlogoWindowView;
 public class SlogoController {
 	
 	private ISlogoWindowView myDisplay; 
-	private ICursor myCursor;
+	private ICursorManagerDisplay myCursorManager;
+	private ICursor myCursor; 
 	private InputParser myParser; 
 	private String myLastCommand; 
 
@@ -32,7 +34,8 @@ public class SlogoController {
 	public SlogoController(ISlogoWindowView view){
 		myDisplay = view; 
 		myLastCommand = "";
-		myCursor= new CursorManager();
+		myCursorManager= new CursorManager();
+		myCursor = (ICursor) myCursorManager; 
 		myGlobalVariableMap = new HashMap<>(); 
 		myParser = new InputParser(myDisplay.getLanguage(),myGlobalVariableMap);
 		bindUserInput(); 
@@ -52,15 +55,10 @@ public class SlogoController {
 					
 					String consolePrint = command.toString()+" " + result; 
 					
-					
 					//receive information from backend
-
-//					List<Drawable>createdItems = myCursors.get(0).myCreatedItems; 
-					
-					//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
-					
-//					myDisplay.getTurtleDisplay().redrawAll(createdItems);
+					myDisplay.updateInformation(myCursorManager);
 					myDisplay.getVariablesAndCommands().addOutput(consolePrint);
+					
 					//myDisplay.getVariablesAndCommands().updateTextArea();
 				}
 				catch (Exception e){
@@ -77,12 +75,5 @@ public class SlogoController {
 		em.showError();
 	}
 	
-	private List<IDrawable> convertToDrawable(List<CreatedItem> items){
-		List<IDrawable>toFrontEnd=new ArrayList<>(); 
-		for(int i=0;i<items.size();i++){
-			toFrontEnd.add(items.get(i));
-		}
-		return toFrontEnd; 
-	}
 	
 }
