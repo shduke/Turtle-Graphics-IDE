@@ -9,8 +9,11 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import view.slogoWindowElements.History;
 import view.slogoWindowElements.IHistory;
 import view.slogoWindowElements.IInputField;
@@ -19,6 +22,7 @@ import view.slogoWindowElements.IVariablesAndCommands;
 import view.slogoWindowElements.InputField;
 import view.slogoWindowElements.Toolbar;
 import view.slogoWindowElements.VariablesAndCommands;
+import view.slogoWindowElements.toolbarElements.CursorImageProperty;
 
 
 /**
@@ -38,24 +42,19 @@ public class SlogoWindowView implements ISlogoWindowView {
     private IVariablesAndCommands myVC;
     private Display myTurtleDisplay;
     private EventHandler<ActionEvent> myResetHandler;
-    private EventHandler<ActionEvent> myFileChooseHandler;
+    private EventHandler<ActionEvent> myFileChooserHandler;
     private ComboBox<String> myBackgroundColorComboBox;
     private ComboBox<String> myPenColorComboBox;
+    private VBox myPenPropertiesVBox;
     
-    public SlogoWindowView(String language, EventHandler<ActionEvent> fileChooseEvent){
-    	myFileChooseHandler = fileChooseEvent;
+    public SlogoWindowView(String language){
+    	myFileChooserHandler = new FileChooserEvent();
     	myResetHandler = new ResetEvent();
         myLanguage = language;
-        myBackgroundColorComboBox = makeBackgroundColorComboBox();
-        myPenColorComboBox = makePenColorComboBox();
-        BorderPane root = new BorderPane();
-        root.setTop(makeToolbar());
-        root.setRight(makeVarDisplay());
-        root.setCenter(new Group(makeTurtleDisplay()));
-        root.setLeft(makeHistory());
-        root.setBottom(makeInputField());
-        root.setId("root");
-        myScene = new Scene(root, myAppWidth, myAppHeight);
+        makeBackgroundColorComboBox();
+        makePenColorComboBox();
+        makePenPropertiesVBox();
+        myScene = new Scene(makeRoot(), myAppWidth, myAppHeight);
         myScene.getStylesheets().add(getClass().getResource(AppResources.APP_CSS.getResource()).toExternalForm());
     }
     
@@ -96,11 +95,31 @@ public class SlogoWindowView implements ISlogoWindowView {
 		public void handle(ActionEvent event) {
 			myHistory.clear();
 			myVC.clear();
-			InputField.myTextArea.clear();
+			myInputField.clear();
 		}
 	}
 	
-	private ComboBox<String> makeBackgroundColorComboBox() {
+	private class FileChooserEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			CursorImageProperty image = new CursorImageProperty();
+			myTurtleDisplay.setTurtleImage(image.getFileDirectory());
+			myTurtleDisplay.setTurtleImage("src/images/KTurtle_Turtle.png");
+		}
+	}
+	
+	private BorderPane makeRoot() {
+		BorderPane root = new BorderPane();
+        root.setTop(makeToolbar());
+        root.setRight(makeVCDisplay());
+        root.setCenter(new Group(makeTurtleDisplay()));
+        root.setLeft(makeHistory());
+        root.setBottom(makeInputField());
+        root.setId("root");
+        return root;
+	}
+	
+	private void makeBackgroundColorComboBox() {
 		myBackgroundColorComboBox = new ComboBox<String>();
 		myBackgroundColorComboBox.getItems().addAll("WHITE", "BLUE", "RED", "GREEN", "YELLOW", "PINK", "PURPLE", "BLACK");
         myBackgroundColorComboBox.valueProperty().addListener(new ChangeListener<String>() {
@@ -109,10 +128,9 @@ public class SlogoWindowView implements ISlogoWindowView {
             	myTurtleDisplay.setBackgroundColor(Color.valueOf(newValue));
             }
         });
-		return myBackgroundColorComboBox;
 	}
 	
-	private ComboBox<String> makePenColorComboBox() {
+	private void makePenColorComboBox() {
 		myPenColorComboBox = new ComboBox<String>();
 		myPenColorComboBox.getItems().addAll("WHITE", "BLUE", "RED", "GREEN", "YELLOW", "PINK", "PURPLE", "BLACK");
         myPenColorComboBox.valueProperty().addListener(new ChangeListener<String>() {
@@ -121,11 +139,19 @@ public class SlogoWindowView implements ISlogoWindowView {
             	myTurtleDisplay.setPenColor(Color.valueOf(newValue));
             }
         });
-		return myPenColorComboBox;
+	}
+	
+	private void makePenPropertiesVBox() {
+		myPenPropertiesVBox = new VBox();
+		myPenPropertiesVBox.getChildren().add(new Label("Pen Color"));
+		myPenPropertiesVBox.getChildren().add(myPenColorComboBox);
+		myPenPropertiesVBox.getChildren().add(new Label("\nThickness"));
+		myPenPropertiesVBox.getChildren().add(new Label("\nLine Type"));
 	}
     
     private Node makeToolbar () {
-    	IToolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooseHandler, myBackgroundColorComboBox, myPenColorComboBox);
+    	IToolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooserHandler, myBackgroundColorComboBox, myPenColorComboBox, 
+    			myPenPropertiesVBox);
 		return toolbar.getToolbar();
     }
     
@@ -139,7 +165,7 @@ public class SlogoWindowView implements ISlogoWindowView {
         return myTurtleDisplay.getGroup();
     }
     
-    private Node makeVarDisplay() {
+    private Node makeVCDisplay() {
     	myVC = new VariablesAndCommands();
     	return myVC.getVCDisplay();
     }
