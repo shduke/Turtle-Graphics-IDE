@@ -27,5 +27,7 @@ public interface Display {
 	public void setTurtleImage(String path);
 	
 	public void resetDisplay();
+
+	public void setLineType(double doubleResource);
 	
 }
