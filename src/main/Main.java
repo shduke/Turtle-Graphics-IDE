@@ -6,8 +6,6 @@ import view.chooseLanguage.IChooseLanguageWindow;
 
 public class Main extends Application {
 
-	public static final String TITLE = "SLogo";
-
 	public static void main(String[] args) {
 		launch(args);
 	}

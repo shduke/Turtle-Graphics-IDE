@@ -15,7 +15,7 @@ import view.SlogoWindowView;
  */
 public class InputField implements IInputField {
     
-    public static TextArea myTextArea;
+    private TextArea myTextArea;
     private EventHandler<ActionEvent> myEnterHandler;
     private ResourceBundle myResources;
     private IHistory myHistory;
@@ -34,6 +34,17 @@ public class InputField implements IInputField {
         return result;
     }
     
+    public void clear() {
+    	myTextArea.clear();
+    }
+    
+    private TextArea makeInputField (int width, EventHandler<ActionEvent> handler) {
+        TextArea result = new TextArea();
+        result.setPrefColumnCount(width);
+        result.setPrefHeight(100);
+        return result;
+    }
+    
     private class EnterEvent implements EventHandler<ActionEvent> {
         @Override
         public void handle (ActionEvent event) {
@@ -41,14 +52,6 @@ public class InputField implements IInputField {
             myHistory.addHistory(input);
             myTextArea.clear();
         }
-    }
-    
-    private TextArea makeInputField (int width, EventHandler<ActionEvent> handler) {
-        TextArea result = new TextArea();
-        result.setPrefColumnCount(width);
-        result.setPrefHeight(100);
-        //result.setOnAction(handler);
-        return result;
     }
     
     private Button makeButton (String property, EventHandler<ActionEvent> handler) {
