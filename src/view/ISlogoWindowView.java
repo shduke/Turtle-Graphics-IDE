@@ -9,6 +9,7 @@ import command.utility.IVariable;
 import cursor.ICursorManagerDisplay;
 import javafx.collections.ListChangeListener;
 import view.slogoWindowElements.IHistory;
+import view.slogoWindowElements.IToolbar;
 import view.slogoWindowElements.IVariablesAndCommands;
 
 /**
@@ -18,6 +19,8 @@ import view.slogoWindowElements.IVariablesAndCommands;
 public interface ISlogoWindowView {
 
 	public IHistory getHistory();
+	
+	public IToolbar getToolbar();
 	
 	public IVariablesAndCommands getVariablesAndCommands();
 	

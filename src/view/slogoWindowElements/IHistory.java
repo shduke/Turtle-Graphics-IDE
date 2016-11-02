@@ -13,8 +13,6 @@ public interface IHistory {
 
 	public void setBinding(ListChangeListener bind);
 	
-	public void clear();
-	
 	public String getRecentCommand();
 	
 	public ObservableList<String> getAllCommands();
