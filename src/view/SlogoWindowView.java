@@ -203,14 +203,11 @@ public class SlogoWindowView implements ISlogoWindowView {
         return myInputField.getInputField();
     }
 
-    
-    
-    //NOEL OR JOHN DO THIS, CALL THE APPROPRIATE METHODS FROM THIS.
+
 	@Override
 	public void updateInformation(ICursorManagerDisplay myCursorManager) {
 		// TODO Auto-generated method stub
-		myTurtleDisplay.redrawAll(myCursorManager.getDrawableItems());
-		
+		myTurtleDisplay.addDrawables(myCursorManager.getDrawableItems());		
 	}
     
 }

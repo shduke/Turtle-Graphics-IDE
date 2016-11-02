@@ -33,6 +33,10 @@ public enum AppResources {
     ANIMATION_MIN_RATE(0.25),
     ANIMATION_MAX_RATE(2.5),
     
+    LINE_LAYER_NUM(10),
+    TURTLE_LAYER_NUM(20),
+    INIT_TURTLE_ID(1),
+    
     DEFAULT_ERROR_MESSAGE("Error: "),
     ERROR_STRING("NO MATCH"),
     PATTERNS_STRING("expressions"),

@@ -29,10 +29,6 @@ public interface ICursor {
 
     Pen getPen ();
 
-    double getLayer ();
-
-    void update (Observable o, Object arg);
-
     boolean getIsActive ();
 
     double setIsActive (boolean isActive);
