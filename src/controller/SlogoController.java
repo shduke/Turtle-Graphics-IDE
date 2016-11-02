@@ -56,11 +56,8 @@ public class SlogoController {
 					String consolePrint = command.toString()+" " + result; 
 					
 					//receive information from backend
-					myDisplay.updateInformation(myCursorManager);
+					myDisplay.updateInformation(myCursorManager, myGlobalVariableMap);
 					myDisplay.getVariablesAndCommands().addOutput(consolePrint);
-					myDisplay.getVariablesAndCommands().update(myGlobalVariableMap);
-					
-					//myDisplay.getVariablesAndCommands().updateTextArea();
 				}
 				catch (Exception e){
 					showErrorMessage(e.getMessage());

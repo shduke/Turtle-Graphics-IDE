@@ -1,5 +1,8 @@
 package view;
 
+import java.util.HashMap;
+
+import command.utility.IVariable;
 import cursor.ICursorManagerDisplay;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -205,9 +208,9 @@ public class SlogoWindowView implements ISlogoWindowView {
 
 
 	@Override
-	public void updateInformation(ICursorManagerDisplay myCursorManager) {
-		// TODO Auto-generated method stub
+	public void updateInformation(ICursorManagerDisplay myCursorManager, HashMap<String, IVariable> variables) {
 		myTurtleDisplay.addDrawables(myCursorManager.getDrawableItems());
+		myVC.update(variables);
 	}
     
 }
