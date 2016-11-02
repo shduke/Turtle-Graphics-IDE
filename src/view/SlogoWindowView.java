@@ -207,7 +207,7 @@ public class SlogoWindowView implements ISlogoWindowView {
 	@Override
 	public void updateInformation(ICursorManagerDisplay myCursorManager) {
 		// TODO Auto-generated method stub
-		myTurtleDisplay.addDrawables(myCursorManager.getDrawableItems());		
+		myTurtleDisplay.addDrawables(myCursorManager.getDrawableItems());
 	}
     
 }

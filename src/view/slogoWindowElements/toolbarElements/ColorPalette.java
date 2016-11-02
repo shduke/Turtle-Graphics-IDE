@@ -20,8 +20,6 @@ import javafx.scene.text.TextAlignment;
  *
  */
 public class ColorPalette extends Palette {
-	
-	private List<String> myColorPaletteList;
 
 	public ColorPalette(List<String> colorList) {
 		super();
