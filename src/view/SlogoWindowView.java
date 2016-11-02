@@ -43,6 +43,7 @@ public class SlogoWindowView implements ISlogoWindowView {
     private Scene myScene;
     private IToolbar myToolbar;
     private IHistory myHistory;
+    private ITurtleSelector myTurtleSelector;
     private IInputField myInputField;
     private IVariablesAndCommands myVC;
     private Display myTurtleDisplay;
@@ -116,8 +117,8 @@ public class SlogoWindowView implements ISlogoWindowView {
 		BorderPane root = new BorderPane();
         root.setTop(makeToolbar());
         root.setRight(makeVCDisplay());
-        root.setCenter(new Group(makeTurtleDisplay()));
         root.setLeft(makeHistory());
+        root.setCenter(new Group(makeTurtleDisplay()));
         root.setBottom(makeInputField());
         root.setId("root");
         return root;
@@ -191,11 +192,12 @@ public class SlogoWindowView implements ISlogoWindowView {
     
     private Node makeHistory() {
         myHistory = new History();
+        myTurtleSelector = (ITurtleSelector) myHistory;
         return myHistory.getHistory();
     }
     
     private Group makeTurtleDisplay() {
-        myTurtleDisplay = new TurtleDisplay(null);
+        myTurtleDisplay = new TurtleDisplay(null, myTurtleSelector);
         return myTurtleDisplay.getGroup();
     }
     
