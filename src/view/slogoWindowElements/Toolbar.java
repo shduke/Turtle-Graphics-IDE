@@ -48,6 +48,7 @@ public class Toolbar implements IToolbar {
 		myCursorImageHandler = fileChooseHandler;
 		myBackgroundColorComboBox = backgroundColor;
 		myPenPropertiesVBox = penProperties;
+		myColorPaletteHandler = new ColorPaletteEvent();
 		addButtons();
 	}
     
@@ -66,8 +67,8 @@ public class Toolbar implements IToolbar {
 		myHBox.getChildren().add(makeButton("BackgroundButton", myBackgroundHandler));
 		myHBox.getChildren().add(makeButton("CursorImageButton", myCursorImageHandler));
 		myHBox.getChildren().add(makeButton("PenPropertiesButton", myPenPropertiesHandler));
-		myHBox.getChildren().add(makeButton("ColorPaletteButton", myPenPropertiesHandler));
-		myHBox.getChildren().add(makeButton("ImagePaletteButton", myPenPropertiesHandler));
+		myHBox.getChildren().add(makeButton("ColorPaletteButton", myColorPaletteHandler));
+		myHBox.getChildren().add(makeButton("ImagePaletteButton", myImagePaletteHandler));
 		myHBox.getChildren().add(makeButton("HelpButton", myHelpHandler));
 	}
 	
