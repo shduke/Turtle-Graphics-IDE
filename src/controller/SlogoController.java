@@ -47,6 +47,7 @@ public class SlogoController {
 				try{
 					myLastCommand = myDisplay.getHistory().getRecentCommand();
 					myExpressionTree = myParser.parse(myLastCommand,myCursor);
+					System.out.println(myExpressionTree);
 					IFirstCommand command = myExpressionTree.createCommand();
 					
 					String consolePrint = executeAndformOutput(command.getInnerCommands());
@@ -67,6 +68,9 @@ public class SlogoController {
 	private String executeAndformOutput(List<ICommand>toExecute){
 		String consoleOutput = "";
 		for(int i=0;i<toExecute.size();i++){
+			if(toExecute.get(i).toString().equals("COMMAND.CURSOR.CLEARSCREEN")){
+				myDisplay.getTurtleDisplay().resetDisplay();
+			}
 			consoleOutput+=toExecute.get(i).toString()+" "+toExecute.get(i).execute()+"\n";
 		}
 		return consoleOutput; 
