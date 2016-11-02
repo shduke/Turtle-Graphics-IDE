@@ -7,17 +7,17 @@ import java.util.stream.IntStream;
 import behavior.AbstractCommandBehavior;
 import command.AbstractCommand;
 
-//TODO - account for 0 length multicommands (maybe a Max())
-public class MultiBehavior extends AbstractCommandBehavior{
+
+public class MultiBehavior extends AbstractCommandBehavior {
     private int myNumberOfCommands;
-    
-    public MultiBehavior(AbstractCommand... arguments) {
+
+    public MultiBehavior (AbstractCommand ... arguments) {
         super(arguments);
-        myNumberOfCommands =  arguments.length - 1;
+        myNumberOfCommands = arguments.length - 1;
     }
 
     @Override
-    public double executeCommand() {
+    public double executeCommand () {
         IntStream.rangeClosed(0, myNumberOfCommands).forEach(this::executeCommand);
         return getCachedValue(myNumberOfCommands);
     }
