@@ -92,38 +92,23 @@ public class CursorManager implements ICursor, ICursorManagerDisplay, Observer {
 
     @Override
     public boolean setIsVisible (Boolean isVisible) {
-        // TODO Auto-generated method stub
+        //return evaluateStream(a -> true, a -> a.setIsVisible(true)) == 1 ? true : false;
         return false;
     }
 
     @Override
     public Pen getPen () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public double getLayer () {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public void update (Observable o, Object arg) {
-        // TODO Auto-generated method stub
-
+        return myPen;
     }
 
     @Override
     public boolean getIsActive () {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
     public double setIsActive (boolean isActive) {// TODO: is this a bad design to have this do
-                                                  // nothing?
-        return 0;
+        return evaluateStream(a -> true, a -> a.setIsActive(true));
     }
 
     
@@ -134,8 +119,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay, Observer {
 
     @Override
     public double getNumberOfTurtles () {
-        // TODO Auto-generated method stub
-        return 0;
+        return myCursors.size();
     }
 
     private double createTurtle (double id) {
@@ -171,7 +155,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay, Observer {
     }
     
     public Constant[] getActiveCursorConstants() {
-        return copyMap().entrySet().stream().toArray(Constant[]::new);
+        return copyMap().keySet().stream().map(Constant::new).toArray(Constant[]::new);
     }
     
 //    private void reinstateMap(Map<Double, Boolean> copyMap) {
