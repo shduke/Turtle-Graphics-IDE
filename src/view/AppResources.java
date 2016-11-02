@@ -26,16 +26,22 @@ public enum AppResources {
     NORMAL_LINE_WIDTH(6),
     THICK_LINE_WIDTH(10),
     
+    TOGGLE_ON_TITLE("Toggle (ON)"),
+    TOGGLE_OFF_TITLE("Toggle (OFF)"),
     STEP_TITLE("Step"),
     RUN_TITLE("Run"),
     PAUSE_TITLE("Pause"),
     ANIMATION_SPEED(250),
     ANIMATION_MIN_RATE(0.25),
     ANIMATION_MAX_RATE(2.5),
+    MILLI_PER_PX(1),
     
     LINE_LAYER_NUM(10),
     TURTLE_LAYER_NUM(20),
     INIT_TURTLE_ID(1),
+    
+    ANIMATION_BUTTON_WIDTH(160),
+    ANIMATION_BUTTON_HEIGHT(55),
     
     DEFAULT_ERROR_MESSAGE("Error: "),
     ERROR_STRING("NO MATCH"),

@@ -10,11 +10,11 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import cursor.Coordinate;
 import cursor.IDrawable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -35,6 +35,7 @@ public class TurtleDisplay implements Display {
 	private Pane myBackgroundPane = new Pane();
 	private Pane myLinePane = new Pane();
 	private Pane myTurtlePane = new Pane();
+	private Pane myForegroundPane = new Pane();
 	private double myPaneWidth = AppResources.CANVAS_WIDTH.getDoubleResource();
 	private double myPaneHeight = AppResources.CANVAS_HEIGHT.getDoubleResource();
 	
@@ -62,13 +63,20 @@ public class TurtleDisplay implements Display {
 	// Drawable List
 	private ArrayList<List<IDrawable>> myAnimationQueue = new ArrayList<List<IDrawable>>();
 	private Timeline myAnimationTimeline;
-	private boolean animating = false;
-	private double msPerPixel = 1;
+	private boolean animatingToggle = false;
+	private boolean setToRun = false;
+	private double msPerPixel = AppResources.MILLI_PER_PX.getDoubleResource();
+	private Button toggleAnimationButton = new Button();
+	private Button runAnimationButton = new Button();
 	
 	public TurtleDisplay(EventHandler<ActionEvent> event) {
 		initPane(myBackgroundPane);
 		initPane(myLinePane);
 		initPane(myTurtlePane);
+		initPane(myForegroundPane);
+		initButton(runAnimationButton, AppResources.RUN_TITLE.getResource(), new RunToggleEvent(), 1, 5);
+		initButton(toggleAnimationButton, AppResources.TOGGLE_ON_TITLE.getResource(), new AnimationToggleEvent(), 2, 15);
+		myForegroundPane.getChildren().addAll(runAnimationButton, toggleAnimationButton);
 		myTurtlePane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
         turtleX = 0;
         turtleY = 0;
@@ -82,6 +90,17 @@ public class TurtleDisplay implements Display {
 	    myAnimationTimeline.getKeyFrames().add(frame);
 	}
 	
+	public void initButton(Button b, String label, EventHandler<ActionEvent> eh, int pos, int gap){
+		double width = AppResources.ANIMATION_BUTTON_WIDTH.getDoubleResource();
+		double height = AppResources.ANIMATION_BUTTON_HEIGHT.getDoubleResource();
+		b.setMinWidth(width); b.setMaxWidth(width);
+		b.setMinHeight(height);	b.setMaxHeight(height);
+		b.setLayoutX(myPaneWidth - width);
+		b.setLayoutY(myPaneHeight - pos*height - gap);
+		b.setText(label);
+		b.setOnAction(eh);
+	}
+	
 	public void initPane(Pane p){
 		p.setId("Pane");
 		p.setMinWidth(myPaneWidth); p.setMinHeight(myPaneHeight);
@@ -91,7 +110,7 @@ public class TurtleDisplay implements Display {
 	}
 
 	public void addDrawables(List<IDrawable> drawables){
-		if (animating){
+		if (animatingToggle){
 			myAnimationQueue.add(drawables);
 		} else {
 			redrawAll(drawables);
@@ -99,22 +118,12 @@ public class TurtleDisplay implements Display {
 	}
 	
 	private void step(){
-		if (myAnimationTimeline.getKeyFrames().size() == 1){
+		if (myAnimationTimeline.getKeyFrames().size() == 1 && animatingToggle && myAnimationQueue.size() > 0){
 			redrawAll(myAnimationQueue.get(0));
 			myAnimationQueue.remove(0);
 		}
+		System.out.println("HI");
 	}
-	
-	// TODO: Fix this and move it to appropriate place (toolbar)
-	private void toggleRunning() {
-        if (myAnimationTimeline.getStatus().equals(Animation.Status.RUNNING)) {
-        	myAnimationTimeline.pause();
-        	toggleAnimationButton.setText(AppResources.RUN_TITLE.getResource());
-        } else {
-        	myAnimationTimeline.play();
-            toggleAnimationButton.setText(AppResources.PAUSE_TITLE.getResource());
-        }
-    }
 	
 	private void animateTurtle(Rectangle t, double destinationX, double destinationY, double orientation){
 		t.setRotate(orientation);
@@ -182,9 +191,9 @@ public class TurtleDisplay implements Display {
 		double turtleID = turtle.getId();
 		String turtleIDString = Double.toString(turtleID);
 		for (Rectangle testTurtle : myTurtles){
-			if (testTurtle.getId() == turtleIDString && animating){
+			if (testTurtle.getId() == turtleIDString && animatingToggle){
 				animateTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
-			} else if (testTurtle.getId() == turtleIDString && !animating){
+			} else if (testTurtle.getId() == turtleIDString && !animatingToggle){
 				setTurtle(testTurtle, turtleX, turtleY, turtleOrientation);
 				System.out.println("Match");
 			}
@@ -293,5 +302,69 @@ public class TurtleDisplay implements Display {
 			}
 		}
 	}	
+	
+	private boolean jumpAnimation(){
+		int index = myAnimationQueue.size()-1;
+		if (index >= 0){
+			redrawAll(myAnimationQueue.get(index));
+			myAnimationQueue.clear();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private class RunToggleEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+		    if (myAnimationTimeline.getStatus().equals(Animation.Status.RUNNING)) {
+		    	setToRun = false;
+		    	myAnimationTimeline.pause();
+	        	runAnimationButton.setText(AppResources.RUN_TITLE.getResource());
+	        } else if (myAnimationTimeline.getStatus().equals(Animation.Status.PAUSED)){
+	        	myAnimationTimeline.play();
+	        	setToRun = true;
+	        	runAnimationButton.setText(AppResources.PAUSE_TITLE.getResource());
+	        } else if (myAnimationTimeline.getStatus().equals(Animation.Status.STOPPED) && setToRun){
+	        	setToRun = false;
+	        	runAnimationButton.setText(AppResources.RUN_TITLE.getResource());
+	        } else if (myAnimationTimeline.getStatus().equals(Animation.Status.STOPPED) && animatingToggle && !setToRun){
+	        	myAnimationTimeline.play();
+	        	setToRun = true;
+	        	runAnimationButton.setText(AppResources.PAUSE_TITLE.getResource());
+	        } else if (myAnimationTimeline.getStatus().equals(Animation.Status.STOPPED) && !setToRun){
+	        	setToRun = true;
+	        	runAnimationButton.setText(AppResources.PAUSE_TITLE.getResource());
+	        }
+		}
+	}
+	
+	private class AnimationToggleEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+		   animatingToggle = !animatingToggle;
+		   if (animatingToggle && setToRun){
+			   myAnimationTimeline.play();
+			   toggleAnimationButton.setText(AppResources.TOGGLE_OFF_TITLE.getResource());
+			   runAnimationButton.setText(AppResources.PAUSE_TITLE.getResource());
+		   } else if (animatingToggle && !setToRun){
+			   toggleAnimationButton.setText(AppResources.TOGGLE_OFF_TITLE.getResource());
+		   } else {
+			   boolean successfulJump = jumpAnimation();
+			   while (!successfulJump && myAnimationTimeline.getKeyFrames().size() > 1){
+				   try {
+					   Thread.sleep(250);
+					   System.out.println("Lost in the netherlands");
+				   } catch (InterruptedException e) {
+					   e.printStackTrace();
+				   }
+			   }
+			   myAnimationTimeline.stop();
+			   setToRun = false;
+			   runAnimationButton.setText(AppResources.RUN_TITLE.getResource());
+			   toggleAnimationButton.setText(AppResources.TOGGLE_ON_TITLE.getResource());
+		   }
+		}
+	}
 	
 }
