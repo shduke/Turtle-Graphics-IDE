@@ -54,6 +54,7 @@ public class TurtleDisplay implements Display {
 	// Line Characteristics
 	private double myLineWidth = AppResources.NORMAL_LINE_WIDTH.getDoubleResource();
 	private Color myLineStroke = AppResources.LINE_STROKE.getColorResource();
+	private List<Double> myDashArray = new ArrayList<Double>();
 	
 	// Lists for Nodes
 	private List<Rectangle> myTurtles = new ArrayList<Rectangle>();
@@ -88,6 +89,7 @@ public class TurtleDisplay implements Display {
 	    myAnimationTimeline = new Timeline();
 	    myAnimationTimeline.setCycleCount(Timeline.INDEFINITE);
 	    myAnimationTimeline.getKeyFrames().add(frame);
+		setLineType(AppResources.SOLID_LINE_TYPE.getDoubleResource());
 	}
 	
 	public void initButton(Button b, String label, EventHandler<ActionEvent> eh, int pos, int gap){
@@ -157,12 +159,9 @@ public class TurtleDisplay implements Display {
 		double time = msPerPixel*Math.sqrt(Math.pow((x1-x2), 2)+Math.pow((y1-y2), 2));
 		Timeline timeline = new Timeline();
 	    myTimelines.add(timeline);
-		x1 += myPaneWidth/2; y1 = -y1 + myPaneHeight/2;
+	    drawLine(x1, y1, x1, y1);
 		x2 += myPaneWidth/2; y2 = -y2 + myPaneHeight/2;
-		Line newLine = new Line(x1, y1, x1, y1);
-		newLine.setStrokeWidth(myLineWidth);
-		newLine.setStroke(myLineStroke);
-		myLinePane.getChildren().add(newLine);
+		Line newLine = myLines.get(myLines.size()-1);
 		KeyValue kvLineX = new KeyValue(newLine.endXProperty(), x2);
 		KeyValue kvLineY = new KeyValue(newLine.endYProperty(), y2);
 		KeyFrame kfLineX = new KeyFrame(Duration.millis(time), kvLineX);
@@ -243,6 +242,10 @@ public class TurtleDisplay implements Display {
 		Line newLine = new Line(x1, y1, x2, y2);
 		newLine.setStrokeWidth(myLineWidth);
 		newLine.setStroke(myLineStroke);
+		if (myDashArray.size() > 0){
+			newLine.getStrokeDashArray().addAll(myDashArray);
+		}
+		myLines.add(newLine);
 		myLinePane.getChildren().add(newLine);
 	}
 	
@@ -318,14 +321,13 @@ public class TurtleDisplay implements Display {
 		myLineWidth = width;
 	}
 	
-	public void setLineType(){
-		// Solid
-		// Dashed
-		// Dotted
-	}
-	
-	public void setPenDash(){
-		
+	public void setLineType(double lineType){
+		myDashArray = new ArrayList<Double>();
+		if (lineType == AppResources.DOTTED_LINE_TYPE.getDoubleResource()){
+			myDashArray.add(20d); myDashArray.add(20d);
+		} else if (lineType == AppResources.DASHED_LINE_TYPE.getDoubleResource()){
+			myDashArray.add(3d); myDashArray.add(3d);
+		}
 	}
 	
 	public void setTurtleImage(String path){

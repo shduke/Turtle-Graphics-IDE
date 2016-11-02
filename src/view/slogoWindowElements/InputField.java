@@ -26,9 +26,15 @@ public class InputField implements IInputField {
         myTextArea = makeInputField((int) (SlogoWindowView.myAppWidth * 0.075), myEnterHandler);
         myHistory = history;
         
-        KeyEvent myKeyEvent = new KeyEvent();
-//        myTextArea.setOnKeyTyp
+//        myTextArea.setOnKeyPressed(ev -> {
+//        	createSuggestion(myTextArea.getText());
+//        }); 
+
 //        myTextArea.setOnKeyTyped(myKeyEvent);
+    }
+    
+    private void createSuggestion(String text){
+    	
     }
 
     public HBox getInputField() {
@@ -56,13 +62,6 @@ public class InputField implements IInputField {
             myHistory.addHistory(input);
             myTextArea.clear();
         }
-    }
-    
-    private class KeyEvent implements EventHandler<ActionEvent> {
-    	@Override
-    	public void handle (ActionEvent event){
-    		
-    	}
     }
     
     private Button makeButton (String property, EventHandler<ActionEvent> handler) {
