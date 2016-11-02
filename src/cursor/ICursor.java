@@ -17,8 +17,6 @@ public interface ICursor {
 
     double clearCreatedItems ();
 
-    void createItem (Coordinate nextCoordinate);
-
     List<IDrawable> getDrawableItems();
 
     double move (double distance);
@@ -28,10 +26,6 @@ public interface ICursor {
     boolean setIsVisible (Boolean isVisible);
 
     Pen getPen ();
-
-    double getLayer ();
-
-    void update (Observable o, Object arg);
 
     boolean getIsActive ();
 

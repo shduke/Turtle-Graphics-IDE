@@ -1,5 +1,9 @@
 package view.slogoWindowElements;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import controller.SlogoController;
@@ -48,6 +52,8 @@ public class Toolbar implements IToolbar {
 		myCursorImageHandler = fileChooseHandler;
 		myBackgroundColorComboBox = backgroundColor;
 		myPenPropertiesVBox = penProperties;
+		myColorPaletteHandler = new ColorPaletteEvent();
+		myImagePaletteHandler = new ImagePaletteEvent();
 		addButtons();
 	}
     
@@ -66,8 +72,8 @@ public class Toolbar implements IToolbar {
 		myHBox.getChildren().add(makeButton("BackgroundButton", myBackgroundHandler));
 		myHBox.getChildren().add(makeButton("CursorImageButton", myCursorImageHandler));
 		myHBox.getChildren().add(makeButton("PenPropertiesButton", myPenPropertiesHandler));
-		myHBox.getChildren().add(makeButton("ColorPaletteButton", myPenPropertiesHandler));
-		myHBox.getChildren().add(makeButton("ImagePaletteButton", myPenPropertiesHandler));
+		myHBox.getChildren().add(makeButton("ColorPaletteButton", myColorPaletteHandler));
+		myHBox.getChildren().add(makeButton("ImagePaletteButton", myImagePaletteHandler));
 		myHBox.getChildren().add(makeButton("HelpButton", myHelpHandler));
 	}
 	
@@ -121,7 +127,9 @@ public class Toolbar implements IToolbar {
 	private class ColorPaletteEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			IProperty window = new ColorPalette(myColorPaletteHBox);
+			List<String> list = new ArrayList<String>();
+			list.addAll(Arrays.asList("BLACK", "WHITE", "BLUE", "RED", "YELLOW"));
+			IProperty window = new ColorPalette(list);
 			window.start();
 		}
 	}
@@ -129,7 +137,10 @@ public class Toolbar implements IToolbar {
 	private class ImagePaletteEvent implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-			IProperty window = new ImagePalette(myImagePaletteHBox);
+			List<String> list = new ArrayList<String>();
+			list.addAll(Arrays.asList("src/images/turtle.png", "src/images/-1EaCVVK.jpg", "src/images/KTurtle_Turtle.png",  
+					"src/images/KTurtle_Turtle.png", "src/images/KTurtle_Turtle.png"));
+			IProperty window = new ImagePalette(list);
 			window.start();
 		}
 	}
