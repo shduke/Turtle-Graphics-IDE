@@ -6,7 +6,9 @@ import java.util.List;
 
 import command.AbstractCommand;
 import command.utility.Variable;
+import node.INode;
 import node.Node;
+import node.NodeIterator;
 
 
 public class ExpressionTree {
@@ -38,7 +40,8 @@ public class ExpressionTree {
 	}
 	
 	public AbstractCommand createCommand(){
-		return myRoot.createCommand();
+		INode iteratedNode = new NodeIterator(myRoot);
+		return myRoot.createCommand(iteratedNode);
 	}
 	
 	@Override
