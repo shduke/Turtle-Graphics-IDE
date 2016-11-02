@@ -8,6 +8,7 @@ import command.AbstractCommand;
 import command.ICommand;
 import command.utility.IVariable;
 import command.utility.Variable;
+import cursor.IFirstCommand;
 import exception.SyntaxException;
 import node.INode;
 import node.Node;
@@ -46,7 +47,7 @@ public class ExpressionTree {
 		temp.myNext = n; 
 	}
 
-	public ICommand createCommand() throws SyntaxException {
+	public IFirstCommand createCommand() throws SyntaxException {
 		INode iteratedNode = new NodeIterator(myRoot);
 		return myRoot.createCommand(iteratedNode);
 	}
