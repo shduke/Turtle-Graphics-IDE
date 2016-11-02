@@ -10,7 +10,9 @@ public class BackgroundColorProperty extends Property {
 	
 	public BackgroundColorProperty(ComboBox<String> backgroundColor) {
 		super();
+		setTitle("Set Background Color");
 		setRoot(backgroundColor);
+
 	}
 
 }

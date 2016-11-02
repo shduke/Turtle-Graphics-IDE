@@ -14,23 +14,22 @@ import javafx.scene.layout.BorderPane;
  * Citations: http://code.makery.ch/blog/javafx-dialogs-official/
  *
  */
-public class ErrorMessageWindow {
+public class ErrorMessage implements IErrorMessage {
 	
 	public static final Dimension DEFAULT_SIZE = new Dimension(1000, 700);
 	
 	private Alert myAlert;
 	private String errorMessage;
 	
-	public ErrorMessageWindow(String errorMessage) {
+	public ErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 		myAlert = new Alert(AlertType.INFORMATION, this.errorMessage);
 		myAlert.setTitle("Error");
 		myAlert.setHeaderText(null);
 	}
 
-	public Scene getScene() {
+	public void showError() {
 		myAlert.showAndWait();
-		return null;
 	}
 
 }

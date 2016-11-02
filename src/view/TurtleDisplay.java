@@ -2,21 +2,22 @@ package view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cursor.Coordinate;
+import cursor.ICoordinate;
 import cursor.IDrawable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 
 /**
  * @author John Martin
@@ -25,17 +26,12 @@ import javafx.scene.transform.Rotate;
 public class TurtleDisplay implements Display {
 	
 	private EventHandler<ActionEvent> myEvent;
-	private StackPane myStackPane = new StackPane();
-	
-	// Canvas Layers
-	private Canvas myBGCanvas = new Canvas(AppResources.CANVAS_WIDTH.getDoubleResource(), AppResources.CANVAS_HEIGHT.getDoubleResource());
-	private GraphicsContext bgGC = myBGCanvas.getGraphicsContext2D();
-	private Canvas myCursorCanvas = new Canvas(AppResources.CANVAS_WIDTH.getDoubleResource(), AppResources.CANVAS_HEIGHT.getDoubleResource());
-	private GraphicsContext cursorGC = myCursorCanvas.getGraphicsContext2D();
-	private Canvas myLineCanvas = new Canvas(AppResources.CANVAS_WIDTH.getDoubleResource(), AppResources.CANVAS_HEIGHT.getDoubleResource());
-	private GraphicsContext lineGC = myLineCanvas.getGraphicsContext2D();
-	private Canvas myStampCanvas = new Canvas(AppResources.CANVAS_WIDTH.getDoubleResource(), AppResources.CANVAS_HEIGHT.getDoubleResource());
-	private GraphicsContext stampGC = myStampCanvas.getGraphicsContext2D();
+	private Group myGroup = new Group();
+	private Pane myBackgroundPane = new Pane();
+	private Pane myLinePane = new Pane();
+	private Pane myTurtlePane = new Pane();
+	private double myPaneWidth = AppResources.CANVAS_WIDTH.getDoubleResource();
+	private double myPaneHeight = AppResources.CANVAS_HEIGHT.getDoubleResource();
 	
 	// Turtle Characteristics
 	private double myTurtleWidth = AppResources.TURTLE_WIDTH.getDoubleResource();
@@ -49,102 +45,140 @@ public class TurtleDisplay implements Display {
 	private double myLineWidth = AppResources.LINE_WIDTH.getDoubleResource();
 	private Color myLineStroke = AppResources.LINE_STROKE.getColorResource();
 	
+	// Lists for Nodes
+	private List<Rectangle> myTurtles = new ArrayList<Rectangle>();
+	private List<Line> myLines = new ArrayList<Line>();
+	
+	// New Stuff for Nodes
+	private Rectangle myTurtle;
+	private ImageView myTurtleImageView;
+	
 	public TurtleDisplay(EventHandler<ActionEvent> event) {
-		myStackPane.setId("StackPane");
-		myStackPane.getChildren().add(myBGCanvas);
-        myStackPane.getChildren().add(myCursorCanvas);
-        myStackPane.getChildren().add(myLineCanvas);
-        myStackPane.getChildren().add(myStampCanvas);
-        myCursorCanvas.toFront();
-        myLineCanvas.toBack();
-        myBGCanvas.toBack();
-        strokeCanvas();
-        setBackgroundColor(AppResources.CANVAS_COLOUR.getColorResource());
+		initPane(myBackgroundPane);
+		initPane(myLinePane);
+		initPane(myTurtlePane);
         turtleX = 0;
         turtleY = 0;
         setTurtleImage("src/images/turtle.png");
-        drawTurtle(turtleX, turtleY);
-        
+        myTurtle = drawTurtle(turtleX, turtleY);
+        myTurtleImageView = drawCursorImage(myTurtleImage, turtleX, turtleY);
+        myTurtle.setFill(Color.TRANSPARENT);
 	}
 	
+	public void initPane(Pane p){
+		p.setId("Pane");
+		p.setMinWidth(myPaneWidth); p.setMinHeight(myPaneHeight);
+		p.setPrefWidth(myPaneWidth); p.setPrefHeight(myPaneHeight);
+		p.setMaxWidth(myPaneWidth); p.setMaxHeight(myPaneHeight);
+		myGroup.getChildren().add(p);
+	}
+	
+
 	public void redrawAll(List<IDrawable> drawables){
-		clearCanvas();
-		strokeCanvas();
 		for (IDrawable drawable : drawables){
-			List<Coordinate> coordinates = drawable.getCreateItems();
+			List<ICoordinate> coordinates = drawable.getDrawableCoordinates();
 			double currentX = coordinates.get(0).getX();
 			double currentY = coordinates.get(0).getY();
-			for (Coordinate coord : coordinates.subList(1, coordinates.size())){
+			for (ICoordinate coord : coordinates.subList(1, coordinates.size())){
 				double nextX = coord.getX();
 				double nextY = coord.getY();
-				drawLine(currentX, currentY, nextX, nextY);
+				checkForLine(currentX, currentY, nextX, nextY);
 				currentX = nextX; 
 				currentY = nextY;
 			}
 		}
 		IDrawable turtleDrawable = drawables.get(drawables.size()-1);
-		List<Coordinate> turtleCoordinates = turtleDrawable.getCreateItems();
+		List<ICoordinate> turtleCoordinates = turtleDrawable.getDrawableCoordinates();
 		turtleCoordinates.get(turtleCoordinates.size()-1);
 		double turtleX = turtleCoordinates.get(turtleCoordinates.size()-1).getX();
 		double turtleY = turtleCoordinates.get(turtleCoordinates.size()-1).getY();
 		myTurtleOrientation = turtleDrawable.getOrientation();
 		System.out.println("FrontEnd Test: " + "x = " + turtleX + " y = " + turtleY + "Ori: " + myTurtleOrientation);
-		drawTurtle(turtleX, turtleY);
+		setRectangle(myTurtle, turtleX, turtleY);
+		setImageView(myTurtleImageView, turtleX, turtleY);
+	}
+	
+	private void checkForLine(double x1, double y1, double x2, double y2){
+		boolean match = false;
+		for (Line testLine : myLines){
+			if (testLine.getStartX() == x1 && testLine.getStartY() == y1 && testLine.getEndX() == x2 && testLine.getEndY() == y2){
+				match = true;
+			}
+		}
+		if (!match){
+			drawLine(x1, y1, x2, y2);
+		}
 	}
 	
 	private void drawLine(double x1, double y1, double x2, double y2){
-		x1 = x1 + myCursorCanvas.getWidth()/2;
-		y1 = -y1 + myCursorCanvas.getHeight()/2;
-		x2 = x2 + myCursorCanvas.getWidth()/2;
-		y2 = -y2 + myCursorCanvas.getHeight()/2;
-		lineGC.setStroke(myLineStroke);
-		lineGC.setLineWidth(myLineWidth);
-		lineGC.strokeLine(x1, y1, x2, y2);
+		x1 += myPaneWidth/2; y1 += myPaneHeight/2;
+		x2 += myPaneWidth/2; y2 += myPaneHeight/2;
+		Line newLine = new Line(x1, y1, x2, y2);
+		newLine.setStrokeWidth(myLineWidth);
+		newLine.setStroke(myLineStroke);
+		myLinePane.getChildren().add(newLine);
 	}
 	
-	private void drawTurtle(double x, double y){
-		turtleX = x + myCursorCanvas.getWidth()/2;
-		turtleY = -y + myCursorCanvas.getHeight()/2;
-		double turtleCornerX = turtleX - myTurtleWidth/2;
-		double turtleCornerY = turtleY - myTurtleHeight/2;
-		cursorGC.setFill(myTurtleFill);
-        cursorGC.fillRect(turtleCornerX, turtleCornerY, myTurtleWidth, myTurtleHeight);
-        drawCursorImage(turtleCornerX, turtleCornerY);
+	private void setRectangle(Rectangle t, double x, double y){
+		x += myPaneWidth/2;
+		y += myPaneHeight/2;
+		double leftX = x - myTurtleWidth/2;
+		double topY = y - myTurtleHeight/2;
+		t.setX(leftX);
+		t.setY(topY);
 	}
 	
-	private void drawCursorImage(double cornerX, double cornerY){
-		double angle = 90 - myTurtleOrientation;
-		cursorGC.save(); // saves the current state on stack, including the current transform
-		Rotate gcRotate = new Rotate(angle, cornerX + myTurtleWidth/2, cornerY + myTurtleHeight/2);
-		cursorGC.setTransform(gcRotate.getMxx(), gcRotate.getMyx(), gcRotate.getMxy(), gcRotate.getMyy(), gcRotate.getTx(), gcRotate.getTy());
-        cursorGC.drawImage(myTurtleImage, cornerX, cornerY, myTurtleWidth, myTurtleHeight);
-        cursorGC.restore(); // back to original state (before rotation)
+	private void setImageView(ImageView iv, double x, double y){
+		x += myPaneWidth/2;
+		y += myPaneHeight/2;
+		double leftX = x - myTurtleWidth/2;
+		double topY = y - myTurtleHeight/2;
+		iv.setX(leftX);
+		iv.setY(topY);
 	}
 	
-	private void clearCanvas(){
-		cursorGC.clearRect(0, 0, myCursorCanvas.getWidth(), myCursorCanvas.getHeight());
-		lineGC.clearRect(0, 0, myLineCanvas.getWidth(), myLineCanvas.getHeight());
-		stampGC.clearRect(0, 0, myStampCanvas.getWidth(), myStampCanvas.getHeight());
+	private Rectangle drawTurtle(double x, double y){
+		Rectangle r = new Rectangle(x, y, myTurtleWidth, myTurtleHeight);
+		r.setFill(Color.RED);
+		myTurtlePane.getChildren().add(r);
+		setRectangle(r, x, y);
+		return r;
 	}
 	
-	private void strokeCanvas(){
-		lineGC.setStroke(AppResources.LINE_STROKE.getColorResource());
-		lineGC.setLineWidth(AppResources.LINE_WIDTH.getDoubleResource());
-		double cWidth = lineGC.getCanvas().getWidth();
-        double cHeight = lineGC.getCanvas().getHeight();
-        lineGC.strokeLine(0, 0, 0, cHeight);
-        lineGC.strokeLine(0, 0, cWidth, 0);
-        lineGC.strokeLine(cWidth, 0, cWidth, cHeight);
-        lineGC.strokeLine(0, cHeight, cWidth, cHeight);
+	private ImageView drawCursorImage(Image img, double x, double y){
+		ImageView imgView = new ImageView(img);
+		imgView.setFitWidth(myTurtleWidth);
+		imgView.setFitHeight(myTurtleHeight);
+		imgView.setRotate(myTurtleOrientation);
+		myTurtlePane.getChildren().add(imgView);
+		setImageView(imgView, x, y);
+		return imgView;
+	}
+		
+	private void strokePane(){
+		double pWidth = myLinePane.getWidth();
+        double pHeight = myLinePane.getHeight();
+		drawLine(0, 0, 0, pHeight);
+		drawLine(0, 0, pWidth, 0);
+		drawLine(pWidth, 0, pWidth, pHeight);
+		drawLine(0, pHeight, pWidth, pHeight);
 	}
 	
-	public Node getStackPane(){
-		return myStackPane;
+	private void clearAllPanes(){
+		myLinePane.getChildren().clear();
+		myTurtlePane.getChildren().clear();
+	}
+	
+	public Group getGroup(){
+		return myGroup;
 	}
 	
 	public void setBackgroundColor(Color color){
-		bgGC.setFill(color);
-		bgGC.fillRect(0, 0, myBGCanvas.getWidth(), myBGCanvas.getHeight());
+		String hex = String.format( "#%02X%02X%02X",
+		            (int)( color.getRed() * 255 ),
+		            (int)( color.getGreen() * 255 ),
+		            (int)( color.getBlue() * 255 ) );
+		myBackgroundPane.setStyle("-fx-background-color: " + hex);
 	}
 	
 	public void setPenColor(Color color){
@@ -160,5 +194,6 @@ public class TurtleDisplay implements Display {
 			e.printStackTrace();
 		}
 	}
+
 	
 }

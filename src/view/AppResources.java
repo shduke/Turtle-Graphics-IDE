@@ -18,11 +18,11 @@ public enum AppResources {
     CANVAS_HEIGHT(525),
     CANVAS_COLOUR(Color.LIGHTGREY),
     
-    TURTLE_WIDTH(40),
+    TURTLE_WIDTH(50),
     TURTLE_HEIGHT(50),
     TURTLE_FILL(Color.DARKSEAGREEN),
     LINE_STROKE(Color.BLUE),
-    LINE_WIDTH(3),
+    LINE_WIDTH(10),
     
     DEFAULT_ERROR_MESSAGE("Error: "),
     ERROR_STRING("NO MATCH"),
