@@ -8,8 +8,8 @@ public interface IPen {
         
     boolean getIsPenDown();
     
-    void setPenSize(double penSize);
+    double setPenSize(double penSize);
     
-    void setPenColor(double color);
+    double setPenColor(double color);
     
 }

@@ -63,7 +63,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
 //    }
     
     public <E> E applyToActive(Function<ICursor, E> mapping) {
-        return evaluateStream(ICursor::getIsActive, mapping);
+        return applyToActive(mapping);
     }
     
     private <E> E evaluateStream(Predicate<ICursor> filter, Function<ICursor, E> mapping) {
@@ -72,7 +72,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
 
     @Override
     public double clearCreatedItems () {
-        return applyToActive(a -> a.clearCreatedItems());
+        return applyToActive(ICursor::clearCreatedItems);
     }
 
     @Override
@@ -85,8 +85,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
 
     @Override
     public boolean getIsVisible () {
-        // TODO Auto-generated method stub
-        return false;
+        return applyToActive(ICursor::getIsVisible);
     }
 
     @Override
@@ -196,9 +195,21 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
         return myBackground;
     }
 
+
     @Override
-    public void setBackground (double background) {
+    public double setBackground(double background) {
         myBackground = background;
+        return background;
+    }
+
+    @Override
+    public double setShape (double shape) {
+        return applyToActive(a -> a.setShape(shape));
+    }
+
+    @Override
+    public double getShape () {
+        return applyToActive(a -> a.getShape());
     }
 
 
