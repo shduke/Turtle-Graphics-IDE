@@ -8,7 +8,7 @@ import command.AbstractCommand;
 import command.ICommand;
 import command.utility.IVariable;
 import command.utility.Variable;
-import cursor.IFirstCommand;
+import command.IFirstCommand;
 import exception.SyntaxException;
 import node.INode;
 import node.Node;
