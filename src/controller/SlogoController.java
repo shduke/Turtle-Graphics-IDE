@@ -6,8 +6,8 @@ import java.util.List;
 import command.AbstractCommand;
 import cursor.CreatedItem;
 import cursor.Cursor;
+import cursor.IDrawable;
 import cursor.CursorManager;
-import cursor.Drawable;
 import cursor.ICursor;
 import javafx.collections.ListChangeListener;
 import parser.ExpressionTree;
@@ -22,8 +22,9 @@ public class SlogoController {
 	private ICursor myCursor;
 	private InputParser myParser; 
 	private String myLastCommand; 
+
 	private ExpressionTree myExpressionTree;  
-	private List<Drawable> myDrawables;
+	private List<IDrawable> myDrawables;
 	
 	public SlogoController(ISlogoWindowView view){
 		myDisplay = view; 
@@ -49,6 +50,7 @@ public class SlogoController {
 					
 					
 					//receive information from backend
+
 //					List<Drawable>createdItems = myCursors.get(0).myCreatedItems; 
 					
 					//List<Drawable>toFrontEnd = convertToDrawable(createdItems);
@@ -71,8 +73,8 @@ public class SlogoController {
 		em.showError();
 	}
 	
-	private List<Drawable> convertToDrawable(List<CreatedItem> items){
-		List<Drawable>toFrontEnd=new ArrayList<>(); 
+	private List<IDrawable> convertToDrawable(List<CreatedItem> items){
+		List<IDrawable>toFrontEnd=new ArrayList<>(); 
 		for(int i=0;i<items.size();i++){
 			toFrontEnd.add(items.get(i));
 		}

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cursor.Coordinate;
-import cursor.Drawable;
+import cursor.ICoordinate;
+import cursor.IDrawable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -72,12 +73,13 @@ public class TurtleDisplay implements Display {
 		myGroup.getChildren().add(p);
 	}
 	
-	public void redrawAll(List<Drawable> drawables){
-		for (Drawable drawable : drawables){
-			List<Coordinate> coordinates = drawable.getCreateItems();
+
+	public void redrawAll(List<IDrawable> drawables){
+		for (IDrawable drawable : drawables){
+			List<ICoordinate> coordinates = drawable.getDrawableCoordinates();
 			double currentX = coordinates.get(0).getX();
 			double currentY = coordinates.get(0).getY();
-			for (Coordinate coord : coordinates.subList(1, coordinates.size())){
+			for (ICoordinate coord : coordinates.subList(1, coordinates.size())){
 				double nextX = coord.getX();
 				double nextY = coord.getY();
 				checkForLine(currentX, currentY, nextX, nextY);
@@ -85,8 +87,8 @@ public class TurtleDisplay implements Display {
 				currentY = nextY;
 			}
 		}
-		Drawable turtleDrawable = drawables.get(drawables.size()-1);
-		List<Coordinate> turtleCoordinates = turtleDrawable.getCreateItems();
+		IDrawable turtleDrawable = drawables.get(drawables.size()-1);
+		List<ICoordinate> turtleCoordinates = turtleDrawable.getDrawableCoordinates();
 		turtleCoordinates.get(turtleCoordinates.size()-1);
 		double turtleX = turtleCoordinates.get(turtleCoordinates.size()-1).getX();
 		double turtleY = turtleCoordinates.get(turtleCoordinates.size()-1).getY();
