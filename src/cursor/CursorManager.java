@@ -55,7 +55,8 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
     
     @Override
     public double move (double distance) {
-        return evaluateStream(ICursor::getIsActive, a -> a.move(distance));
+        //return evaluateStream(ICursor::getIsActive, a -> a.move(distance));
+        return applyToActive(a -> a.move(distance));
     }
     
     public Function<Double, Double> getAngle2(double degrees) {
