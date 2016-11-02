@@ -304,6 +304,7 @@ public class TurtleDisplay implements Display {
 	}
 	
 	public void resetDisplay(){
+		System.out.println("asdhasudhasiuldhasiufhealuivbaelbvuilasbia");
 		myLines.clear();
 		myLinePane.getChildren().clear();
 		for (Rectangle turtle : myTurtles){
