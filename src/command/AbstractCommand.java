@@ -29,6 +29,12 @@ public abstract class AbstractCommand implements ICommand{
         return myCommandExecutionBehavior.getArguments();
     }
     
+    public List<ICommand> getInnerCommandArguments() {
+        List<ICommand> myInnerCommands = new ArrayList<ICommand>();
+        myInnerCommands.addAll(myCommandExecutionBehavior.getArguments());
+        return myInnerCommands;
+    }
+    
     
     @Override
     public String toString () {
