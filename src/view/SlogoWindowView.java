@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import view.slogoWindowElements.History;
 import view.slogoWindowElements.IHistory;
 import view.slogoWindowElements.IInputField;
@@ -19,6 +20,7 @@ import view.slogoWindowElements.IVariablesAndCommands;
 import view.slogoWindowElements.InputField;
 import view.slogoWindowElements.Toolbar;
 import view.slogoWindowElements.VariablesAndCommands;
+import view.slogoWindowElements.toolbarElements.CursorImageProperty;
 
 
 /**
@@ -38,12 +40,12 @@ public class SlogoWindowView implements ISlogoWindowView {
     private IVariablesAndCommands myVC;
     private Display myTurtleDisplay;
     private EventHandler<ActionEvent> myResetHandler;
-    private EventHandler<ActionEvent> myFileChooseHandler;
+    private EventHandler<ActionEvent> myFileChooserHandler;
     private ComboBox<String> myBackgroundColorComboBox;
     private ComboBox<String> myPenColorComboBox;
     
-    public SlogoWindowView(String language, EventHandler<ActionEvent> fileChooseEvent){
-    	myFileChooseHandler = fileChooseEvent;
+    public SlogoWindowView(String language){
+    	myFileChooserHandler = new FileChooserEvent();
     	myResetHandler = new ResetEvent();
         myLanguage = language;
         myBackgroundColorComboBox = makeBackgroundColorComboBox();
@@ -96,7 +98,16 @@ public class SlogoWindowView implements ISlogoWindowView {
 		public void handle(ActionEvent event) {
 			myHistory.clear();
 			myVC.clear();
-			InputField.myTextArea.clear();
+			myInputField.clear();
+		}
+	}
+	
+	private class FileChooserEvent implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			CursorImageProperty image = new CursorImageProperty();
+			myTurtleDisplay.setTurtleImage(image.getFileDirectory());
+			myTurtleDisplay.setTurtleImage("src/images/KTurtle_Turtle.png");
 		}
 	}
 	
@@ -125,7 +136,7 @@ public class SlogoWindowView implements ISlogoWindowView {
 	}
     
     private Node makeToolbar () {
-    	IToolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooseHandler, myBackgroundColorComboBox, myPenColorComboBox);
+    	IToolbar toolbar = new Toolbar(myLanguage, myResetHandler, myFileChooserHandler, myBackgroundColorComboBox, myPenColorComboBox);
 		return toolbar.getToolbar();
     }
     

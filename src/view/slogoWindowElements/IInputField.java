@@ -12,4 +12,6 @@ import javafx.scene.layout.HBox;
 public interface IInputField {
 
 	public HBox getInputField();
+
+	public void clear();
 }

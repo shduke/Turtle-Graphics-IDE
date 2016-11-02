@@ -68,7 +68,7 @@ public class Toolbar implements IToolbar {
 		@Override
 		public void handle(ActionEvent event) {
 			Stage slogoStage = new Stage();
-        	SlogoWindowView display = new SlogoWindowView(myLanguage, null);
+        	SlogoWindowView display = new SlogoWindowView(myLanguage);
             slogoStage.setTitle("SLogo");
             slogoStage.setScene(display.getScene());
             slogoStage.show();

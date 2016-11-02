@@ -66,9 +66,8 @@ public class ChooseLanguageWindow implements IChooseLanguageWindow {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             	myLanguage = newValue;
             	stage.close();
-            	EventHandler<ActionEvent> fileChoose = new FileChooserEvent();
             	slogoStage = new Stage();
-            	SlogoWindowView display = new SlogoWindowView(getLanguage(), fileChoose);
+            	SlogoWindowView display = new SlogoWindowView(getLanguage());
                 slogoStage.setTitle("SLogo");
                 slogoStage.setScene(display.getScene());
                 slogoStage.show();
@@ -76,17 +75,6 @@ public class ChooseLanguageWindow implements IChooseLanguageWindow {
             }
         });
 		return myComboBox;
-	}
-	
-	private class FileChooserEvent implements EventHandler<ActionEvent> {
-		private FileChooser fileChooser;
-		
-		@Override
-		public void handle(ActionEvent event) {
-			fileChooser = new FileChooser();
-			fileChooser.setTitle("Open Resource File");
-			fileChooser.showOpenDialog(getSlogoStage());
-		}
 	}
 
 }
