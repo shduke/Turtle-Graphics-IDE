@@ -13,6 +13,7 @@ public enum AppResources {
     APP_HEIGHT(700),
     APP_PADDING(25),
     APP_CSS("style.css"),
+    DEFAULT_TURTLE_IMAGE("src/images/turtle.png"),
     
     CANVAS_WIDTH(675),
     CANVAS_HEIGHT(525),
@@ -20,6 +21,7 @@ public enum AppResources {
     
     TURTLE_WIDTH(50),
     TURTLE_HEIGHT(65),
+    INIT_NUM_TURTLES(1),
     TURTLE_FILL(Color.DARKSEAGREEN),
     LINE_STROKE(Color.BLUE),
     THIN_LINE_WIDTH(3),
@@ -84,4 +86,17 @@ public enum AppResources {
     public Color getColorResource(){
     	return resourceColor;
     }
+    
+    public void setResource(String resource){
+    	resourceString = resource;
+    }
+    
+    public void setDoubleResource(double resource){
+    	resourceDouble = resource;
+    }
+    
+    public void setColorResource(Color resource){
+    	resourceColor = resource;
+    }
+    
 }

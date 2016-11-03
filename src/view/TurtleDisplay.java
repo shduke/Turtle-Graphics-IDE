@@ -77,6 +77,8 @@ public class TurtleDisplay implements Display {
 	private Button runAnimationButton = new Button();
 	private List<Timeline> myTimelines = new ArrayList<Timeline>();
 	
+	private boolean justReset = false;
+	
 	public TurtleDisplay(EventHandler<ActionEvent> event, ITurtleSelector selector) {
 		myTurtleSelector = selector;
 		initPane(myBackgroundPane);
@@ -89,14 +91,17 @@ public class TurtleDisplay implements Display {
 		myForegroundPane.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
 		initTurtleX = 0;
 		initTurtleY = 0;
-        setTurtleImage("src/images/turtle.png");
-        drawTurtle(initTurtleX, initTurtleY, myInitTurtleID, myTurtleOrientationDefault);
+        setTurtleImage(AppResources.DEFAULT_TURTLE_IMAGE.getResource());
+        for (int i = 1; i <= AppResources.INIT_NUM_TURTLES.getDoubleResource(); i++){
+        	drawTurtle(initTurtleX, initTurtleY, i, myTurtleOrientationDefault);
+        }
         KeyFrame frame = new KeyFrame(Duration.millis(AppResources.ANIMATION_SPEED.getDoubleResource()),
                 e -> step());
 	    myAnimationTimeline = new Timeline();
 	    myAnimationTimeline.setCycleCount(Timeline.INDEFINITE);
 	    myAnimationTimeline.getKeyFrames().add(frame);
 		setLineType(AppResources.SOLID_LINE_TYPE.getDoubleResource());
+		setBackgroundColor(AppResources.CANVAS_COLOUR.getColorResource());
 		myScrollPane.setContent(myGroup);
 	}
 	
@@ -185,23 +190,29 @@ public class TurtleDisplay implements Display {
 	}
 	
 	public void redrawAll(List<IDrawable> drawables){
-		System.out.println("------- Redraw All Called -------");
-		myLastDrawables = drawables;
-		for (IDrawable drawable : drawables){
-			if (drawable.getLayer() == lineLayerNum){
-				List<ICoordinate> coordinates = drawable.getDrawableCoordinates();
-				double currentX = coordinates.get(0).getX();
-				double currentY = coordinates.get(0).getY();
-				for (ICoordinate coord : coordinates.subList(1, coordinates.size())){
-					double nextX = coord.getX();
-					double nextY = coord.getY();
-					checkForLine(currentX, currentY, nextX, nextY);
-					currentX = nextX; 
-					currentY = nextY;
+		if (!justReset){
+			System.out.println("------- Redraw All Called -------");
+			System.out.println(drawables);
+			myLastDrawables = drawables;
+			for (IDrawable drawable : drawables){
+				if (drawable.getLayer() == lineLayerNum){
+					System.out.println("new line");
+					List<ICoordinate> coordinates = drawable.getDrawableCoordinates();
+					double currentX = coordinates.get(0).getX();
+					double currentY = coordinates.get(0).getY();
+					for (ICoordinate coord : coordinates.subList(1, coordinates.size())){
+						double nextX = coord.getX();
+						double nextY = coord.getY();
+						checkForLine(currentX, currentY, nextX, nextY);
+						currentX = nextX; 
+						currentY = nextY;
+					}
+				} else if (drawable.getLayer() == turtleLayerNum){
+					checkForTurtle(drawable);
 				}
-			} else if (drawable.getLayer() == turtleLayerNum){
-				checkForTurtle(drawable);
 			}
+		} else {
+			justReset = false;
 		}
 	}
 	
@@ -267,8 +278,6 @@ public class TurtleDisplay implements Display {
 		newLine.setStroke(myLineStroke);
 		if (myDashArray.size() > 0){
 			newLine.getStrokeDashArray().addAll(myDashArray);
-			System.out.println(myDashArray);
-			System.out.println("Is this love is this love is this love");
 		}
 		myLines.add(newLine);
 		myLinePane.getChildren().add(newLine);
@@ -319,11 +328,8 @@ public class TurtleDisplay implements Display {
 	}
 	
 	public void resetDisplay(){
-		for (Line l : myLines){
-			l.setStroke(Color.TRANSPARENT);
-		}
+		justReset = true;
 		myLinePane.getChildren().clear();
-		myLinePane = new Pane();
 		myLines.clear();
 		for (Rectangle turtle : myTurtles){
 			setTurtle(turtle, initTurtleX, initTurtleY, myTurtleOrientationDefault);

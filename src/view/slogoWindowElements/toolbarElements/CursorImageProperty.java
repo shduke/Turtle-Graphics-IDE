@@ -27,7 +27,6 @@ public class CursorImageProperty extends Property {
 		super(DEFAULT_SIZE.getWidth(), DEFAULT_SIZE.getHeight());
 		myFileChooser = new FileChooser();
 		myFileChooser.setTitle(TITLE);
-		myFileChooser.setInitialDirectory(getInitialDirectory());
 		myFile = myFileChooser.showOpenDialog(getStage());
 	}
 	

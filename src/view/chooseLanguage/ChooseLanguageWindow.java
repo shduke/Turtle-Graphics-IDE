@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import view.SlogoWindowView;
+import view.setPreferences.PreferencesWindow;
 
 /**
  * @author Noel Moon (nm142)
@@ -66,12 +67,14 @@ public class ChooseLanguageWindow implements IChooseLanguageWindow {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             	myLanguage = newValue;
             	stage.close();
-            	slogoStage = new Stage();
-            	SlogoWindowView display = new SlogoWindowView(getLanguage());
-                slogoStage.setTitle("SLogo");
-                slogoStage.setScene(display.getScene());
-                slogoStage.show();
-                SlogoController slogo = new SlogoController(display);
+            	PreferencesWindow window = new PreferencesWindow(getLanguage());
+        		window.start();
+//            	slogoStage = new Stage();
+//            	SlogoWindowView display = new SlogoWindowView(getLanguage());
+//                slogoStage.setTitle("SLogo");
+//                slogoStage.setScene(display.getScene());
+//                slogoStage.show();
+//                SlogoController slogo = new SlogoController(display);
             }
         });
 		return myComboBox;
