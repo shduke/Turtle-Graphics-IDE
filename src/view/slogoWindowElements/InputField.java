@@ -1,6 +1,7 @@
 package view.slogoWindowElements;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import view.SlogoWindowView;
 
 /**
  * @author Noel Moon
+ * @author John Martin
  *
  */
 public class InputField implements IInputField {
@@ -24,6 +26,7 @@ public class InputField implements IInputField {
     private HBox myHBox = new HBox();
     private EventHandler<ActionEvent> myEnterHandler;
     private ResourceBundle myResources;
+    private ArrayList<String> myCommandKeys = new ArrayList<String>();
     private IHistory myHistory;
     private ArrayList<String> myCommands = new ArrayList<String>();
     
@@ -32,7 +35,7 @@ public class InputField implements IInputField {
         myEnterHandler = new EnterEvent();
         myTextArea = makeInputField((int) (SlogoWindowView.myAppWidth * 0.075), myEnterHandler);
         myHistory = history;
-        setCommands();
+        setCommandList();
         myTextArea.setOnKeyReleased(ev -> {
         	createSuggestion(myTextArea.getText());
         });
@@ -44,7 +47,7 @@ public class InputField implements IInputField {
     	}
     	ArrayList<MenuItem> choices = new ArrayList<MenuItem>();
     	for (String option : myCommands){
-    		if (option.startsWith(text)){
+    		if (option.toLowerCase().startsWith(text.toLowerCase())){
     			MenuItem mi = new MenuItem(option);
     			choices.add(mi);
     		}
@@ -64,9 +67,20 @@ public class InputField implements IInputField {
     	}
     }
     
-    private void setCommands(){
-    	myCommands.add("forward"); myCommands.add("fd");
+    private void setCommandList(){
+    	Enumeration<String> myResourceKeys = myResources.getKeys();
+    	while (myResourceKeys.hasMoreElements()){
+    		myCommandKeys.add(myResourceKeys.nextElement());
+    	}
+    	for (String command : myCommandKeys){
+    		String keyString = myResources.getString(command);
+    		String[] keyStringSplit = keyString.split("[^a-zA-Z]");
+    		for (String commandString : keyStringSplit){
+    			myCommands.add(commandString);
+    		}
+    	}
     }
+    
     
     private void setupEvents(ArrayList<MenuItem> choices){
     	for (MenuItem choice : choices){

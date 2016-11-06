@@ -25,9 +25,12 @@ import javafx.stage.Stage;
 import view.AppResources;
 import view.SlogoWindowView;
 
-// TODO: Integrate with everything else
 // TODO: Make compatible with language
 
+/**
+ * @author John Martin
+ *
+ */
 public class PreferencesWindow {
 
 	public static final double myAppWidth = AppResources.APP_WIDTH.getDoubleResource();
