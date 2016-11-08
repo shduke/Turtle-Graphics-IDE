@@ -49,14 +49,28 @@ We added clear() methods to the IHistory and IVariablesAndCommands interfaces in
 
 **Back-end External API**
 
-* IDrawable (Interface)
- * List<ICoordinate>getCoordinates()
- * Int getLayer()
- * Int getOrientation()
- * Boolean getIsVisible()
-* ICoordinate
- * double getX()
- * double getY()
+* ICursorManagerDisplay
+    *   List<Drawables> getDrawableItems()
+    *	IPen getPen()
+    *	double getBackGround()
+    *	Map<Double, String> getPalette()
+* IDrawable()
+    *	List<ICoordinate> getDrawableCoordinates()
+    *	double getOrientation()
+    *	double getLayer()
+    *	boolean getIsVisible()
+    *	double getId()
+    *	double getColor()
+    *	Double getSize()
+* ICoordinate()
+    *	double getX()
+    *	double getY()
+* IPen
+    *    double getPenSize()
+    *	double getPenColor()
+    *	double getIsPenDown()
+    *	void setPenSize()
+    *	void setPenColor()
 * ExpressionTree
  * HashMap getMap()
  * add()
