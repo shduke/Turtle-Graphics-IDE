@@ -2,7 +2,7 @@ package node;
 
 import java.util.Map;
 import command.AbstractCommand;
-import command.ParameterCommandFactory;
+import command.factory.ParameterCommandFactory;
 import command.utility.IVariable;
 import command.utility.Variable;
 import exception.SyntaxException;

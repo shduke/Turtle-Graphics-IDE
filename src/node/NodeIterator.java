@@ -3,7 +3,9 @@ package node;
 import command.AbstractCommand;
 import exception.SyntaxException;
 
-//TODO: Mask in an interface
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class NodeIterator implements INode{
     private Node myCurrentNode;
     

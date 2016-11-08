@@ -4,7 +4,9 @@ import java.util.Map;
 import behavior.AbstractCommandBehavior;
 import command.utility.IVariable;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class VariableExecutionBehavior extends AbstractCommandBehavior {
     private Map<String, IVariable> myVariableMap;
     private String myKey;

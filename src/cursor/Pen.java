@@ -1,5 +1,8 @@
 package cursor;
 
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class Pen implements IPen {
     private static final double DEFAULT_SIZE = 10;
     private static final double DEFAULT_COLOR = 0;

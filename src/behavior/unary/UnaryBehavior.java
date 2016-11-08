@@ -4,7 +4,9 @@ import java.util.function.Function;
 import behavior.AbstractCommandBehavior;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public abstract class UnaryBehavior<E, R> extends AbstractCommandBehavior {
     Function<E, R> myOperation;
 

@@ -3,7 +3,9 @@ package behavior.binary;
 import java.util.function.BiFunction;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class ColorBehavior extends BinaryBehavior<Double, String, Double> {
     private static final int COLOR_INDEX = 1;
     private static final int R_INDEX = 1;

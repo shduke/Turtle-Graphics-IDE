@@ -6,7 +6,9 @@ import command.assignment.Set;
 import command.utility.Constant;
 import command.utility.IVariable;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class IncrementIterationBehavior extends IterationBehavior {
     private static final int VARIABLE_INDEX = 0;
     private static final int START_INDEX = 1;

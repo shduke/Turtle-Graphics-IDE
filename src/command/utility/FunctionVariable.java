@@ -10,7 +10,9 @@ import behavior.nonexpression.VariableExecutionBehavior;
 import command.AbstractCommand;
 
 
-// TODO: have constant separate from the rest. Doesn't need behavior or input list.
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class FunctionVariable extends AbstractCommand implements IVariable {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     private List<IVariable> myParameters;

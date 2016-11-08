@@ -1,7 +1,7 @@
 package node;
 
 import command.AbstractCommand;
-import command.OperationCommandFactory;
+import command.factory.OperationCommandFactory;
 import exception.SyntaxException;
 
 public class OperationNode extends Node {

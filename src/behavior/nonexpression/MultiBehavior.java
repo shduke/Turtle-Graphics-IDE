@@ -7,7 +7,9 @@ import java.util.stream.IntStream;
 import behavior.AbstractCommandBehavior;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class MultiBehavior extends AbstractCommandBehavior {
     private int myNumberOfCommands;
 

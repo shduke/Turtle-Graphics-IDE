@@ -2,7 +2,9 @@ package behavior;
 
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public abstract class IterationBehavior extends AbstractCommandBehavior {
 
     IterationBehavior (AbstractCommand ... arguments) {

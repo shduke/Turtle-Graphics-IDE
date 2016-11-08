@@ -1,7 +1,7 @@
 package node;
 
 import command.AbstractCommand;
-import command.CursorCommandFactory;
+import command.factory.CursorCommandFactory;
 import cursor.ICursor;
 import exception.SyntaxException;
 

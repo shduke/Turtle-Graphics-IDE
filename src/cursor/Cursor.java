@@ -10,6 +10,9 @@ import command.utility.Constant;
 import java.util.Observer;
 
 
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class Cursor implements IDrawable, Observer, ICursor {
     private static final double DEFAULT_LAYER = 20;
     private static final boolean DEFAULT_IS_VISIBLE = true;

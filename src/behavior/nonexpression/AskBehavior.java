@@ -4,7 +4,9 @@ import java.util.stream.IntStream;
 import behavior.AbstractCommandBehavior;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class AskBehavior extends AbstractCommandBehavior {
     private static final int RETURN_VALUE_INDEX = 1;
     private int myNumberOfCommands;

@@ -4,6 +4,9 @@ import java.util.function.Function;
 import command.AbstractCommand;
 import command.utility.IVariable;
 
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class VariableAssignmentBehavior extends UnaryBehavior<String, IVariable> {
     private static final int EXPRESSION_KEY_INDEX = 0;    
     private static final int EXPRESSION_VALUE_INDEX = 1;    

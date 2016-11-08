@@ -5,7 +5,9 @@ import java.util.function.Supplier;
 import behavior.ICommandExecutionBehavior;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public abstract class QueryBehavior<R> implements ICommandExecutionBehavior {
     Supplier<R> myOperation;
 

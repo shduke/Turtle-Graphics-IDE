@@ -11,7 +11,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import command.utility.Constant;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class CursorManager implements ICursor, ICursorManagerDisplay {
     Map<Double, ICursor> myCursors;
     Stack<Map<Double, Boolean>> myActiveCursorStack;
@@ -49,6 +51,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
         return applyToActive(a -> a.move(distance));
     }
 
+    @Override
     public <E> E applyToActive (Function<ICursor, E> mapping) {
         return evaluateStream(ICursor::getIsActive, mapping);
     }

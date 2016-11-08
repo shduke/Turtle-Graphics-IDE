@@ -1,5 +1,8 @@
 package cursor;
 
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class Angle {
     private static final double DEFAULT_ORIENTATION = 90;
     private static final double ANGLE_SIGN_OFFSET = 0.5;

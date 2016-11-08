@@ -3,7 +3,9 @@ package behavior.unary;
 import java.util.function.Function;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class DoubleUnaryBehavior extends UnaryBehavior<Double, Double> {
     private static final int INPUT1_INDEX = 0;
 

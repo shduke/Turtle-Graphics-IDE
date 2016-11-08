@@ -1,9 +1,11 @@
-package command;
+package command.factory;
 
 import java.util.Map;
 import command.utility.IVariable;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class VariableCommandFactory extends CommandFactory {
     private String myVariableName;
     private Map<String, IVariable> myVariableMap;
