@@ -69,7 +69,7 @@ public class SlogoController {
 		String consoleOutput = "";
 		for(int i=0;i<toExecute.size();i++){
 			if(toExecute.get(i).toString().equals("COMMAND.CURSOR.CLEARSCREEN")){
-				myDisplay.getTurtleDisplay().resetDisplay();
+				//myDisplay.getTurtleDisplay().resetDisplay();
 			}
 			consoleOutput+=toExecute.get(i).toString()+" "+toExecute.get(i).execute()+"\n";
 		}

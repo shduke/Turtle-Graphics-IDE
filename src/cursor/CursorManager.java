@@ -49,6 +49,7 @@ public class CursorManager implements ICursor, ICursorManagerDisplay {
         return applyToActive(a -> a.move(distance));
     }
 
+    @Override
     public <E> E applyToActive (Function<ICursor, E> mapping) {
         return evaluateStream(ICursor::getIsActive, mapping);
     }
