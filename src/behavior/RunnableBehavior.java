@@ -1,5 +1,8 @@
 package behavior;
 
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class RunnableBehavior extends AbstractCommandBehavior {
     Runnable myOperation;
 

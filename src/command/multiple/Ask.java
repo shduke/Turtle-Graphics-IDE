@@ -5,7 +5,9 @@ import command.AbstractCommand;
 import command.utility.MultiLine;
 import cursor.ICursor;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class Ask extends AbstractCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
 

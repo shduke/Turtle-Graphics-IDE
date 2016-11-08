@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class CreatedItem implements IDrawable{
     private static final double DEFAULT_ORIENTATION = 90;
     private static final double DEFAULT_LAYER = 10;

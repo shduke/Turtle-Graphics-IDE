@@ -5,7 +5,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class MultiCursorUnaryBehavior extends UnaryBehavior<List<Double>, Double> {
     private static final int INPUT1_INDEX = 0;
 

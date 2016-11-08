@@ -3,7 +3,9 @@ package behavior.binary;
 import java.util.function.BiFunction;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class BooleanBinaryBehavior extends BinaryBehavior<Double, Double, Boolean> {
     private static final int INPUT1_INDEX = 0;
     private static final int INPUT2_INDEX = 1;

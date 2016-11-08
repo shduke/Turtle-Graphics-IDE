@@ -1,8 +1,10 @@
-package command;
+package command.factory;
 
 import node.Node;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class MultiLineCommandFactory extends CommandFactory {
     private static final String MULTILINE_TERMINATOR = "]";
 

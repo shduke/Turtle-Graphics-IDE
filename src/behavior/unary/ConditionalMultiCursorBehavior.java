@@ -5,7 +5,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class ConditionalMultiCursorBehavior extends UnaryBehavior<List<Double>, Double> {
     private static final int CONDITIONS_INDEX = 0;
 

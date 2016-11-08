@@ -3,7 +3,9 @@ package behavior.unary;
 import java.util.function.Function;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class MovementBehavior extends UnaryBehavior<Double, Double> {
     private static final int DISTANCE_INDEX = 0;
     private static final int SCALEFACTOR_INDEX = 1;

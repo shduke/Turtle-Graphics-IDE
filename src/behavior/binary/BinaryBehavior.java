@@ -4,7 +4,9 @@ import java.util.function.BiFunction;
 import behavior.AbstractCommandBehavior;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public abstract class BinaryBehavior<E, U, R> extends AbstractCommandBehavior {
     BiFunction<E, U, R> myOperation;
 

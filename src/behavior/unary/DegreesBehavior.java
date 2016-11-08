@@ -3,7 +3,9 @@ package behavior.unary;
 import java.util.function.Function;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class DegreesBehavior extends UnaryBehavior<Double, Double> {
     private static final int ANGLE_INDEX = 0;
 

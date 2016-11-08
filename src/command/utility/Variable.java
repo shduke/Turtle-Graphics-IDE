@@ -5,7 +5,9 @@ import java.util.function.BiFunction;
 import behavior.nonexpression.MultiBehavior;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class Variable extends AbstractCommand implements IVariable {
     private static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 0;
     private String myKey;

@@ -5,7 +5,9 @@ import behavior.unary.FunctionAssignmentBehavior;
 import command.AbstractCommand;
 import command.utility.IVariable;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class To extends AbstractCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 3;
 

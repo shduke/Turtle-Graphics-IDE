@@ -1,7 +1,7 @@
 package node;
 
 import command.AbstractCommand;
-import command.MultiLineCommandFactory;
+import command.factory.MultiLineCommandFactory;
 import exception.SyntaxException;
 
 public class BracketNode extends Node {

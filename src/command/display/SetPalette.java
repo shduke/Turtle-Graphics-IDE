@@ -1,6 +1,8 @@
 package command.display;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 import behavior.binary.ColorBehavior;
 import command.AbstractCommand;
 import cursor.ICursor;

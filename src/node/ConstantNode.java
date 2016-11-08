@@ -1,7 +1,7 @@
 package node;
 
 import command.AbstractCommand;
-import command.ConstantCommandFactory;
+import command.factory.ConstantCommandFactory;
 import exception.SyntaxException;
 
 public class ConstantNode extends Node {

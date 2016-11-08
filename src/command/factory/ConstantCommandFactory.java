@@ -1,5 +1,8 @@
-package command;
+package command.factory;
 
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class ConstantCommandFactory extends CommandFactory {
     private double myValue;
 

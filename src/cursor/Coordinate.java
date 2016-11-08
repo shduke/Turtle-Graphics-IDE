@@ -4,10 +4,7 @@ import java.util.Observable;
 
 
 /**
- * Creates a coordinate class to utilize in the map of cells inside of the grid
- * 
- * @author Sean Hudson
- *
+ * @author Sean Hudson (srh50)
  */
 public class Coordinate extends Observable implements ICoordinate {
     private static final double DEFAULT_X_COORDINATE = 0;

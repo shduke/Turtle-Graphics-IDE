@@ -11,7 +11,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import command.utility.Constant;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class CursorManager implements ICursor, ICursorManagerDisplay {
     Map<Double, ICursor> myCursors;
     Stack<Map<Double, Boolean>> myActiveCursorStack;

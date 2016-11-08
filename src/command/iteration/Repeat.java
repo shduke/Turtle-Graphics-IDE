@@ -7,6 +7,9 @@ import command.utility.Constant;
 import command.utility.IVariable;
 import command.utility.Variable;
 
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class Repeat extends AbstractCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     private static final int LIMIT_INDEX = 0;

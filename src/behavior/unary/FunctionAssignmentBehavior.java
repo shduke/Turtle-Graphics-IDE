@@ -7,7 +7,9 @@ import command.AbstractCommand;
 import command.utility.IVariable;
 import command.utility.Variable;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class FunctionAssignmentBehavior extends UnaryBehavior<String, IVariable> {
     private static final int EXPRESSION_KEY_INDEX = 0;
     private static final int EXPRESSION_PARAMETER_INDEX = 1;

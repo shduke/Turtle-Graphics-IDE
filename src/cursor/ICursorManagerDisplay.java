@@ -1,5 +1,8 @@
 package cursor;
 
+/**
+ * @author Sean Hudson (srh50)
+ */
 import java.util.List;
 import java.util.Map;
 

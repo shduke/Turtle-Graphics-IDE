@@ -3,7 +3,9 @@ package behavior.unary;
 import java.util.function.Function;
 import command.AbstractCommand;
 
-
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class CursorBehavior extends UnaryBehavior<Boolean, Boolean> {
     private static final int IS_TRUE_INDEX = 0;
 

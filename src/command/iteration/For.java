@@ -5,6 +5,9 @@ import behavior.IncrementIterationBehavior;
 import command.AbstractCommand;
 import command.utility.IVariable;
 
+/**
+ * @author Sean Hudson (srh50)
+ */
 public class For extends AbstractCommand {
     public static final int MY_NUMBER_OF_COMMAND_PARAMETERS = 2;
     private static final int PARAMETER_INDEX = 0;
